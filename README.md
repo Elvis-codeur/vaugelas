@@ -93,7 +93,7 @@ chose en même temps (charge 5 à 7) : les chiffres sur une machine récente ser
 | modèle + règles, depuis le texte | 12,4 ms | ~100 phrases/s | ~540 Mo au démarrage, ~670 Mo en pointe |
 | idem, modèle int8 (`--int8`) | 14,1 ms | ~74 phrases/s | ~20 Mo de moins |
 
-Démarrage : environ 1,2 s, sauf la toute première fois (environ 6 s, le temps de créer les tables du modèle).
+Le programme fait environ 5 Mo. Le serveur occupe environ 490 Mo de mémoire. Démarrage : environ 1 s, sauf la toute première fois (environ 6 s, le temps de créer les tables du modèle).
 
 Qualité, sur les phrases de test « final-2 » (jamais vues pendant l'entraînement), avec erreurs difficiles : les
 règles seules trouvent 49,2 % des fautes (1,6 % de fausses alertes), règles + modèle **67,5 %** (3,1 %), contre
@@ -171,7 +171,7 @@ build simple on all four platforms.
 | model + rules, from text | 12.4 ms | ~100 sentences/s | ~540 MB after start, ~670 MB peak |
 | same, int8 model (`--int8`) | 14.1 ms | ~74 sentences/s | ~20 MB less |
 
-Startup is about 1.2 s. The very first start takes about 6 s while the model's lexicon tables are built and cached.
+The program is about 5 MB. The server uses about 490 MB of memory and answers a one-sentence request in about 22 ms. Startup is about 1 s. The very first start takes about 6 s while the model's lexicon tables are built and cached.
 Quality on the held-out final-2 set: rules alone 49.2% detection at 1.6% false alarms, rules + model **67.5%** at 3.1%,
 rules + LanguageTool 61.9% at 6.1%. On clean book text the model flags 9.6 sentences per 1,000. Caveat:
 final-2 was built partly from errors the rules miss, which favours a model that complements them.
