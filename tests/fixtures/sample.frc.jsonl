@@ -1,0 +1,1006 @@
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":12,"len":10,"text":"craignants","message":"Faute d’orthographe possible.","suggestions":["craignant"]},{"rule":"FR_PPRESENT","offset":12,"len":10,"text":"craignants","message":"Le participe présent est invariable.","suggestions":["craignant"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":0,"len":8,"text":"Vas-t'en","message":"Forme correcte de ce mot composé.","suggestions":["Va-t’en"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":25,"len":6,"text":"fanals","message":"Faute d’orthographe possible.","suggestions":["fanaux","fanais","fanal","fanas","fatals"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":4,"len":14,"text":"semie-remorque","message":"Faute d’orthographe possible.","suggestions":["semi-remorque"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":17,"len":8,"text":"échauffé","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["échauffée"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":8,"len":6,"text":"pousse","message":"Le verbe s’accorde avec son sujet placé après lui.","suggestions":["poussent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":26,"len":15,"text":"presses-papiers","message":"Forme correcte de ce mot composé.","suggestions":["presse-papiers"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DONT","offset":13,"len":3,"text":"que","message":"Ce verbe se construit avec « de » : le relatif est « dont ».","suggestions":["dont"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":18,"len":8,"text":"répondit","message":"Dans l’incise, le verbe s’accorde avec le sujet inversé.","suggestions":["répondirent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_TOUT","offset":51,"len":4,"text":"tout","message":"« tout » adverbe varie devant un adjectif féminin commençant par une consonne.","suggestions":["toutes"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":18,"len":3,"text":"aux","message":"« aider quelqu’un » : complément direct.","suggestions":["les"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":15,"len":9,"text":"préparent","message":"Sujets coordonnés : la 1re personne l’emporte sur la 2e, la 2e sur la 3e.","suggestions":["préparons","préparè"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":0,"len":6,"text":"Arrivé","message":"Le participe ou l’adjectif détaché s’accorde avec le sujet de la phrase.","suggestions":["Arrivés"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJONCTIF","offset":38,"len":8,"text":"surprend","message":"Le subjonctif est requis après cette expression.","suggestions":["surprenne"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_CAPITAL","offset":15,"len":9,"text":"Portugais","message":"Langue ou adjectif de nationalité : minuscule (majuscule seulement pour les habitants).","suggestions":["portugais"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":17,"len":2,"text":"de","message":"« se rappeler quelque chose » se construit sans « de ».","suggestions":[]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":24,"len":6,"text":"régnés","message":"Faute d’orthographe possible.","suggestions":["rognés","réglés","régnas","régné"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_TOUT","offset":11,"len":4,"text":"tout","message":"« tout » adverbe varie devant un adjectif féminin commençant par une consonne.","suggestions":["toutes"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":46,"len":5,"text":"faits","message":"« fait » suivi d’un infinitif est toujours invariable.","suggestions":["fait"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ON_NEG","offset":0,"len":4,"text":"On a","message":"Négation : « on n’ » devant une voyelle.","suggestions":["On n’a"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":28,"len":6,"text":"faites","message":"« fait » suivi d’un infinitif est toujours invariable.","suggestions":["fait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NOUN_ADJ","offset":25,"len":8,"text":"bancales","message":"L’adjectif doit s’accorder avec le nom.","suggestions":["bancale"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":4,"len":13,"text":"main-d'œuvres","message":"Faute d’orthographe possible.","suggestions":["main-d’œuvre"]},{"rule":"FR_COMPOUND","offset":4,"len":13,"text":"main-d'œuvres","message":"Forme correcte de ce mot composé.","suggestions":["main-d’œuvre"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":40,"len":6,"text":"exhumé","message":"Le participe s’accorde avec le complément placé avant (interrogation).","suggestions":["exhumées"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":19,"len":10,"text":"presqu'une","message":"Faute d’orthographe possible.","suggestions":["presqu’ile","presqu’île"]}]}
+{"lints":[{"rule":"FR_PP_AVOIR","offset":15,"len":5,"text":"aidés","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["aidé"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":36,"len":6,"text":"lisent","message":"Un infinitif ou une proposition sujet commande le singulier.","suggestions":["lit"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":36,"len":6,"text":"lisent","message":"Un infinitif ou une proposition sujet commande le singulier.","suggestions":["lit"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_TOUT","offset":0,"len":4,"text":"Tout","message":"« tout » adverbe varie devant un adjectif féminin commençant par une consonne.","suggestions":["Toute"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":0,"len":8,"text":"Exceptés","message":"Placé devant le nom, ce participe est invariable.","suggestions":["Excepté"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":3,"len":5,"text":"vieux","message":"Un adjectif placé juste avant « gens » se met au féminin.","suggestions":["vieilles"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":25,"len":7,"text":"précisa","message":"Dans l’incise, le verbe s’accorde avec le sujet inversé.","suggestions":["précisèrent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":47,"len":8,"text":"embarque","message":"« L’un et l’autre » sujet : verbe au pluriel.","suggestions":["embarquent"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NUMBER","offset":22,"len":4,"text":"cent","message":"« cent » multiplié prend un s quand il termine le nombre.","suggestions":["cents"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":11,"len":7,"text":"accoste","message":"Le verbe s’accorde avec son sujet inversé.","suggestions":["accostent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":26,"len":6,"text":"faites","message":"« fait » suivi d’un infinitif est toujours invariable.","suggestions":["fait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":16,"len":2,"text":"au","message":"« pallier » est transitif direct (pallier quelque chose).","suggestions":["le"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":2,"len":3,"text":"est","message":"« c’est » devant un nom singulier, « ce sont » devant un nom pluriel.","suggestions":["sont"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":2,"len":3,"text":"est","message":"« c’est » devant un nom singulier, « ce sont » devant un nom pluriel.","suggestions":["sont"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_LEQUEL","offset":17,"len":7,"text":"quelles","message":"Après une préposition, le pronom relatif est « lequel » (laquelle, lesquels, lesquelles).","suggestions":["lesquelles"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":28,"len":6,"text":"écrits","message":"Pronom réfléchi complément indirect (ou complément direct placé après) : participe invariable.","suggestions":["écrit"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":22,"len":7,"text":"menties","message":"Faute d’orthographe possible.","suggestions":["mendies","mentes","menthes","mentiez","mentis"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":45,"len":10,"text":"manquaient","message":"Après « tout le monde, chacun, personne, rien », le verbe est au singulier.","suggestions":["manquait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":46,"len":4,"text":"sera","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["serait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":23,"len":7,"text":"écrites","message":"Pronom réfléchi complément indirect (ou complément direct placé après) : participe invariable.","suggestions":["écrit"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":21,"len":2,"text":"eu","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["eus"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":19,"len":13,"text":"demie-journée","message":"Devant le nom, « demi », « nu », « semi » sont invariables.","suggestions":["demi-journée"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":40,"len":5,"text":"exige","message":"Accord du verbe avec un sujet de quantité.","suggestions":["exigent"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":13,"len":2,"text":"la","message":"On téléphone « à » quelqu’un.","suggestions":["à la"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":38,"len":11,"text":"convaincant","message":"Après « des plus », l’adjectif se met au pluriel.","suggestions":["convaincants"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_CAPITAL","offset":12,"len":9,"text":"Canadiens","message":"Langue ou adjectif de nationalité : minuscule (majuscule seulement pour les habitants).","suggestions":["canadiens"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":22,"len":7,"text":"siégera","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["siègerait","siégerait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":17,"len":11,"text":"préparantes","message":"Faute d’orthographe possible.","suggestions":["préparant","préparasses","préparâtes"]},{"rule":"FR_PPRESENT","offset":17,"len":11,"text":"préparantes","message":"Le participe présent est invariable.","suggestions":["préparant"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":39,"len":5,"text":"dicté","message":"Le participe s’accorde avec le pronom complément placé avant (le, la, les).","suggestions":["dictées"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":21,"len":6,"text":"faites","message":"« fait » suivi d’un infinitif est toujours invariable.","suggestions":["fait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NUMBER","offset":5,"len":5,"text":"cents","message":"« cent » suivi d’un autre nombre ne prend pas de s.","suggestions":["cent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":14,"len":11,"text":"échosondeur","message":"Faute d’orthographe possible.","suggestions":[]}]}
+{"lints":[{"rule":"FR_SPELL","offset":14,"len":11,"text":"échosondeur","message":"Faute d’orthographe possible.","suggestions":[]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":17,"len":2,"text":"l'","message":"On téléphone « à » quelqu’un.","suggestions":["à l’"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":18,"len":8,"text":"tournera","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["tournerait"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":24,"len":10,"text":"ressemblés","message":"Faute d’orthographe possible.","suggestions":["ressembles","rassemblés","ressemblas","ressemblé","ressemelés"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":48,"len":11,"text":"téléphonera","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["téléphonerait"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":25,"len":10,"text":"dressaient","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["dressait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":3,"len":11,"text":"presque-île","message":"Forme correcte de ce mot composé.","suggestions":["presqu’île"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":41,"len":4,"text":"sera","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["serait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":42,"len":4,"text":"demi","message":"« et demi » s’accorde en genre (jamais en nombre) avec le nom qui précède.","suggestions":["demie"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_AVOIR","offset":13,"len":7,"text":"tondues","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["tondu"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_CAPITAL","offset":32,"len":7,"text":"Janvier","message":"Les jours et les mois s’écrivent en minuscules.","suggestions":["janvier"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":42,"len":5,"text":"avril","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["avrils"]}]}
+{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":41,"len":5,"text":"avril","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["avrils"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_LEQUEL","offset":23,"len":6,"text":"quelle","message":"Après une préposition, le pronom relatif est « lequel » (laquelle, lesquels, lesquelles).","suggestions":["laquelle"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":15,"len":10,"text":"accordants","message":"Faute d’orthographe possible.","suggestions":["accordant"]},{"rule":"FR_PPRESENT","offset":15,"len":10,"text":"accordants","message":"Le participe présent est invariable.","suggestions":["accordant"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":0,"len":13,"text":"Chantera-t'il","message":"Forme correcte de ce mot composé.","suggestions":["Chantera-t-il"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":28,"len":13,"text":"coupes-ongles","message":"Forme correcte de ce mot composé.","suggestions":["coupe-ongles"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":24,"len":1,"text":"à","message":"Pour demander une opinion : « penser de » (que penses-tu de …).","suggestions":["de"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":0,"len":6,"text":"Manges","message":"Verbe à la 1re ou 2e personne sans sujet je/tu/nous/vous.","suggestions":["Mange"]},{"rule":"FR_IMPERATIF","offset":0,"len":6,"text":"Manges","message":"Impératif des verbes en -er : pas de s à la 2e personne du singulier (sauf devant en/y).","suggestions":["Mange"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":16,"len":4,"text":"issu","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["issus"]},{"rule":"FR_ETRE_PLURAL","offset":16,"len":4,"text":"issu","message":"Après « sont », l’attribut est au pluriel.","suggestions":["issus"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":0,"len":6,"text":"Malgré","message":"« malgré que » est fautif : « bien que » (+ subjonctif).","suggestions":["Bien"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_TOUT","offset":12,"len":4,"text":"tout","message":"« tout » adverbe varie devant un adjectif féminin commençant par une consonne.","suggestions":["toutes"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":2,"len":11,"text":"inspecteure","message":"Faute d’orthographe possible.","suggestions":["inspecteur","inspecteurs"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":45,"len":7,"text":"restent","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["reste"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":39,"len":5,"text":"piqué","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["piquées"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":21,"len":7,"text":"souries","message":"Verbe à la 1re ou 2e personne sans sujet je/tu/nous/vous.","suggestions":["sourie"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":8,"len":6,"text":"aurais","message":"Après « si », pas de conditionnel : utilisez l’imparfait.","suggestions":["avais"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":3,"len":4,"text":"sots","message":"Un adjectif placé juste avant « gens » se met au féminin.","suggestions":["sottes"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":5,"text":"savez","message":"Sujets coordonnés : la 1re personne l’emporte sur la 2e, la 2e sur la 3e.","suggestions":["savons"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":29,"len":6,"text":"répété","message":"Le participe s’accorde avec le pronom complément placé avant (le, la, les).","suggestions":["répétées"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":52,"len":9,"text":"demandera","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["demanderait"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":3,"len":11,"text":"traducteure","message":"Faute d’orthographe possible.","suggestions":["traducteur","traducteurs"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PPRESENT","offset":17,"len":8,"text":"portants","message":"Le participe présent est invariable.","suggestions":["portant"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":3,"len":3,"text":"ont","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["a"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":20,"len":3,"text":"aux","message":"« aider quelqu’un » : complément direct.","suggestions":["les"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":0,"len":7,"text":"Rentres","message":"Verbe à la 1re ou 2e personne sans sujet je/tu/nous/vous.","suggestions":["Rentre"]},{"rule":"FR_IMPERATIF","offset":0,"len":7,"text":"Rentres","message":"Impératif des verbes en -er : pas de s à la 2e personne du singulier (sauf devant en/y).","suggestions":["Rentre"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_TOUT","offset":18,"len":4,"text":"tout","message":"« tout » adverbe varie devant un adjectif féminin commençant par une consonne.","suggestions":["toute"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_CAPITAL","offset":40,"len":8,"text":"Novembre","message":"Les jours et les mois s’écrivent en minuscules.","suggestions":["novembre"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":29,"len":7,"text":"radoubé","message":"Le participe s’accorde avec le complément placé avant (interrogation).","suggestions":["radoubées"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NUMBER","offset":16,"len":4,"text":"cent","message":"« cent » multiplié prend un s quand il termine le nombre.","suggestions":["cents"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":29,"len":4,"text":"posé","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["posées"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":19,"len":8,"text":"maquillé","message":"L’attribut s’accorde avec le sujet inversé.","suggestions":["maquillées"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":4,"len":13,"text":"ouvres-boîtes","message":"Forme correcte de ce mot composé.","suggestions":["ouvre-boîtes"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":30,"len":7,"text":"recopié","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["recopiée"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":28,"len":11,"text":"presque-île","message":"Forme correcte de ce mot composé.","suggestions":["presqu’île"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":34,"len":3,"text":"aux","message":"« aider quelqu’un » : complément direct.","suggestions":["les"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":35,"len":10,"text":"mouillerai","message":"Si + imparfait : conditionnel dans la principale.","suggestions":["mouillerais"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_CAPITAL","offset":9,"len":7,"text":"Octobre","message":"Les jours et les mois s’écrivent en minuscules.","suggestions":["octobre"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NE_QUE","offset":5,"len":3,"text":"est","message":"Restriction « ne … que » : le « ne » est obligatoire à l’écrit.","suggestions":["n’est"]},{"rule":"FR_SUBJONCTIF","offset":32,"len":1,"text":"a","message":"Le subjonctif est requis après cette expression.","suggestions":["ait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NUMBER","offset":18,"len":12,"text":"quatre-vingt","message":"« quatre-vingts » prend un s quand il termine le nombre.","suggestions":["quatre-vingts"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":30,"len":9,"text":"glissants","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["glissantes"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":15,"len":3,"text":"aux","message":"« aider quelqu’un » : complément direct.","suggestions":["les"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":21,"len":8,"text":"ancienne","message":"Après « des plus », l’adjectif se met au pluriel.","suggestions":["anciennes"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":19,"len":1,"text":"a","message":"Accord du verbe avec un sujet de quantité.","suggestions":["ont"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":19,"len":1,"text":"a","message":"Accord du verbe avec un sujet de quantité.","suggestions":["ont"]},{"rule":"FR_SPELL","offset":21,"len":6,"text":"régnés","message":"Faute d’orthographe possible.","suggestions":["rognés","réglés","régnas","régné"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":41,"len":8,"text":"blessera","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["blesserait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_QUEL_QUE","offset":0,"len":8,"text":"Quelques","message":"Devant le verbe être : « quel(le)(s) que » en deux mots, accordé avec le sujet.","suggestions":["Quels que"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":31,"len":7,"text":"déclara","message":"Dans l’incise, le verbe s’accorde avec le sujet inversé.","suggestions":["déclarèrent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":6,"len":7,"text":"données","message":"Placé devant le nom, ce participe est invariable.","suggestions":["donné"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":2,"len":7,"text":"acteure","message":"Faute d’orthographe possible.","suggestions":["acteur","acteurs","auteure"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":4,"len":6,"text":"bijous","message":"Faute d’orthographe possible.","suggestions":["bijoux","bijou","bisous"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":54,"len":10,"text":"avaient-il","message":"Le verbe s’accorde avec le pronom inversé.","suggestions":["avait-il"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NOUN_ADJ","offset":13,"len":4,"text":"bleu","message":"L’adjectif doit s’accorder avec le nom.","suggestions":["bleus"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DONT","offset":11,"len":3,"text":"que","message":"« parler de quelque chose » : le relatif est « dont ».","suggestions":["dont"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":3,"len":12,"text":"chroniqueure","message":"Faute d’orthographe possible.","suggestions":["chroniqueur","chroniqueurs","chroniqueuse"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":10,"len":2,"text":"le","message":"On joue « de » un instrument.","suggestions":["du"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":12,"len":11,"text":"cherchantes","message":"Faute d’orthographe possible.","suggestions":["cherchant","cherchasses","cherchâtes"]},{"rule":"FR_PPRESENT","offset":12,"len":11,"text":"cherchantes","message":"Le participe présent est invariable.","suggestions":["cherchant"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":0,"len":6,"text":"Malgré","message":"« malgré que » est fautif : « bien que » (+ subjonctif).","suggestions":["Bien"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":6,"len":7,"text":"données","message":"Placé devant le nom, ce participe est invariable.","suggestions":["donné"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_QUEL_QUE","offset":20,"len":7,"text":"quelque","message":"Devant le verbe être : « quel(le)(s) que » en deux mots, accordé avec le sujet.","suggestions":["quelle que"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":3,"len":10,"text":"médiateure","message":"Faute d’orthographe possible.","suggestions":["médiateur","médiateurs"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":4,"len":7,"text":"choraux","message":"Faute d’orthographe possible.","suggestions":["chiraux","coraux"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":20,"len":12,"text":"demie-finale","message":"Devant le nom, « demi », « nu », « semi » sont invariables.","suggestions":["demi-finale"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":30,"len":5,"text":"versé","message":"L’attribut s’accorde avec le sujet inversé.","suggestions":["versés"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":7,"len":5,"text":"venus","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["venu"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":25,"len":10,"text":"gardes-les","message":"Forme correcte de ce mot composé.","suggestions":["garde-les"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_CAPITAL","offset":15,"len":8,"text":"Grecques","message":"Langue ou adjectif de nationalité : minuscule (majuscule seulement pour les habitants).","suggestions":["grecques"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_AVOIR","offset":28,"len":8,"text":"imaginés","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["imaginé"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":47,"len":7,"text":"résista","message":"Accord du verbe avec un sujet de quantité.","suggestions":["résistèrent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DONT","offset":8,"len":3,"text":"que","message":"Ce verbe se construit avec « de » : le relatif est « dont ».","suggestions":["dont"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":0,"len":8,"text":"Viennent","message":"Le verbe s’accorde avec le sujet placé après lui.","suggestions":["Vient"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJONCTIF","offset":12,"len":4,"text":"sais","message":"Le subjonctif est requis ici.","suggestions":["saches"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":16,"len":1,"text":"a","message":"« L’un et l’autre » sujet : verbe au pluriel.","suggestions":["ont"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":29,"len":3,"text":"tel","message":"« tel » s’accorde avec le nom auquel il se rapporte.","suggestions":["telles"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":24,"len":4,"text":"fait","message":"Le participe s’accorde avec le complément placé avant (interrogation).","suggestions":["faites"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":26,"len":6,"text":"malgré","message":"« malgré que » est fautif : « bien que » (+ subjonctif).","suggestions":["bien"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":14,"len":7,"text":"inscrit","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["inscrites"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":82,"len":8,"text":"caillous","message":"Faute d’orthographe possible.","suggestions":["cailloux","caillons","caillots","caillou"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":18,"len":5,"text":"tombé","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["tombées"]},{"rule":"FR_ETRE_PLURAL","offset":18,"len":5,"text":"tombé","message":"Après « sont », l’attribut est au pluriel.","suggestions":["tombés"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":17,"len":6,"text":"trompé","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["trompés"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NOUN_ADJ","offset":20,"len":10,"text":"ambitieuse","message":"L’adjectif doit s’accorder avec le nom.","suggestions":["ambitieux"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":20,"len":9,"text":"demandent","message":"Un infinitif ou une proposition sujet commande le singulier.","suggestions":["demande"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_CAPITAL","offset":39,"len":6,"text":"Coréen","message":"Langue ou adjectif de nationalité : minuscule (majuscule seulement pour les habitants).","suggestions":["coréen"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":7,"text":"prépare","message":"Le verbe s’accorde avec son sujet inversé.","suggestions":["préparent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":16,"len":5,"text":"était","message":"« L’un et l’autre » sujet : verbe au pluriel.","suggestions":["étaient"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_QUEL_QUE","offset":0,"len":4,"text":"Quel","message":"« quel que » s’accorde avec le sujet de « être ».","suggestions":["Quelle"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":23,"len":7,"text":"repeint","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["repeints"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":17,"len":5,"text":"durés","message":"Faute d’orthographe possible.","suggestions":["dures","dorés","dupés","duras","durs"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":56,"len":8,"text":"récitaux","message":"Faute d’orthographe possible.","suggestions":["récifaux"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_TOUT","offset":27,"len":4,"text":"tout","message":"« tout » adverbe varie devant un adjectif féminin commençant par une consonne.","suggestions":["toutes"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":0,"len":7,"text":"Restent","message":"Le verbe s’accorde avec le sujet placé après lui.","suggestions":["Reste"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":21,"len":3,"text":"eus","message":"« il y a eu » : participe invariable (impersonnel).","suggestions":["eu"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":28,"len":4,"text":"eues","message":"« il y a eu » : participe invariable (impersonnel).","suggestions":["eu"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":65,"len":8,"text":"produira","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["produirait"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":0,"len":6,"text":"Malgré","message":"« malgré que » est fautif : « bien que » (+ subjonctif).","suggestions":["Bien"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NOUN_ADJ","offset":13,"len":5,"text":"mauve","message":"L’adjectif doit s’accorder avec le nom.","suggestions":["mauves"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_CAPITAL","offset":31,"len":5,"text":"Mardi","message":"Les jours et les mois s’écrivent en minuscules.","suggestions":["mardi"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NE_QUE","offset":5,"len":6,"text":"sommes","message":"Restriction « ne … que » : le « ne » est obligatoire à l’écrit.","suggestions":["ne sommes"]},{"rule":"FR_SUBJONCTIF","offset":33,"len":1,"text":"a","message":"Le subjonctif est requis après cette expression.","suggestions":["ait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":40,"len":6,"text":"notres","message":"Faute d’orthographe possible.","suggestions":["nôtres","nitres","noires","notes","notre"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":40,"len":8,"text":"décembre","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["décembres"]}]}
+{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":39,"len":8,"text":"décembre","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["décembres"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":13,"len":3,"text":"tel","message":"« tel » s’accorde avec le nom auquel il se rapporte.","suggestions":["telle"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":23,"len":6,"text":"publié","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["publiées"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":17,"len":3,"text":"ont","message":"Sujets coordonnés : la 1re personne l’emporte sur la 2e, la 2e sur la 3e.","suggestions":["avons"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":24,"len":3,"text":"les","message":"On téléphone « à » quelqu’un.","suggestions":["aux"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":26,"len":3,"text":"ont","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["a"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":23,"len":5,"text":"rouge","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["rouges"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":31,"len":10,"text":"fabriquées","message":"Avec « en », le participe passé reste invariable.","suggestions":["fabriqué"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":24,"len":3,"text":"aux","message":"« aider quelqu’un » : complément direct.","suggestions":["les"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":33,"len":7,"text":"chevals","message":"Faute d’orthographe possible.","suggestions":["chevaux","cheval","chevala","chevalas","chevale"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DONT","offset":13,"len":3,"text":"que","message":"Ce verbe se construit avec « de » : le relatif est « dont ».","suggestions":["dont"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":59,"len":6,"text":"parlés","message":"Pronom réfléchi complément indirect (ou complément direct placé après) : participe invariable.","suggestions":["parlé"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":3,"len":8,"text":"viennent","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["vient"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":9,"len":3,"text":"rit","message":"Le verbe s’accorde avec son sujet placé après lui.","suggestions":["rient"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":4,"len":12,"text":"culs-de-sacs","message":"Forme correcte de ce mot composé.","suggestions":["culs-de-sac"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":22,"len":8,"text":"cordiale","message":"Après « des plus », l’adjectif se met au pluriel.","suggestions":["cordiales"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":16,"len":1,"text":"a","message":"« L’un et l’autre » sujet : verbe au pluriel.","suggestions":["ont"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":9,"len":8,"text":"glissées","message":"Construction impersonnelle (il …) : participe invariable.","suggestions":["glissé"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":3,"len":6,"text":"nierai","message":"Hypothèse (si + imparfait, à ta place…) : conditionnel en -rais, pas futur.","suggestions":["nierais"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":46,"len":7,"text":"étrange","message":"Après « des plus », l’adjectif se met au pluriel.","suggestions":["étranges"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":18,"len":10,"text":"dressaient","message":"Le verbe s’accorde avec son sujet placé après lui.","suggestions":["dressait"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":25,"len":6,"text":"solide","message":"Après « des plus », l’adjectif se met au pluriel.","suggestions":["solides"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":39,"len":4,"text":"à la","message":"« pallier » est transitif direct (pallier quelque chose).","suggestions":["la"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":23,"len":5,"text":"gardé","message":"Le complément direct (« que ») est placé avant : le participe s’accorde avec lui.","suggestions":["gardée"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":29,"len":5,"text":"écrit","message":"Le complément direct (« que ») est placé avant : le participe s’accorde avec lui.","suggestions":["écrites"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":13,"len":6,"text":"malgré","message":"« malgré que » est fautif : « bien que » (+ subjonctif).","suggestions":["bien"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":0,"len":8,"text":"Vas-t'en","message":"Forme correcte de ce mot composé.","suggestions":["Va-t’en"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":55,"len":11,"text":"travaillera","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["travaillerait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":19,"len":3,"text":"aux","message":"« aider quelqu’un » : complément direct.","suggestions":["les"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":68,"len":11,"text":"portes-clés","message":"Forme correcte de ce mot composé.","suggestions":["porte-clés"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_AVOIR","offset":44,"len":11,"text":"construites","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["construit"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":36,"len":9,"text":"dangereux","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["dangereuses"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":9,"text":"mie-pente","message":"Devant le nom, « demi », « nu », « semi » sont invariables.","suggestions":["mi-pente"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_AVOIR","offset":16,"len":7,"text":"choisie","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["choisi"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJONCTIF","offset":11,"len":3,"text":"est","message":"Le subjonctif est requis ici.","suggestions":["soit"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":20,"len":5,"text":"vendu","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["vendues"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":19,"len":7,"text":"surpris","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["surprises"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":6,"text":"pousse","message":"Le verbe s’accorde avec son sujet inversé.","suggestions":["poussent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_TOUT","offset":9,"len":4,"text":"tout","message":"« tout » adverbe varie devant un adjectif féminin commençant par une consonne.","suggestions":["toute"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COMPOUND","offset":0,"len":6,"text":"A-t'on","message":"Forme correcte de ce mot composé.","suggestions":["A-t-on"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":37,"len":6,"text":"malgré","message":"« malgré que » est fautif : « bien que » (+ subjonctif).","suggestions":["bien"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_NOUN_ADJ","offset":9,"len":9,"text":"ci-inclus","message":"L’adjectif doit s’accorder avec le nom.","suggestions":["ci-incluse"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_LEUR","offset":22,"len":4,"text":"leur","message":"« leurs » devant un nom pluriel.","suggestions":["leurs"]},{"rule":"FR_DET_NOUN_NUM","offset":27,"len":6,"text":"jouets","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["jouet"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":6,"len":9,"text":"croyaient","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["croyait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJONCTIF","offset":20,"len":2,"text":"as","message":"Le subjonctif est requis après cette expression.","suggestions":["aies"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_LEQUEL","offset":16,"len":4,"text":"quel","message":"Après une préposition, le pronom relatif est « lequel » (laquelle, lesquels, lesquelles).","suggestions":["lequel"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":0,"len":7,"text":"Blessée","message":"Le participe ou l’adjectif détaché s’accorde avec le sujet de la phrase.","suggestions":["Blessé"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":16,"len":6,"text":"habite","message":"Le verbe s’accorde avec son sujet placé après lui.","suggestions":["habitent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":34,"len":6,"text":"devras","message":"Après « au cas où », le verbe est au conditionnel.","suggestions":["devrais"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":3,"len":8,"text":"méchants","message":"Un adjectif placé juste avant « gens » se met au féminin.","suggestions":["méchantes"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":8,"len":9,"text":"viendriez","message":"Après « si », pas de conditionnel : utilisez l’imparfait.","suggestions":["veniez"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":2,"len":3,"text":"est","message":"« c’est » devant un nom singulier, « ce sont » devant un nom pluriel.","suggestions":["sont"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_INVARIABLE","offset":21,"len":7,"text":"restées","message":"Construction impersonnelle (il …) : participe invariable.","suggestions":["resté"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SI_COND","offset":6,"len":9,"text":"viendrais","message":"Après « si », pas de conditionnel : utilisez l’imparfait.","suggestions":["venais"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_COD","offset":34,"len":4,"text":"joué","message":"Le participe s’accorde avec le complément placé avant (interrogation).","suggestions":["jouées"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":7,"len":3,"text":"mai","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["mais"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":49,"len":10,"text":"semblaient","message":"Après « tout le monde, chacun, personne, rien », le verbe est au singulier.","suggestions":["semblait"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PREP","offset":17,"len":2,"text":"le","message":"« permettre à quelqu’un de faire ».","suggestions":["au"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":14,"len":11,"text":"téléphonées","message":"Pronom réfléchi complément indirect (ou complément direct placé après) : participe invariable.","suggestions":["téléphoné"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":22,"len":7,"text":"annulés","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["annulées"]}]}
+{"lints":[{"rule":"FR_AVOIR_INF","offset":5,"len":6,"text":"manger","message":"Après « avoir », on attend un participe passé.","suggestions":["mangé"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":24,"len":6,"text":"chante","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["chantent"]}]}
+{"lints":[{"rule":"FR_PP_COD","offset":21,"len":5,"text":"écrit","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["écrites"]}]}
+{"lints":[{"rule":"FR_SPACE_AFTER","offset":7,"len":1,"text":",","message":"Espace manquant après la virgule.","suggestions":[", "]}]}
+{"lints":[{"rule":"FR_DOUBLE_SPACE","offset":2,"len":2,"text":"  ","message":"Espaces multiples.","suggestions":[" "]},{"rule":"FR_DOUBLE_SPACE","offset":7,"len":2,"text":"  ","message":"Espaces multiples.","suggestions":[" "]},{"rule":"FR_TYPO_SPACE_BEFORE","offset":20,"len":1,"text":"?","message":"Espace (insécable) requise avant cette ponctuation.","suggestions":[" ?"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":18,"len":8,"text":"répondit","message":"Dans l’incise, le verbe s’accorde avec le sujet inversé.","suggestions":["répondirent"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":60,"len":5,"text":"parti","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["partis"]},{"rule":"FR_ETRE_PLURAL","offset":60,"len":5,"text":"parti","message":"Après « sont », l’attribut est au pluriel.","suggestions":["partis"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_QUEL_QUE","offset":0,"len":7,"text":"Quelque","message":"Devant le verbe être : « quel(le)(s) que » en deux mots, accordé avec le sujet.","suggestions":["Quelle que"]}]}
+{"lints":[{"rule":"FR_SUBJONCTIF","offset":15,"len":4,"text":"peut","message":"Le subjonctif est requis après cette expression.","suggestions":["puisse"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_COLOUR","offset":9,"len":7,"text":"marrons","message":"Les noms employés comme adjectifs de couleur sont invariables.","suggestions":["marron"]},{"rule":"FR_ATTR_AGREE","offset":31,"len":4,"text":"demi","message":"« et demi » s’accorde en genre (jamais en nombre) avec le nom qui précède.","suggestions":["demie"]},{"rule":"FR_NUMBER","offset":37,"len":12,"text":"quatre-vingt","message":"« quatre-vingts » prend un s quand il termine le nombre.","suggestions":["quatre-vingts"]}]}
