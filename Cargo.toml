@@ -1,0 +1,15 @@
+[workspace]
+resolver = "2"
+members = ["crates/vaugelas", "crates/vaugelas-cli"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+publish = false
+repository = "https://github.com/Elvis-codeur/vaugelas"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 16
+panic = "abort"
