@@ -1,11 +1,23 @@
 #!/bin/bash
-# Model parity on the held-out sets: new crate vs the reference scores (frc-infer golden = Python + PyTorch verified).
-# usage: tools/parity.sh WORK_ROOT DATA_DIR    (WORK_ROOT = language-correction-works, holding hardloop/, datasets/, build/)
-set -e
-L="$1"; export VAUGELAS_DATA="$2"
-for f in final2_pairs:final-2 tune_pairs:tune; do IFS=: read -r set dir <<< "$f"
-  echo "== $set"
-  VAUGELAS_PARITY_ITEMS="$L/hardloop/work/$dir/items.jsonl" VAUGELAS_PARITY_REF="$L/build/infer-work/e2e_ds_$set.jsonl" \
-  VAUGELAS_PARITY_PY="$L/datasets/ebm6/$set.jsonl.gz" \
-    cargo test --release --locked -p vaugelas --test parity_model -- --ignored --nocapture 2>&1 | grep -E '^\{|test result|differs|panicked'
-done
+# Model parity with the research implementation on the hand-written sentences of tests/fixtures/sentences.tsv:
+# regenerates tests/fixtures/sentences.frc-infer-v14.jsonl with fr-check-infer's frc-infer (the reference, itself
+# checked against PyTorch), then runs the parity test, which compares every per-word score.
+#
+# usage: tools/parity.sh FRC_INFER DATA_DIR
+#   FRC_INFER  the frc-infer binary (fr-check-infer: cargo build --release -p frc-infer)
+#   DATA_DIR   an installed Vaugelas data directory (vaugelas download-model --data DATA_DIR)
+# The fr-check lints the model does not read are taken from the model itself (`vaugelas info`).
+set -euo pipefail
+[ $# -eq 2 ] || { sed -n '2,9p' "$0"; exit 2; }
+frc_infer=$1; data=$2
+root=$(cd "$(dirname "$0")/.." && pwd)
+fx="$root/tests/fixtures"
+tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
+cargo build --release --locked -p vaugelas-cli
+ignore=$("${CARGO_TARGET_DIR:-$root/target}/release/vaugelas" info --data "$data" | sed -n 's/^  fr-check lints not read by the model: //p')
+[ -n "$ignore" ] || { echo "cannot read the model's lint list from vaugelas info" >&2; exit 1; }
+# one {"id", "text"} line per sentence (the sentences hold no tab, backslash or double quote)
+awk -F'\t' 'NR > 1 { printf "{\"id\": \"%d\", \"text\": \"%s\"}\n", NR - 1, $2 }' "$fx/sentences.tsv" > "$tmp/in.jsonl"
+"$frc_infer" v14 "$tmp/in.jsonl" "$fx/sentences.frc-infer-v14.jsonl" --model "$data/model.frcm" --frc-ignore "$ignore" \
+  --lexicon "$data/lexicon.tsv" --resources "$data/resources" --frc-lex "$data/lex"
+VAUGELAS_DATA="$data" cargo test --release --locked -p vaugelas --test parity_h1 -- --nocapture 2>&1 | grep -E '^parity:|test result|panicked'

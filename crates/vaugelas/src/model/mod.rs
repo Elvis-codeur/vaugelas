@@ -75,6 +75,19 @@ pub struct Model {
 
 fn err<T>(m: &str) -> Result<T, String> { Err(m.to_string()) }
 
+/// The JSON header of a model.frcm file, without reading the weights.
+pub fn read_header(path: &str) -> Result<Value, String> {
+    let mut f = std::fs::File::open(path).map_err(|e| format!("{path}: {e}"))?;
+    let mut magic = [0u8; 14];
+    f.read_exact(&mut magic).map_err(|_| format!("{path}: not a model.frcm file"))?;
+    if &magic[..6] != b"FRCM1\n" { return Err(format!("{path}: not a model.frcm file")); }
+    let hl = u64::from_le_bytes(magic[6..14].try_into().map_err(|_| "truncated header")?) as usize;
+    let mut head = Vec::new();
+    f.take(hl as u64).read_to_end(&mut head).map_err(|e| format!("{path}: {e}"))?;
+    if head.len() < hl { return Err(format!("{path}: truncated model.frcm header")); }
+    serde_json::from_slice(&head).map_err(|e| format!("{path}: {e}"))
+}
+
 impl Model {
     pub fn load(path: &str) -> Result<Model, String> { Self::load_opts(path, false) }
 
