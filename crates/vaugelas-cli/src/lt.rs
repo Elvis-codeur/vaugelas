@@ -3,7 +3,6 @@
 //! document: `text`, or for annotated `data` the concatenation of every `text` and `markup` piece.
 use serde_json::{json, Value};
 use std::collections::HashSet;
-use std::sync::Arc;
 use vaugelas::report::{rule_description, Issue, Settings, Vaugelas};
 
 pub const MAX_CHARS: usize = 200_000;
@@ -115,7 +114,7 @@ fn split_list(v: Option<&String>) -> HashSet<String> {
 }
 
 /// Handle `/v2/check` parameters; Err((status, message)).
-pub fn check(vg: &Vaugelas, cands: &vaugelas::model::cands::Cands, params: &[(String, String)], base: &Settings) -> Result<Value, (u16, String)> {
+pub fn check(vg: &Vaugelas, params: &[(String, String)], base: &Settings) -> Result<Value, (u16, String)> {
     let get = |k: &str| params.iter().find(|(a, _)| a == k).map(|(_, v)| v);
     let lang = get("language").map(String::as_str).unwrap_or("fr");
     let code = if lang == "auto" || lang.eq_ignore_ascii_case("fr") || lang.to_ascii_lowercase().starts_with("fr-") { lang } else {
@@ -129,9 +128,9 @@ pub fn check(vg: &Vaugelas, cands: &vaugelas::model::cands::Cands, params: &[(St
     if doc.plain.chars().count() > MAX_CHARS { return Err((413, format!("Error: text too long (maximum {MAX_CHARS} characters)"))); }
     let disabled = split_list(get("disabledRules"));
     let enabled = split_list(get("enabledRules"));
-    let enabled_only = get("enabledOnly").map_or(false, |v| v == "true");
+    let enabled_only = get("enabledOnly").is_some_and(|v| v == "true");
     let dis_cat = split_list(get("disabledCategories"));
-    let issues = vg.check(cands, &doc.plain, base);
+    let issues = vg.check(&doc.plain, base);
     let t16 = utf16_table(&doc.original);
     let matches: Vec<Value> = issues.iter()
         .filter(|i| !disabled.contains(&i.rule) && !dis_cat.contains(i.category.id()) && (!enabled_only || enabled.contains(&i.rule)))
@@ -147,21 +146,18 @@ pub fn check(vg: &Vaugelas, cands: &vaugelas::model::cands::Cands, params: &[(St
     }))
 }
 
-/// Run the HTTP server; blocks forever.
-pub fn serve(vg: Arc<Vaugelas>, host: &str, port: u16, threads: usize, settings: Settings) -> Result<(), String> {
-    let server = Arc::new(tiny_http::Server::http((host, port)).map_err(|e| format!("cannot listen on {host}:{port}: {e}"))?);
+/// Run the HTTP server with `threads` worker threads sharing `vg`; blocks forever.
+pub fn serve(vg: &Vaugelas, host: &str, port: u16, threads: usize, settings: Settings) -> Result<(), String> {
+    let server = tiny_http::Server::http((host, port)).map_err(|e| format!("cannot listen on {host}:{port}: {e}"))?;
     eprintln!("Vaugelas listens on http://{host}:{port}/v2/  ({threads} threads; LanguageTool-compatible: POST /v2/check, GET /v2/languages)");
-    let hs: Vec<_> = (0..threads).map(|_| {
-        let (server, vg) = (server.clone(), vg.clone());
-        std::thread::spawn(move || {
-            let cands = vg.cands();
-            loop {
+    std::thread::scope(|sc| {
+        for _ in 0..threads {
+            sc.spawn(|| loop {
                 let Ok(rq) = server.recv() else { continue };
-                handle(&vg, &cands, rq, &settings);
-            }
-        })
-    }).collect();
-    for h in hs { h.join().ok(); }
+                handle(vg, rq, &settings);
+            });
+        }
+    });
     Ok(())
 }
 
@@ -176,7 +172,7 @@ fn respond(rq: tiny_http::Request, status: u16, ctype: &str, body: String) {
     rq.respond(r).ok();
 }
 
-fn handle(vg: &Vaugelas, cands: &vaugelas::model::cands::Cands, mut rq: tiny_http::Request, settings: &Settings) {
+fn handle(vg: &Vaugelas, mut rq: tiny_http::Request, settings: &Settings) {
     let url = rq.url().to_string();
     let (path, query) = url.split_once('?').unwrap_or((url.as_str(), ""));
     let path = path.trim_end_matches('/').to_string();
@@ -204,7 +200,7 @@ fn handle(vg: &Vaugelas, cands: &vaugelas::model::cands::Cands, mut rq: tiny_htt
                     params.extend(form_urlencoded::parse(&body).into_owned());
                 }
             }
-            match check(vg, cands, &params, settings) {
+            match check(vg, &params, settings) {
                 Ok(v) => respond(rq, 200, "application/json", v.to_string()),
                 Err((st, msg)) => respond(rq, st, "text/plain; charset=utf-8", msg),
             }
