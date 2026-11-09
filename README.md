@@ -266,7 +266,7 @@ vaugelas score -f sentences.txt      # per-word model scores, one sentence per l
   `tests/fixtures/sentences.tsv` holds 343 hand-written sentences and `sentences.frc-infer-v14.jsonl` the scores
   `frc-infer v14` gives them with H1; the `parity_h1` test compares every per-word score (2026-11-09: max |diff| 0
   on 3,256 words). `tools/parity.sh FRC_INFER DATA_DIR` regenerates the reference. The rule checker is checked
-  against `frc` on `tests/fixtures/sample.txt` (1,006 sentences, byte-identical).
+  against `frc` on `tests/fixtures/sample.txt` (1,006 hand-written sentences, byte-identical).
 - **Data release.** The data is not in git. Data set `data-2` = release `data-2` with `model.frcm.gz`,
   `lexicon.tsv.gz`, `resources.tar.gz` and `SHA256SUMS`. The sha256 of the uncompressed files (and of every file
   inside the resources archive) are in `crates/vaugelas-cli/src/data.rs`. `VAUGELAS_DATA_URL` points the download
