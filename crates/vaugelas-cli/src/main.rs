@@ -209,6 +209,13 @@ fn main() {
             let f = data::Files::in_dir(&dir);
             println!("vaugelas {}\ndata directory: {}\ndata set: {}\ncomplete: {}", env!("CARGO_PKG_VERSION"), dir.display(), data::DATA_SET, f.complete());
             for p in [&f.model, &f.lexicon, &f.resources, &f.lex_dir] { println!("  {} {}", if p.exists() { "ok     " } else { "missing" }, p.display()); }
+            if f.model.is_file() {
+                let p = vaugelas::model::read_header(&f.model.to_string_lossy()).and_then(|h| vaugelas::model::profile::Profile::from_header(&h));
+                match p {
+                    Ok(p) => println!("model: {}\n  default threshold: {}\n  fr-check lints not read by the model: {}", p.name, p.threshold, p.frc_ignore.join(",")),
+                    Err(e) => println!("model: {e}"),
+                }
+            }
         }
         c => fail(&format!("unknown command '{c}' (see vaugelas --help)")),
     }
