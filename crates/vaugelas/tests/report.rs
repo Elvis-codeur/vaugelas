@@ -20,6 +20,12 @@ fn one_entry_per_word_and_line_offsets() {
         assert!(issues.iter().filter(|j| j.source != Source::Model).all(|j| i.end <= j.start || j.end <= i.start));
     }
 
+    // two rules on the same word (attribute agreement + plural after être): still one entry, first rule's suggestion first
+    let t2 = "Les rues étaient désert pendant la nuit.";
+    let d2: Vec<_> = vg.check(t2, &Settings::default()).into_iter().filter(|i| &t2[i.start..i.end] == "désert").collect();
+    assert_eq!(d2.len(), 1, "{d2:?}");
+    assert_eq!(d2[0].replacements.first().map(String::as_str), Some("désertes"), "{d2:?}");
+
     // rules only / model only
     let r = vg.check(text, &Settings { model: false, ..Settings::default() });
     assert!(r.iter().all(|i| i.source == Source::Rules));

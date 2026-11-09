@@ -1,9 +1,9 @@
 //! Rules + model in one report, one entry per word.
 //!
 //! The text is checked line by line (like `frc check FILE`, one document per line). On each line the rule checker
-//! gives its lints; the energy model scores every word of every sentence and flags those above the threshold. A model
-//! flag on a word that a rule already covers is merged into the rule's entry (its suggestion is added to the
-//! replacements when new), so each word appears once. Nothing else combines the two: the report is the plain union of
+//! gives its lints; the energy model scores every word of every sentence and flags those above the threshold. A second
+//! rule on the same word, or a model flag on a word that a rule already covers, is merged into the first entry (its
+//! suggestions are added to the replacements when new), so each word appears once. Nothing else combines the two: the report is the plain union of
 //! the rules and the model (the learned combiner of v14 was fitted for that model only and is not used).
 use crate::model::pipeline::{LexCache, Scorer, Tables};
 use crate::model::Model;
@@ -166,7 +166,11 @@ impl<'a> Vaugelas<'a> {
         if s.rules {
             let opts = CheckOptions { spell_suggestions: s.spell_suggestions, strict_typography: s.strict_typography };
             for l in self.data.rules.check_opts(line, &opts) {
-                if issues.iter().any(|i| i.start == l.start && i.end == l.end && i.rule == l.rule) { continue; }
+                // a second rule on the same word: its suggestions join the first entry (one entry per word)
+                if let Some(i) = issues.iter_mut().find(|i| i.start == l.start && i.end == l.end) {
+                    for x in l.suggestions { if !i.replacements.contains(&x) { i.replacements.push(x); } }
+                    continue;
+                }
                 issues.push(Issue { start: l.start, end: l.end, rule: l.rule.to_string(), message: l.message, replacements: l.suggestions,
                                     source: Source::Rules, score: None, category: Category::of_rule(l.rule) });
             }
