@@ -9,9 +9,18 @@ Vaugelas Corrector. Copyright the author (Elvis-codeur). Licence not chosen yet:
   with **Grammalecte 2.3.0** by Olivier R. (http://grammalecte.net, dictionary from the Dicollecte project).
   Grammalecte is distributed under GPL-3.0, and its dictionary data under its own licence (MPL-2.0 according to
   upstream; to be verified, see LICENSE-TBD.md).
-- **Model** (`model.frcm`). Paradigm-energy model trained by the author on: public-domain French books from
-  Project Gutenberg (https://www.gutenberg.org); sentences from the author's generators; training sentences written
-  with DeepSeek; readings from the lexicon above.
+- **Model** (`model.frcm`, energy model H1). Paradigm-energy model trained by the author on: public-domain French
+  books from Project Gutenberg (https://www.gutenberg.org), including homophone-swap pairs made from them; sentences
+  from the author's generators; French Wikipedia sentences and a French grammatical-error-correction set (the
+  "natural" stream); training sentences written with DeepSeek; confusion examples written with Claude (Anthropic);
+  readings from the lexicon above. Its vocabulary holds lemma strings from the lexicon.
+- **Resources** (`resources.tar.gz`, unpacked into `resources/`): tables the model's candidate lists read.
+  Word and word-pair counts from the training books (`ngram/`, `interp/ctx_*.json`, `interp/capstats.json`);
+  homophone and near-homophone lists derived from the lexicon (`interp/homophones_lex_1.0*.json`,
+  `interp/nearhom.json`); confusion pairs mined from the training errors (`interp/mined_pairs.json`); confusion
+  partners written with Claude (`interp/cw_pairs.json`).
+
+The rights questions these raise are listed in [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md).
 
 ## Design credits
 
@@ -42,6 +51,7 @@ Generated from `cargo tree -e normal --target all` (all platforms; build-only cr
 | displaydoc v0.2.7 | MIT OR Apache-2.0 |
 | either v1.19.0 | MIT OR Apache-2.0 |
 | equivalent v1.0.3 | Apache-2.0 OR MIT |
+| filetime v0.2.29 | MIT/Apache-2.0 |
 | flate2 v1.1.10 | MIT OR Apache-2.0 |
 | foldhash v0.2.0 | Zlib |
 | form_urlencoded v1.2.2 | MIT OR Apache-2.0 |
@@ -91,6 +101,7 @@ Generated from `cargo tree -e normal --target all` (all platforms; build-only cr
 | subtle v2.6.1 | BSD-3-Clause |
 | synstructure v0.14.0 | MIT |
 | syn v3.0.9 | MIT OR Apache-2.0 |
+| tar v0.4.46 | MIT OR Apache-2.0 |
 | tiny_http v0.12.0 | MIT OR Apache-2.0 |
 | tinystr v0.8.5 | Unicode-3.0 |
 | typenum v1.20.1 | MIT OR Apache-2.0 |
