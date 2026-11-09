@@ -3,6 +3,7 @@ name = "vaugelas"
 description = "Vaugelas Corrector: French grammar checker library (FST-lexicon rules + paradigm-energy model)"
 version.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 publish.workspace = true
 repository.workspace = true
 
@@ -10,6 +11,7 @@ repository.workspace = true
 fst = { version = "0.4", features = ["levenshtein"] }
 memmap2 = "0.9"
 # preserve_order + float_roundtrip: same JSON semantics as the reference implementation (Python json)
+serde = "1"
 serde_json = { version = "1", features = ["preserve_order", "float_roundtrip"] }
 flate2 = { version = "1", default-features = false, features = ["zlib-rs"] }
 rayon = "1"

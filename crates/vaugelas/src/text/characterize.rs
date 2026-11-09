@@ -32,7 +32,7 @@ pub struct Bundle {
     pub lem: Option<String>,
 }
 
-fn split_semi_hash(x: &str) -> &str { x.split(|c| c == ';' || c == '#').next().unwrap_or("") }
+fn split_semi_hash(x: &str) -> &str { x.split([';', '#']).next().unwrap_or("") }
 
 /// `bundle(tag)`: Grammalecte tag -> one reading.
 pub fn bundle(tag: &str) -> Bundle {
@@ -188,7 +188,7 @@ impl Lexicon {
 
     /// `Lexicon()`; the lemma atom follows the FRC_LEMMA=1 environment variable, as in characterize.py
     pub fn from_tsv(text: &str) -> Lexicon {
-        Self::from_tsv_with(text, std::env::var("FRC_LEMMA").map_or(false, |v| v == "1"))
+        Self::from_tsv_with(text, std::env::var("FRC_LEMMA").is_ok_and(|v| v == "1"))
     }
 
     /// `Lexicon()` with the lemma atom on or off explicitly (round-3 models are trained with it on)
@@ -215,7 +215,9 @@ impl Lexicon {
         let lines: Vec<&str> = text.split('\n').collect();
         let n = if text.ends_with('\n') { lines.len() - 1 } else { lines.len() };
         // parallel pre-pass (pure per line): split the fields, lower-case form and lemma, look the lemma up in GOV/LW
-        let rows: Vec<(String, &str, Option<&String>, Option<String>, Option<String>)> = lines[..n].par_iter().with_min_len(4096).map(|line| {
+        /// (lower-cased form, tag, GOV entry of the lemma, LW lemma, lemma atom)
+        type Row<'t> = (String, &'t str, Option<&'t String>, Option<String>, Option<String>);
+        let rows: Vec<Row> = lines[..n].par_iter().with_min_len(4096).map(|line| {
             let mut it = line.split('\t');
             let (form, lem, tag) = match (it.next(), it.next(), it.next(), it.next()) {
                 (Some(a), Some(b), Some(c), None) => (a, b, c),
@@ -264,8 +266,7 @@ impl Lexicon {
             }
         }
         let mut det_ns: BTreeSet<String> = BTreeSet::new();
-        for k in 0..n_lex_keys {
-            let s = &tmp_keys[k];
+        for s in &tmp_keys[..n_lex_keys] {
             if s.starts_with("pos=DET") {
                 for a in s.split('|') { if a.starts_with("n=") { det_ns.insert(a.split('=').nth(1).unwrap().to_string()); } }
             }
@@ -409,12 +410,11 @@ pub fn tokenize(lex: &Lexicon, text: &str) -> Vec<String> {
     let b = text.as_ref();
     let mut it = b.char_indices().peekable();
     while let Some((s, c)) = it.next() {
-        let e;
-        if tok_word_char(c) {
+        let e = if tok_word_char(c) {
             let mut end = s + c.len_utf8();
             while let Some(&(j, d)) = it.peek() { if tok_word_char(d) { end = j + d.len_utf8(); it.next(); } else { break; } }
-            e = end;
-        } else if crate::text::pystr::is_space(c) { continue; } else { e = s + c.len_utf8(); }
+            end
+        } else if crate::text::pystr::is_space(c) { continue; } else { s + c.len_utf8() };
         let mut w: &str = &b[s..e];
         let low = lower(w);
         let lowc = low.chars().count();
@@ -451,7 +451,7 @@ pub fn sent_split(text: &str) -> Vec<&str> {
             let mut end = i + c.len_utf8();
             while let Some(&(j, d)) = it.peek() { if crate::text::pystr::is_space(d) { end = j + d.len_utf8(); it.next(); } else { break; } }
             let next = text[end..].chars().next();
-            if prev.map_or(false, closer) && next.map_or(false, opener) {
+            if prev.is_some_and(closer) && next.is_some_and(opener) {
                 out.push(&text[last..start]);
                 last = end;
             }
@@ -513,7 +513,9 @@ impl Lexicon {
         out
     }
 
-    fn guess(&self, w: &str, i: usize, prev: &[Tok]) -> Tok {
+    /// `Characterizer.guess(w, i, toks, prev)`: readings of a word the lexicon does not know, from its shape, its
+    /// suffix and the previous token (`prev` = the characterised tokens before position i).
+    pub fn guess(&self, w: &str, i: usize, prev: &[Tok]) -> Tok {
         let tok = |r: Vec<Key>, src: Src| Tok { r, src, guessed: true };
         if str_isdigit(w) || num_fullmatch(w) { return tok(vec![self.k_num], Src::Shape); }
         if !w.is_empty() && w.len() <= 6 && w.bytes().all(|b| b"IVXLCDM".contains(&b)) { return tok(vec![self.k_num], Src::Shape); }
