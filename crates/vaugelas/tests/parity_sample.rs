@@ -1,6 +1,6 @@
-//! The rule checker gives exactly what the research binary gave on `tests/fixtures/sample.txt` (1,006 sentences from
-//! the final-2 and tuning rounds plus hand-written ones):
-//!   sample.frc.jsonl        `frc --lex lex check --json sample.txt` (fr-check, branch feat/rust-infer)
+//! The rule checker gives exactly what the research binary gave on `tests/fixtures/sample.txt` (1,006 hand-written
+//! sentences, with and without errors, written for this test; no evaluation or training data):
+//!   sample.frc.jsonl        `frc --lex lex check --json sample.txt` (fr-check, branch feat/rust-infer, c17445e)
 //! Skipped when the data files are not installed (VAUGELAS_DATA, else <repo>/data).
 mod common;
 use common::fixture;
