@@ -232,10 +232,10 @@ impl Checker {
             }
             if matches!(l, "rose" | "mauve" | "fauve" | "pourpre" | "écarlate") && i > 0 && t[i - 1].word
                 && t[i - 1].morph.iter().any(|m| m.pos == Pos::Noun && m.number == N_P) && !t[i - 1].morph.iter().any(|m| m.number & N_S != 0)
-                && !nx.map_or(false, |n| COLOUR_QUAL.contains(&n.lower.as_str())) {
+                && !nx.is_some_and(|n| COLOUR_QUAL.contains(&n.lower.as_str())) {
                 o.push(self.mk(&t[i], "FR_COLOUR", "« rose, mauve, fauve, pourpre, écarlate » s’accordent.", vec![format!("{l}s")]));
             }
-            if nx.map_or(false, |n| n.lower == "gens") {
+            if nx.is_some_and(|n| n.lower == "gens") {
                 let fem = match l { "vieux" => Some("vieilles"), "bons" => Some("bonnes"), "petits" => Some("petites"), "certains" => Some("certaines"), "méchants" => Some("méchantes"), "sots" => Some("sottes"), _ => None };
                 if let Some(f) = fem { o.push(self.mk(&t[i], "FR_ATTR_AGREE", "Un adjectif placé juste avant « gens » se met au féminin.", vec![f.to_string()])); }
             }
@@ -257,7 +257,7 @@ impl Checker {
             let e = (s..t.len()).take_while(|&k| t[k].sid == t[s].sid).last().unwrap_or(s);
             let si_imparfait = (s..=e).any(|k| t[k].word && matches!(t[k].lower.as_str(), "si" | "s’")
                 && (k + 1..(k + 5).min(e + 1)).any(|j| t[j].word && t[j].morph.iter().any(|m| m.moods & M_IQ != 0) && !t[j].morph.iter().any(|m| m.moods & M_IP != 0)));
-            let a_ta_place = (s..e.saturating_sub(1)).any(|k| t[k].word && t[k].lower == "à" && matches!(t[k + 1].lower.as_str(), "ta" | "votre" | "sa" | "leur" | "ma" | "notre") && t.get(k + 2).map_or(false, |x| x.lower == "place"));
+            let a_ta_place = (s..e.saturating_sub(1)).any(|k| t[k].word && t[k].lower == "à" && matches!(t[k + 1].lower.as_str(), "ta" | "votre" | "sa" | "leur" | "ma" | "notre") && t.get(k + 2).is_some_and(|x| x.lower == "place"));
             if si_imparfait || a_ta_place {
                 for k in s..=e {
                     let x = &t[k];
@@ -387,7 +387,7 @@ impl Checker {
             if Self::word_at(t, p + 1) && t[p + 1].morph.iter().any(|m| m.moods & M_Y != 0) { continue; }
             // referent: a dislocated noun phrase at the start of the sentence, else the clitic itself
             let ss = (0..=c).rev().find(|&k| t[k].sent_start).unwrap_or(0);
-            let disloc = self.np_at(t, ss).filter(|np| t.get(np.end + 1).map_or(false, |x| x.text == ","));
+            let disloc = self.np_at(t, ss).filter(|np| t.get(np.end + 1).is_some_and(|x| x.text == ","));
             let (g, n) = match (l, disloc) {
                 (_, Some(np)) if single(np.number) => (np.gender, np.number),
                 ("la", _) => (G_F, N_S), ("les", _) => (3, N_P), _ => continue,
@@ -485,7 +485,7 @@ impl Checker {
             if !t[i].word { continue; }
             let nx = |k: usize| if Self::word_at(t, i + k) && t[i + k].sid == t[i].sid { Some(&t[i + k]) } else { None };
             // malgré que -> bien que
-            if t[i].lower == "malgré" && nx(1).map_or(false, |x| matches!(x.lower.as_str(), "que" | "qu’")) {
+            if t[i].lower == "malgré" && nx(1).is_some_and(|x| matches!(x.lower.as_str(), "que" | "qu’")) {
                 o.push(self.mk(&t[i], "FR_PREP", "« malgré que » est fautif : « bien que » (+ subjonctif).", vec!["bien".into()]));
             }
             let refl = i > 0 && t[i - 1].word && matches!(t[i - 1].lower.as_str(), "me" | "m’" | "te" | "t’" | "se" | "s’" | "nous" | "vous");
@@ -493,8 +493,8 @@ impl Checker {
             if refl && lemma_is(&t[i], "rappeler") && has_fin(&t[i]) {
                 if let Some(p) = nx(1) {
                     let after = nx(2);
-                    let inf = after.map_or(false, |a| a.morph.iter().any(|m| m.moods & M_Y != 0));
-                    let sug = match p.lower.as_str() { "du" => Some("le"), "de" if after.map_or(false, |a| matches!(a.lower.as_str(), "la" | "l’")) => Some(""), "d’" if !inf => Some(""), _ => None };
+                    let inf = after.is_some_and(|a| a.morph.iter().any(|m| m.moods & M_Y != 0));
+                    let sug = match p.lower.as_str() { "du" => Some("le"), "de" if after.is_some_and(|a| matches!(a.lower.as_str(), "la" | "l’")) => Some(""), "d’" if !inf => Some(""), _ => None };
                     if let Some(s) = sug { o.push(self.mk(p, "FR_PREP", "« se rappeler quelque chose » se construit sans « de ».", if s.is_empty() { vec![] } else { vec![s.to_string()] })); }
                 }
             }
@@ -512,7 +512,7 @@ impl Checker {
             if lemma_is(&t[i], "téléphoner") && !noun_use && t[i].morph.iter().any(|m| is_fin(m) || m.moods & (M_Q | M_Y) != 0) {
                 if let Some(p) = nx(1) {
                     if let Some(s) = match p.lower.as_str() { "le" => Some("au"), "la" => Some("à la"), "les" => Some("aux"), "l’" => Some("à l’"), _ => None } {
-                        if nx(2).map_or(false, |n| has_pos(n, Pos::Noun)) { o.push(self.mk(p, "FR_PREP", "On téléphone « à » quelqu’un.", vec![s.to_string()])); }
+                        if nx(2).is_some_and(|n| has_pos(n, Pos::Noun)) { o.push(self.mk(p, "FR_PREP", "On téléphone « à » quelqu’un.", vec![s.to_string()])); }
                     }
                 }
                 if i > 1 && t[i - 1].word && matches!(t[i - 1].lower.as_str(), "le" | "la" | "les" | "l’") && t[i - 2].word && has_pos(&t[i - 2], Pos::PronSubj) {
@@ -643,16 +643,16 @@ impl Checker {
         const LANG_VERBS: &[&str] = &["parler", "apprendre", "étudier", "enseigner", "traduire", "comprendre", "lire", "écrire", "maîtriser", "pratiquer"];
         for i in 1..t.len() {
             let x = &t[i];
-            if !x.word || x.sent_start || !x.text.chars().next().map_or(false, |c| c.is_uppercase()) || x.text.chars().skip(1).any(|c| c.is_uppercase()) { continue; }
+            if !x.word || x.sent_start || !x.text.chars().next().is_some_and(|c| c.is_uppercase()) || x.text.chars().skip(1).any(|c| c.is_uppercase()) { continue; }
             if !t[i - 1].word && matches!(t[i - 1].text.as_str(), "." | "!" | "?" | "«" | "“" | "\"" | ":" | "—") { continue; }
             let l = x.lower.as_str();
             let lower_sug = vec![x.lower.clone()];
             if matches!(l, "mars" | "mai") { continue; } // the god / planet, or a name
-            let in_names = (i >= 2 && t[i - 1].text == "," && t[i - 2].text.chars().next().map_or(false, |c| c.is_uppercase()))
-                || (i >= 2 && t[i - 1].lower == "de" && t[i - 2].text.chars().next().map_or(false, |c| c.is_uppercase()));
+            let in_names = (i >= 2 && t[i - 1].text == "," && t[i - 2].text.chars().next().is_some_and(|c| c.is_uppercase()))
+                || (i >= 2 && t[i - 1].lower == "de" && t[i - 2].text.chars().next().is_some_and(|c| c.is_uppercase()));
             if in_names { continue; }
             let feast = Self::word_at(t, i + 1) && (matches!(t[i + 1].lower.as_str(), "saint" | "sainte" | "gras")
-                || (matches!(t[i + 1].lower.as_str(), "des" | "de") && Self::word_at(t, i + 2) && t[i + 2].text.chars().next().map_or(false, |c| c.is_uppercase())));
+                || (matches!(t[i + 1].lower.as_str(), "des" | "de") && Self::word_at(t, i + 2) && t[i + 2].text.chars().next().is_some_and(|c| c.is_uppercase())));
             if DAYS.contains(&l) && !feast { o.push(Lint { start: x.start, end: x.end, rule: "FR_CAPITAL", message: "Les jours et les mois s’écrivent en minuscules.".into(), suggestions: lower_sug }); continue; }
             if !nat(l) { continue; }
             let mut pi = i - 1;
@@ -663,7 +663,7 @@ impl Checker {
             if matches!(l, "suisse" | "suisses") { continue; } // also the country
             const PERSON_ADJ: &[&str] = &["jeune", "jeunes", "vieux", "vieil", "vieille", "vieilles", "bon", "bons", "bonne", "bonnes", "grand", "grands", "petit", "petits", "brave", "braves", "pauvre", "pauvres", "riche", "riches", "célèbre", "illustre", "simple", "vrai", "vrais"];
             let head_noun = p.word && has_pos(p, Pos::Noun) && !PERSON_ADJ.contains(&p.lower.as_str()) && pi >= 1 && t[pi - 1].word && det_info(&t[pi - 1]).is_some();
-            let adj_after_noun = p.word && has_pos(p, Pos::Noun) && !p.text.chars().next().map_or(false, |c| c.is_uppercase()) && det_info(p).is_none()
+            let adj_after_noun = p.word && has_pos(p, Pos::Noun) && !p.text.chars().next().is_some_and(|c| c.is_uppercase()) && det_info(p).is_none()
                 && (!p.morph.iter().any(adjish) || head_noun);
             if lang_ctx || adj_after_noun {
                 o.push(Lint { start: x.start, end: x.end, rule: "FR_CAPITAL", message: "Langue ou adjectif de nationalité : minuscule (majuscule seulement pour les habitants).".into(), suggestions: lower_sug });
@@ -952,7 +952,7 @@ impl Checker {
                 return None;
             }
             let filler = x.morph.iter().any(|m| m.moods & (M_Q | M_Y) != 0) || ADVERBS.contains(&x.lower.as_str()) || all_pos(x, Pos::Adv)
-                || (all_pos(x, Pos::Noun) && !x.text.chars().next().map_or(false, |c| c.is_uppercase()));
+                || (all_pos(x, Pos::Noun) && !x.text.chars().next().is_some_and(|c| c.is_uppercase()));
             if !filler { return None; }
             k += 1;
         }
@@ -1010,7 +1010,7 @@ impl Checker {
             if t[pre].word || !matches!(t[pre].text.as_str(), "," | "»" | "—" | "”") { continue; }
             let q = |k: usize| !t[k].word && matches!(t[k].text.as_str(), "»" | "”" | "\"");
             let after_quote = (t[pre].text == "," && pre >= 1 && q(pre - 1)) || (q(pre) && pre >= 1 && !t[pre - 1].word && matches!(t[pre - 1].text.as_str(), "!" | "?" | "…" | ","));
-            if !t[v].word || !after_quote || !has_fin(&t[v]) || t[v].text.chars().next().map_or(false, |c| c.is_uppercase()) { continue; }
+            if !t[v].word || !after_quote || !has_fin(&t[v]) || t[v].text.chars().next().is_some_and(|c| c.is_uppercase()) { continue; }
             if let Some(n) = self.inverted_np(t, v, true) {
                 let sug = self.verb_forms_for(&t[v], 4, n);
                 o.push(self.mk(&t[v], "FR_SUBJ_VERB", "Dans l’incise, le verbe s’accorde avec le sujet inversé.", sug));
@@ -1118,9 +1118,9 @@ impl Checker {
             if !t[i].word { continue; }
             let l = t[i].lower.as_str();
             let after = if l == "tout" && Self::word_at(t, i + 2) && t[i + 1].lower == "le" && t[i + 2].lower == "monde" { i + 3 }
-                else if matches!(l, "chacun" | "chacune" | "quelqu’un") { i + 1 }
-                else if l == "tout" && i > 0 && !t[i - 1].word && t[i - 1].text == "," && Self::word_at(t, i + 1) && (has_fin(&t[i + 1]) || CLITICS.contains(&t[i + 1].lower.as_str())) { i + 1 }
-                else if matches!(l, "personne" | "rien" | "nul" | "nulle") && Self::word_at(t, i + 1) && matches!(t[i + 1].lower.as_str(), "ne" | "n’") { i + 1 }
+                else if matches!(l, "chacun" | "chacune" | "quelqu’un")
+                    || (l == "tout" && i > 0 && !t[i - 1].word && t[i - 1].text == "," && Self::word_at(t, i + 1) && (has_fin(&t[i + 1]) || CLITICS.contains(&t[i + 1].lower.as_str())))
+                    || (matches!(l, "personne" | "rien" | "nul" | "nulle") && Self::word_at(t, i + 1) && matches!(t[i + 1].lower.as_str(), "ne" | "n’")) { i + 1 }
                 else { continue };
             if i > 0 && t[i - 1].word && (det_info(&t[i - 1]).is_some() || PREPS.contains(&t[i - 1].lower.as_str())) { continue; }
             if !(i == 0 || t[i].sent_start || !t[i - 1].word || t[i - 1].morph.iter().any(|m| matches!(m.pos, Pos::ConjC | Pos::ConjS))) { continue; }
@@ -1239,8 +1239,8 @@ impl Checker {
             let object_after = Self::word_at(t, p + 1) && Self::same(t, p, p + 1)
                 && (det_info(&t[p + 1]).is_some() || t[p + 1].lower == "compte") && !t[p + 1].morph.iter().any(|m| m.pos == Pos::Prep)
                 && !matches!(t[p + 1].lower.as_str(), "du" | "de" | "d’" | "des")
-                && !self.np_at(t, p + 1).map_or(false, |np| qr.iter().any(|m| m.gender & np.gender != 0 && m.number & np.number != 0) && (np.end + 1 >= t.len() || !t[np.end + 1].word))
-                && !t.get(p + 2).map_or(false, |h| TIME_NOUNS.contains(&h.lower.as_str()) || matches!(h.lower.as_str(), "long" | "côté" | "cours" | "bord" | "part")
+                && !self.np_at(t, p + 1).is_some_and(|np| qr.iter().any(|m| m.gender & np.gender != 0 && m.number & np.number != 0) && (np.end + 1 >= t.len() || !t[np.end + 1].word))
+                && !t.get(p + 2).is_some_and(|h| TIME_NOUNS.contains(&h.lower.as_str()) || matches!(h.lower.as_str(), "long" | "côté" | "cours" | "bord" | "part")
                     || h.lower.chars().all(|c| c.is_ascii_digit()) || NUM_WORDS.contains(&h.lower.as_str()));
             let rendre_compte = self.lemma_of(qr[0]) == "rendre" && Self::word_at(t, p + 1) && t[p + 1].lower == "compte";
             if !(object_after || rendre_compte || (indirect && self.lemma_of(qr[0]) != "rendre")) { continue; }

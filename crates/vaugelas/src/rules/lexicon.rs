@@ -68,9 +68,9 @@ pub fn parse_tag(tag: &str) -> (Pos, u8, u8, u8, u16) {
             "Dn" => Pos::DetNum, "R" => Pos::Prep, "Cs" => Pos::ConjS, "Cc" => Pos::ConjC,
             "W" => Pos::Adv, "X" => Pos::Neg,
             _ => {
-                if rest.iter().any(|r| *r == "Os") { Pos::PronSubj }
+                if rest.contains(&"Os") { Pos::PronSubj }
                 else if rest.iter().any(|r| r.starts_with("Oo")) { Pos::PronObj }
-                else if rest.iter().any(|r| *r == "Od") { Pos::PronDem }
+                else if rest.contains(&"Od") { Pos::PronDem }
                 else if k.starts_with('O') { Pos::PronOther }
                 else { Pos::Other }
             }
@@ -79,7 +79,7 @@ pub fn parse_tag(tag: &str) -> (Pos, u8, u8, u8, u16) {
     let (mut g, mut n, mut p, mut mo) = (0u8, 0u8, 0u8, 0u16);
     for r in &rest {
         // tags can carry suffixes: "s;C", "i#G#L"
-        let r = &r.split(|c| c == ';' || c == '#').next().unwrap_or("");
+        let r = &r.split([';', '#']).next().unwrap_or("");
         match *r {
             "m" => g |= 1, "f" => g |= 2, "e" => g |= 3,
             "s" => n |= 1, "p" => n |= 2, "i" => n |= 3,
@@ -236,7 +236,7 @@ impl Lexicon {
     pub fn suggest(&self, word: &str, max: usize) -> Vec<String> {
         let norm = word.replace('\'', "’");
         let lower = norm.to_lowercase();
-        let cap = norm.chars().next().map_or(false, |c| c.is_uppercase());
+        let cap = norm.chars().next().is_some_and(|c| c.is_uppercase());
         let rep = self.repairs(&lower);
         if !rep.is_empty() {
             let mut r = rep;
@@ -256,7 +256,7 @@ impl Lexicon {
             let mut cands: Vec<(u32, bool, String)> = Vec::new();
             while let Some((k, _)) = st.next() {
                 let Ok(s) = std::str::from_utf8(k) else { continue };
-                if s.chars().next().map_or(false, |c| c.is_uppercase()) && !cap { continue; }
+                if s.chars().next().is_some_and(|c| c.is_uppercase()) && !cap { continue; }
                 let dist = damerau(&lower, s);
                 let first_same = s.chars().next() == lower.chars().next();
                 cands.push((dist, !first_same, s.to_string()));
@@ -279,8 +279,8 @@ pub fn damerau(a: &str, b: &str) -> u32 {
     let b: Vec<char> = b.chars().collect();
     let (n, m) = (a.len(), b.len());
     let mut d = vec![vec![0u32; m + 1]; n + 1];
-    for i in 0..=n { d[i][0] = i as u32; }
-    for j in 0..=m { d[0][j] = j as u32; }
+    for (i, row) in d.iter_mut().enumerate() { row[0] = i as u32; }
+    for (j, x) in d[0].iter_mut().enumerate() { *x = j as u32; }
     for i in 1..=n {
         for j in 1..=m {
             let cost = (a[i - 1] != b[j - 1]) as u32;
