@@ -105,7 +105,7 @@ fn pron_gn(l: &str) -> Option<(u8, u8)> {
 
 fn match_case(orig: &str, s: &str) -> String {
     let n = orig.chars().count();
-    let first_up = orig.chars().next().map_or(false, |c| c.is_uppercase());
+    let first_up = orig.chars().next().is_some_and(|c| c.is_uppercase());
     if n > 1 && orig.chars().all(|c| !c.is_lowercase()) { return s.to_uppercase(); }
     if first_up {
         let mut c = s.chars();
@@ -135,7 +135,7 @@ impl Checker {
                     if matches!(parts[parts.len() - 1], "nous" | "vous") && m.iter().any(|x| x.moods & M_E != 0) && parts.len() == 2 && !m.iter().any(|x| is_fin(x) && x.person & pn.0 != 0 && x.number & pn.1 != 0) {
                         tok.known = true; tok.compound = true; return;
                     }
-                    let verb: Vec<Morph> = m.into_iter().filter(|x| is_fin(x)).collect();
+                    let verb: Vec<Morph> = m.into_iter().filter(is_fin).collect();
                     if k && !verb.is_empty() && parts[1..parts.len() - 1].iter().all(|p| *p == "t") {
                         tok.known = true; tok.morph = verb; tok.inv = Some(pn); return;
                     }
@@ -245,7 +245,7 @@ impl Checker {
         let (mut ng, mut nn) = (0u8, 0u8);
         for m in &t[head].morph { if m.pos == Pos::Noun && m.number & dn != 0 { ng |= m.gender; nn |= m.number; } }
         let mut number = if single(dn) { dn } else if single(nn) { nn } else { 3 };
-        let mut gender = if single(ng) { ng } else if single(dg) && ng == 3 { dg } else if ng == 0 { dg } else { ng };
+        let mut gender = if single(ng) { ng } else if (single(dg) && ng == 3) || ng == 0 { dg } else { ng };
         if t[i].lower == "quelque" && t[head].lower == "chose" { gender = G_M; } // "quelque chose" is neuter -> masculine
         if t[i].lower == "quelque" && Self::word_at(t, i + 1) && matches!(t[i + 1].lower.as_str(), "deux" | "trois" | "dix" | "vingt" | "cinquante" | "cent" | "mille") { number = N_P; }
         Some(Np { head, end: last, gender, number, alt: 0 })
@@ -305,11 +305,10 @@ impl Checker {
 
     // ---------- spelling ----------
     fn spell(&self, t: &[Tok], suggest: bool, o: &mut Vec<Lint>) {
-        for k in 0..t.len() {
-            let tk = &t[k];
+        for tk in t {
             if !tk.word || tk.known || tk.skip || tk.compound { continue; }
             if tk.text.chars().count() < 2 { continue; }
-            let first_up = tk.text.chars().next().map_or(false, |c| c.is_uppercase());
+            let first_up = tk.text.chars().next().is_some_and(|c| c.is_uppercase());
             if first_up { continue; } // proper nouns, acronyms, sentence-initial names
             if tk.text.chars().any(|c| !c.is_alphabetic() && c != '’' && c != '\'' && c != '-') { continue; }
             let sugg = if suggest { self.lex.suggest(&tk.text, 5) } else { Vec::new() };
@@ -339,7 +338,7 @@ impl Checker {
                               suggestions: vec![tk.text.clone()] });
             }
             if tk.text == "," && !tk.space_before && prev.word && k + 1 < t.len() && t[k + 1].word && !t[k + 1].space_before
-                && !t[k + 1].text.chars().next().map_or(false, |c| c.is_ascii_digit()) && !prev.skip {
+                && !t[k + 1].text.chars().next().is_some_and(|c| c.is_ascii_digit()) && !prev.skip {
                 o.push(Lint { start: tk.start, end: tk.end, rule: "FR_SPACE_AFTER", message: "Espace manquant après la virgule.".into(),
                               suggestions: vec![", ".into()] });
             }
@@ -415,7 +414,7 @@ impl Checker {
                 if self.colour_compound(t, a) { break; } // "bleu clair", "vert foncé", "marron": invariable
                 if matches!(ta.lower.as_str(), "tel" | "telle" | "tels" | "telles" | "tout" | "toute" | "tous" | "toutes" | "même" | "mêmes" | "autre" | "autres" | "quelque" | "quelques") { break; }
                 let agrees = |g: u8, n: u8| ta.morph.iter().any(|m| adjish(m) && m.number & n != 0 && (m.gender & g != 0 || !single(g)));
-                if coord.map_or(false, |(g, n)| agrees(g, n)) || higher.map_or(false, |(g, n)| agrees(g, n)) { a += 1; continue; }
+                if coord.is_some_and(|(g, n)| agrees(g, n)) || higher.is_some_and(|(g, n)| agrees(g, n)) { a += 1; continue; }
                 if !agrees(np.gender, np.number) {
                     let Some(m0) = ta.morph.iter().find(|m| adjish(m)) else { break };
                     let sug = self.inflect_adj(self.lemma_of(m0), m0.pos == Pos::Verb, np.gender, np.number);
@@ -493,8 +492,8 @@ impl Checker {
             if matches!(t[i].lower.as_str(), "quel" | "quelle" | "quels" | "quelles" | "combien") { continue; } // interrogative phrase
             if i >= 2 && matches!(t[i - 1].lower.as_str(), "que" | "qu’") && matches!(t[i - 2].lower.as_str(), "tel" | "telle" | "tels" | "telles" | "ainsi") { continue; }
             let Some(np) = self.np_at(t, i) else { continue };
-            if TIME_NOUNS.contains(&t[np.head].lower.as_str()) && t.get(np.end + 1).map_or(false, |x| x.text == ",") { continue; } // "Chaque été, ..."
-            if Self::word_at(t, np.end + 2) && matches!(t[np.end + 1].lower.as_str(), "et" | "ou") && t[np.end + 2].lower.split('-').next().map_or(false, |p| matches!(p, "moi" | "toi" | "nous" | "vous" | "lui" | "elle" | "eux" | "elles")) { continue; }
+            if TIME_NOUNS.contains(&t[np.head].lower.as_str()) && t.get(np.end + 1).is_some_and(|x| x.text == ",") { continue; } // "Chaque été, ..."
+            if Self::word_at(t, np.end + 2) && matches!(t[np.end + 1].lower.as_str(), "et" | "ou") && t[np.end + 2].lower.split('-').next().is_some_and(|p| matches!(p, "moi" | "toi" | "nous" | "vous" | "lui" | "elle" | "eux" | "elles")) { continue; }
             if Self::word_at(t, np.end + 1) && has_pos(&t[np.end + 1], Pos::PronSubj) && !has_pos(&t[np.end + 1], Pos::PronObj) { continue; }
             if Self::word_at(t, np.end + 1) && matches!(t[np.end + 1].lower.as_str(), "nous" | "vous") && t[np.end + 1].sid == t[i].sid
                 && Self::word_at(t, np.end + 2) && t[np.end + 2].morph.iter().any(|m| is_fin(m) && m.number == N_P && m.person & 3 != 0) { continue; }
@@ -534,7 +533,7 @@ impl Checker {
                 while Self::word_at(t, v) && CLITICS.contains(&t[v].lower.as_str()) && t[v].lower != "nous" { v += 1; }
                 if Self::word_at(t, v) && Self::same(t, i, v) && self.verbish(&t[v]) && !t[v].morph.iter().any(|m| m.pos == Pos::PronSubj || m.pos.is_det())
                     && !(t[v].morph.iter().any(|m| m.moods & M_E != 0) && !t[v].morph.iter().any(|m| is_fin(m) && m.person & 4 != 0)) // "et prenons garde"
-                    && t[v].morph.iter().any(|m| is_fin(m))
+                    && t[v].morph.iter().any(is_fin)
                     && !t[v].morph.iter().any(|m| is_fin(m) && m.person & p != 0 && m.number & n != 0) {
                     let sug = self.verb_forms_for(&t[v], p, n);
                     o.push(self.mk(&t[v], "FR_SUBJ_VERB", "Ce verbe coordonné doit s’accorder avec le même sujet.", sug));
@@ -609,7 +608,7 @@ impl Checker {
         for v in 0..t.len() {
             let x = &t[v];
             if !x.word || x.skip || x.morph.is_empty() || x.inv.is_some() { continue; } // "avez-vous": licensed by its own pronoun
-            if !x.sent_start && x.text.chars().next().map_or(false, |c| c.is_uppercase()) { continue; } // proper name
+            if !x.sent_start && x.text.chars().next().is_some_and(|c| c.is_uppercase()) { continue; } // proper name
             if !x.morph.iter().all(|m| m.pos == Pos::Verb && m.moods & (M_FIN | M_E) != 0) { continue; }
             if !x.morph.iter().any(is_fin) || x.morph.iter().any(|m| is_fin(m) && m.person & 4 != 0) { continue; }
             // imperative: first word of its clause, possibly after "ne"/clitics
@@ -706,7 +705,7 @@ impl Checker {
     fn etre_plural_attr(&self, t: &[Tok], o: &mut Vec<Lint>) {
         for i in 0..t.len() {
             if !t[i].word || !t[i].morph.iter().any(|m| is_fin(m) && self.lemma_of(m) == "être" && m.person & 4 != 0 && m.number == N_P && m.moods & M_SP == 0) { continue; }
-            if matches!(t[i].lower.as_str(), "sont" | "étaient" | "seront" | "seraient" | "furent") == false { continue; }
+            if !matches!(t[i].lower.as_str(), "sont" | "étaient" | "seront" | "seraient" | "furent") { continue; }
             if t[i].morph.iter().any(|m| m.number & N_S != 0 && is_fin(m)) { continue; }
             if i > 0 && t[i - 1].word && matches!(t[i - 1].lower.as_str(), "se" | "s’" | "nous" | "vous" | "me" | "m’" | "te" | "t’") { continue; } // pronominal: own rules
             let mut k = i + 1;
@@ -795,7 +794,7 @@ impl Checker {
             // a direct object or an infinitive right after the participle: no agreement with the antecedent
             if Self::word_at(t, k + 2) && matches!(t[k + 1].lower.as_str(), "à" | "de" | "d’") && t[k + 2].morph.iter().any(|m| m.moods & M_Y != 0) { continue; }
             if let Some(nx) = t.get(k + 1) {
-                let time_phrase = det_info(nx).is_some() && t.get(k + 2).map_or(false, |h| TIME_NOUNS.contains(&h.lower.as_str()));
+                let time_phrase = det_info(nx).is_some() && t.get(k + 2).is_some_and(|h| TIME_NOUNS.contains(&h.lower.as_str()));
                 if nx.word && nx.sid == p.sid && !time_phrase && (det_info(nx).is_some() || nx.morph.iter().any(|m| m.moods & M_Y != 0 || m.pos == Pos::Noun || m.pos == Pos::Proper)) { continue; }
             }
             if qr.iter().any(|m| m.gender & np.gender != 0 && m.number & np.number != 0 && (m.gender != 3 || m.number != 3)) { continue; }
@@ -830,7 +829,7 @@ impl Checker {
                 None => false,
                 Some(x) if !x.word => false,
                 Some(x) if matches!(x.lower.as_str(), "de" | "d’" | "du" | "dès") => false,
-                Some(x) if det_info(x).is_some() && t.get(i + 4).map_or(false, |h| TIME_NOUNS.contains(&h.lower.as_str()) || matches!(h.lower.as_str(), "long" | "côté" | "cours" | "bord")) => false,
+                Some(x) if det_info(x).is_some() && t.get(i + 4).is_some_and(|h| TIME_NOUNS.contains(&h.lower.as_str()) || matches!(h.lower.as_str(), "long" | "côté" | "cours" | "bord")) => false,
                 Some(x) => x.sid == p.sid && !x.morph.iter().any(|m| matches!(m.pos, Pos::ConjC | Pos::Prep | Pos::Adv)) || x.morph.iter().any(|m| m.pos.is_det() || m.pos == Pos::ConjS),
             };
             if obj_follows { continue; }
@@ -866,7 +865,7 @@ impl Checker {
             if !Self::word_at(t, j) || !Self::same(t, i, j) { continue; }
             let p = &t[j];
             if !p.known || p.morph.iter().any(|m| m.pos == Pos::Noun || is_fin(m) || m.moods & M_Y != 0) { continue; }
-            if p.text.chars().next().map_or(false, |c| c.is_uppercase()) { continue; }
+            if p.text.chars().next().is_some_and(|c| c.is_uppercase()) { continue; }
             if !(p.lower.ends_with('é') || p.lower.ends_with("és") || p.lower.ends_with("ée") || p.lower.ends_with("ées")) { continue; }
             let Some(m) = p.morph.iter().find(|m| m.pos == Pos::Verb && m.moods & M_Q != 0 && self.lemma_of(m).ends_with("er")) else { continue };
             o.push(self.mk(p, "FR_INF_PP", "Après ce mot, on attend un infinitif.", vec![self.lemma_of(m).to_string()]));
@@ -969,14 +968,14 @@ impl Checker {
                             && !n.morph.iter().any(|m| m.moods & M_Q != 0)
                             && !matches!(p.lower.as_str(), "il" | "elle" | "on" | "y" | "n’" | "ne" | "l’" | "qui" | "c’" | "ce" | "j’" | "lui" | "t’");
                         let after_verb = after_verb && !n.morph.iter().any(|m| m.moods & M_Q != 0) && !matches!(n.lower.as_str(), "été" | "eu");
-                        if after_verb || before_inf || (self.fin_lemma(p, "aller") && (n.morph.iter().any(|m| m.pos.is_det()) || n.text.chars().next().map_or(false, |c| c.is_uppercase()))) {
+                        if after_verb || before_inf || (self.fin_lemma(p, "aller") && (n.morph.iter().any(|m| m.pos.is_det()) || n.text.chars().next().is_some_and(|c| c.is_uppercase()))) {
                             o.push(self.mk(tk, "FR_A_ACCENT", "Préposition « à » avec accent.", vec!["à".into()]));
                         }
                     }
                 }
                 "ont" => {
                     if let Some(n) = next {
-                        let plural_prev = prev.map_or(false, |p| matches!(p.lower.as_str(), "ils" | "elles" | "ceux" | "celles" | "qui" | "les" | "eux")
+                        let plural_prev = prev.is_some_and(|p| matches!(p.lower.as_str(), "ils" | "elles" | "ceux" | "celles" | "qui" | "les" | "eux")
                             || p.morph.iter().any(|m| m.pos == Pos::Noun && m.number == N_P) || p.morph.iter().any(|m| m.pos == Pos::PronObj));
                         if !plural_prev && !n.morph.is_empty() && n.morph.iter().all(|m| m.pos == Pos::Verb && m.moods & M_FIN != 0 && m.moods & (M_Q | M_Y | M_P) == 0) {
                             o.push(self.mk(tk, "FR_ON_ONT", "« on » (pronom) plutôt que « ont ».", vec!["on".into()]));

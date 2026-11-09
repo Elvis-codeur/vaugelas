@@ -31,7 +31,7 @@ pub fn check(text: &str, strict: bool) -> Vec<Lint> {
             ';' | ':' | '!' | '?' => {
                 let space = if c == ':' { NBSP } else { NNBSP };
                 // 10:30, emoticons, "?!" sequences
-                let time = c == ':' && prev.map_or(false, |p| p.is_ascii_digit()) && next.map_or(false, |x| x.is_ascii_digit());
+                let time = c == ':' && prev.is_some_and(|p| p.is_ascii_digit()) && next.is_some_and(|x| x.is_ascii_digit());
                 let smiley = matches!(c, ':' | ';') && matches!(next, Some(')') | Some('(') | Some('-') | Some('D') | Some('P'));
                 if time || smiley { continue; }
                 match prev {
@@ -45,7 +45,7 @@ pub fn check(text: &str, strict: bool) -> Vec<Lint> {
                     _ => {}
                 }
                 if let Some(x) = next {
-                    if x.is_alphabetic() && !(c == ':' && prev.map_or(false, |p| p.is_ascii_digit())) {
+                    if x.is_alphabetic() && !(c == ':' && prev.is_some_and(|p| p.is_ascii_digit())) {
                         out.push(lint(b, end_of(k), "FR_SPACE_AFTER", "Espace manquante après cette ponctuation.", format!("{c} ")));
                     }
                 }
@@ -73,7 +73,7 @@ pub fn check(text: &str, strict: bool) -> Vec<Lint> {
             }
             ' ' => {
                 // start of a run of 2+ spaces between two visible characters
-                if prev.map_or(false, |p| !p.is_whitespace()) && next == Some(' ') {
+                if prev.is_some_and(|p| !p.is_whitespace()) && next == Some(' ') {
                     let mut j = k;
                     while j < n && ch[j].1 == ' ' { j += 1; }
                     if j < n && !ch[j].1.is_whitespace() {
@@ -81,11 +81,10 @@ pub fn check(text: &str, strict: bool) -> Vec<Lint> {
                     }
                 }
             }
-            '\'' if strict => {
-                if prev.map_or(false, |p| p.is_alphabetic()) && next.map_or(false, |x| x.is_alphabetic()) {
+            '\'' if strict
+                && prev.is_some_and(|p| p.is_alphabetic()) && next.is_some_and(|x| x.is_alphabetic()) => {
                     out.push(lint(b, end_of(k), "FR_TYPO_APOS", "Apostrophe typographique « ’ ».", "’".to_string()));
                 }
-            }
             _ => {}
         }
     }
