@@ -10,40 +10,55 @@
 
 ### Qu'est-ce que c'est ?
 
-Vaugelas relit un texte français et signale les fautes de grammaire et d'orthographe : accords (sujet-verbe,
-participes passés, adjectifs), homophones (*a / à*, *on / ont*, *ces / ses*…), modes (subjonctif, conditionnel),
-mots inconnus et typographie. Pour chaque faute, il propose une correction quand il en a une.
+Vaugelas relit un texte français et signale les fautes : accords (sujet-verbe, participes passés, adjectifs),
+homophones (*a / à*, *son / sont*, *ces / ses*, *vert / verre*…), modes (subjonctif, conditionnel), infinitif ou
+participe (*manger / mangé*), majuscules, mots inconnus et typographie. Pour chaque faute, il propose une correction
+quand il en a une.
 
-Il combine deux correcteurs et donne **un seul rapport, une entrée par mot** :
+Il réunit deux correcteurs et donne **un seul rapport, une entrée par mot** :
 
-- **des règles** écrites à la main, très rapides (moins d'un dixième de milliseconde par phrase) et précises ;
-- **un modèle appris** (un réseau de neurones « à énergie ») : il compare chaque mot aux autres formes du même mot
-  (*annulés / annulées / annulé…*) et signale celui qui ne va pas dans la phrase, avec la forme la plus plausible.
+- **des règles** écrites à la main, très rapides et précises ;
+- **un modèle appris** (un réseau de neurones « à énergie », version H1) : il compare chaque mot aux autres formes
+  qu'il pourrait prendre (*annulés / annulées / annulé…*, *vert / verre / vers*) et signale celui qui ne va pas dans la
+  phrase, avec la forme la plus plausible. Il lit aussi ce que les règles ont trouvé.
 
-Tout fonctionne **sur votre ordinateur**, sans connexion et sans envoyer votre texte ailleurs, une fois les
-données téléchargées.
+Tout fonctionne **sur votre ordinateur**, sans connexion. Votre texte n'est jamais envoyé ailleurs.
 
-Ce qu'il sait faire et ne sait pas faire, avec des exemples : [docs/capabilities.md](docs/capabilities.md).
+Ce qu'il fait bien et ce qu'il fait mal, avec des exemples : [docs/capabilities.md](docs/capabilities.md).
 
-### Télécharger
+### Installer
 
-1. Prenez le fichier de votre système sur la page des versions (*Releases*) du projet :
-   - Windows : `vaugelas-…-windows-x86_64.zip`
-   - macOS (puce Apple M1/M2/M3…) : `vaugelas-…-macos-arm64.tar.gz` ; macOS (Intel) : `…-macos-x86_64.tar.gz`
-   - Linux : `vaugelas-…-linux-x86_64.tar.gz`
-2. Décompressez-le. Il contient un seul programme, `vaugelas` (`vaugelas.exe` sous Windows).
-3. Au premier lancement, Vaugelas télécharge ses données (environ 64 Mo : le modèle, 61 Mo, et le lexique, 3 Mo),
-   vérifie leur empreinte (sha256) et les range dans votre dossier utilisateur. Vous pouvez aussi le faire à
-   l'avance avec `vaugelas download-model`.
+Il vous faut **quatre fichiers**, tous sur la page des versions (*Releases*) du projet :
 
-Les données occupent environ 165 Mo sur le disque : modèle 66 Mo, lexique 20 Mo, lexique compilé des règles
-7 Mo et tables du modèle 72 Mo (créées au premier démarrage, une seule fois). Elles sont rangées dans :
+1. le programme pour votre système :
+   - Windows : `vaugelas-v0.2.0-windows-x86_64.zip`
+   - Mac avec puce Apple (M1, M2, M3…) : `vaugelas-v0.2.0-macos-arm64.tar.gz` ; Mac Intel : `…-macos-x86_64.tar.gz`
+   - Linux : `vaugelas-v0.2.0-linux-x86_64.tar.gz`
+2. les trois fichiers de données : `model.frcm.gz` (71 Mo), `lexicon.tsv.gz` (3 Mo) et `resources.tar.gz` (9 Mo).
+
+Décompressez le programme (double-clic sur le `.zip` ou le `.tar.gz`), puis **posez les trois fichiers de données
+dans le même dossier que le programme**, sans les décompresser. C'est tout.
+
+Au premier lancement, Vaugelas trouve ces fichiers à côté de lui, vérifie leur empreinte (sha256) et les installe
+dans votre dossier utilisateur (une dizaine de secondes). Ensuite vous pouvez effacer les trois fichiers téléchargés.
+Si les fichiers ne sont pas à côté du programme, Vaugelas essaie de les télécharger lui-même ; tant que le projet est
+privé ce téléchargement échoue, et le programme vous dit quoi faire.
+
+Les données occupent environ 200 Mo sur le disque, dans :
 Windows `%LOCALAPPDATA%\vaugelas`, macOS `~/Library/Application Support/vaugelas`, Linux `~/.local/share/vaugelas`.
-Pour un autre dossier : option `--data DOSSIER` ou variable `VAUGELAS_DATA`.
+Pour un autre dossier : option `--data DOSSIER` ou variable d'environnement `VAUGELAS_DATA`.
+`vaugelas info` montre où sont les données et quel modèle est installé.
+
+**Mac :** le programme n'est pas signé par Apple. Si macOS refuse de l'ouvrir, tapez une fois dans le Terminal,
+dans le dossier du programme : `xattr -d com.apple.quarantine vaugelas`.
+**Windows :** si Windows affiche « Windows a protégé votre ordinateur », cliquez sur *Informations complémentaires*
+puis *Exécuter quand même*.
 
 ### Utiliser
 
-Ouvrez un terminal (Windows : *Invite de commandes* ou *PowerShell*) dans le dossier du programme :
+Vaugelas s'utilise dans un terminal (Windows : ouvrez le dossier du programme, tapez `cmd` dans la barre d'adresse et
+Entrée ; Mac : app *Terminal* ; puis `cd` vers le dossier). Sous Windows tapez `vaugelas`, sous Mac et Linux
+`./vaugelas`.
 
 ```
 vaugelas check "Les élections ont été annulés par le juge."
@@ -53,58 +68,86 @@ ligne 1, colonne 23 : « annulés »  →  annulées
     L’attribut doit s’accorder avec le sujet.  [FR_ATTR_AGREE, rules+model, score 1.000]
 ```
 
-- Vérifier un fichier texte : `vaugelas check -f mon_texte.txt`
-- Résultat en JSON (pour d'autres programmes) : `vaugelas check --json "…"`
-- Moins d'alertes (le modèle ne signale que ce dont il est très sûr) : `--threshold 0.99`. Plus d'alertes :
-  `--threshold 0.9`. La valeur par défaut, 0.9571, donne environ 1,5 % de fausses alertes sur nos phrases de test.
-- Règles seulement (très rapide) : `--rules-only` ; modèle seulement : `--model-only`.
-- Conventions typographiques (espaces insécables, `…`, `’`) : `--strict-typo`.
+- Vérifier un fichier texte : `vaugelas check -f mon_texte.txt` (texte brut en UTF-8).
+- Résultat en JSON (pour d'autres programmes) : `vaugelas check --json "…"`.
+- **Plus ou moins d'alertes.** Le modèle signale un mot quand son score dépasse un seuil, 0.9914 par défaut (choisi
+  pour que le modèle signale environ 3,5 phrases sur 1 000 phrases correctes de livres). `--threshold 0.9` : il signale davantage
+  de fautes, mais aussi davantage de phrases correctes ; `--threshold 0.999` : moins d'alertes, plus sûres.
+- Règles seulement : `--rules-only` ; modèle seulement : `--model-only`.
+- Conventions de la typographie soignée (espaces insécables, `…`, `’`) : `--strict-typo`.
 - Aide : `vaugelas --help`.
 
 ### Dans votre éditeur (serveur compatible LanguageTool)
 
-Vaugelas peut tourner en arrière-plan comme un serveur **LanguageTool**. Les extensions et modules qui savent
-parler à un serveur LanguageTool fonctionnent alors avec lui : LTeX (VS Code, Neovim…), l'extension LanguageTool
-des navigateurs, des modules pour Obsidian, LibreOffice, Emacs, etc.
+Vaugelas peut tourner en arrière-plan comme un serveur **LanguageTool** local :
 
 ```
 vaugelas serve --port 8081
 ```
 
-Dans les réglages de l'extension, choisissez un serveur « local » ou « personnalisé » et donnez l'adresse
-`http://localhost:8081` (selon l'extension : `http://localhost:8081/v2`). Exemple pour LTeX dans VS Code :
+Laissez cette fenêtre ouverte. Les extensions qui savent parler à un serveur LanguageTool peuvent alors l'utiliser :
+dans leurs réglages, choisissez un serveur « local » ou « personnalisé » et donnez l'adresse `http://localhost:8081`
+(certaines veulent `http://localhost:8081/v2`). Exemple pour l'extension LTeX de VS Code :
 `"ltex.languageToolHttpServerUri": "http://localhost:8081"` et `"ltex.language": "fr"`.
+Même principe pour l'extension LanguageTool des navigateurs (réglages avancés, serveur local), le module LanguageTool
+de LibreOffice (*Outils › Options › Paramètres linguistiques*, serveur distant), Obsidian ou Emacs.
+Le serveur suit l'API publique de LanguageTool (`/v2`) ; il a été testé avec des requêtes directes, pas avec chacune
+de ces extensions : si l'une ne marche pas, signalez-le (voir plus bas).
 
-Le serveur charge le modèle et le lexique une seule fois au démarrage (1 à 2 secondes), puis répond à chaque
-requête. Il n'écoute que votre ordinateur (`127.0.0.1`), sauf avec `--host 0.0.0.0`.
+Le serveur charge le modèle une seule fois (environ 1 seconde), puis répond en une quinzaine de millisecondes par
+phrase. Il n'écoute que votre ordinateur (`127.0.0.1`), sauf si vous demandez `--host 0.0.0.0`.
 
 Ce qui est pris en charge : `POST /v2/check` (champs `language`, `text` ou `data` annoté, `disabledRules`,
-`enabledRules` + `enabledOnly`, `disabledCategories`), `GET /v2/languages`. Positions en unités UTF-16 comme
+`enabledRules` + `enabledOnly`, `disabledCategories`) et `GET /v2/languages`. Positions en unités UTF-16 comme
 LanguageTool. Seul le français est accepté (`fr`, `fr-FR`, `fr-BE`, `fr-CA`, `fr-CH`, `auto`).
+
+### Vie privée
+
+Vaugelas ne se connecte à Internet que pour télécharger ses données, et seulement si elles manquent. Il ne
+collecte rien et n'envoie jamais votre texte. Le serveur n'accepte que les connexions venant de votre ordinateur.
+
+### Ce qu'il sait faire, et ses limites
+
+Résumé (détails, chiffres et exemples : [docs/capabilities.md](docs/capabilities.md)) :
+
+- **Bon** sur les accords (sujet-verbe, participe passé, adjectif, attribut), sur l'infinitif / participe
+  (*a manger*, *vais acheté*), sur le subjonctif et le conditionnel quand une règle connaît le déclencheur, sur les
+  majuscules des jours et des mois, et sur une partie des homophones (*à / a*, *son / sont*, *peu / peut*,
+  *vert / verre / vers*).
+- **Moyen** sur les homophones : sur un test d'homophones fabriqué de la même façon que ses exemples
+  d'entraînement, le modèle en trouve 55 %, mais ce test le favorise (voir la page détaillée) ; il en rate encore
+  beaucoup (*ou / où*, *ces / ses*, *mer / mère*).
+- **Faible** sur le choix du mot quand il faut comprendre le sens (*conjecture / conjoncture*, *voie / voix*), sur
+  les fautes qui demandent d'ajouter ou de retirer un mot, sur la ponctuation et le style.
+- Le modèle ne fait que remplacer un mot par une autre forme ; il n'ajoute, ne retire et ne déplace jamais de mot.
+
+Sur le jeu de test difficile du projet (final-2, phrases jamais vues à l'entraînement), le modèle seul trouve
+51,4 % des fautes au seuil par défaut, et les règles seules 47,0 % (1,6 % des phrases correctes signalées). Les
+deux réunis en trouvent davantage : les règles et le modèle attrapent en partie des fautes différentes. Sur 18 703
+phrases correctes de livres, le modèle seul signale environ 3,5 phrases sur 1 000.
 
 ### Vitesse et mémoire
 
-Mesuré sur un portable de 2013 (Intel i5-4300M, 2 cœurs / 4 fils, 7 Go de RAM), une machine qui faisait autre
-chose en même temps (charge 5 à 7) : les chiffres sur une machine récente seront meilleurs.
+Mesuré sur un portable de 2013 (Intel i5-4300M, 2 cœurs, 7 Go de mémoire) ; une machine récente fera mieux.
 
-| | par phrase (médiane) | 4 fils | mémoire |
-|---|---:|---:|---:|
-| règles seules | 0,07 ms | — | ~50 Mo |
-| modèle + règles, depuis le texte | 12,4 ms | ~100 phrases/s | ~540 Mo au démarrage, ~670 Mo en pointe |
-| idem, modèle int8 (`--int8`) | 14,1 ms | ~74 phrases/s | ~20 Mo de moins |
+| | par phrase | mémoire |
+|---|---:|---:|
+| règles + modèle | environ 12 ms | environ 650 Mo |
+| règles seules (`--rules-only`) | moins de 0,1 ms | idem (le modèle est chargé quand même) |
 
-Le programme fait environ 5 Mo. Le serveur occupe environ 490 Mo de mémoire. Démarrage : environ 1 s, sauf la toute première fois (environ 6 s, le temps de créer les tables du modèle).
+Démarrage : environ 1 seconde ; la toute première fois environ 5 à 10 secondes (installation des données et
+préparation des tables). Le serveur occupe environ 620 Mo. Le programme lui-même fait environ 6 Mo.
 
-Qualité, sur les phrases de test « final-2 » (jamais vues pendant l'entraînement), avec erreurs difficiles : les
-règles seules trouvent 49,2 % des fautes (1,6 % de fausses alertes), règles + modèle **67,5 %** (3,1 %), contre
-61,9 % (6,1 %) pour règles + LanguageTool. Sur 20 000 phrases correctes de livres, le modèle signale 9,6 phrases
-sur 1 000. Attention : ces phrases de test ont été construites en partie à partir des fautes que les règles
-manquent, ce qui avantage un modèle qui les complète.
+### Signaler un problème
+
+Ouvrez une *issue* sur la page GitHub du projet (onglet *Issues*, bouton *New issue*) avec :
+la phrase exacte, ce que Vaugelas a répondu, ce que vous attendiez, et le résultat de `vaugelas --version` et de
+`vaugelas info`. Une fausse alerte sur une phrase correcte est aussi utile qu'une faute manquée.
 
 ### Licence
 
-Pas encore choisie : voir [LICENSE-TBD.md](LICENSE-TBD.md) et [NOTICE.md](NOTICE.md). Le lexique vient du
-dictionnaire de Grammalecte (Olivier R.) et a sa propre licence.
+Pas encore choisie : voir [LICENSE-TBD.md](LICENSE-TBD.md), [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md) et
+[NOTICE.md](NOTICE.md). Le lexique vient du dictionnaire de Grammalecte (Olivier R.) et a sa propre licence.
 
 ---
 
@@ -112,26 +155,38 @@ dictionnaire de Grammalecte (Olivier R.) et a sa propre licence.
 
 ### What it is
 
-Vaugelas proofreads French text and points out grammar and spelling mistakes: agreement (subject-verb, past
-participles, adjectives), homophones (*a / à*, *on / ont*…), moods (subjunctive, conditional), unknown words and
-typography, with a correction when it has one.
+Vaugelas proofreads French text and points out mistakes: agreement (subject-verb, past participles, adjectives),
+homophones (*a / à*, *son / sont*, *ces / ses*, *vert / verre*…), moods (subjunctive, conditional), infinitive vs
+participle (*manger / mangé*), capitals, unknown words and typography, with a correction when it has one.
 
 It combines two checkers into **one report, one entry per word**:
-- **hand-written rules**, very fast (under 0.1 ms per sentence) and precise;
-- **a learned model** (a paradigm-energy neural network) that compares each word with the other forms of the same
-  word and flags the one that does not fit, together with the most plausible form.
+- **hand-written rules**, very fast and precise;
+- **a learned model** (a paradigm-energy neural network, version H1) that compares each word with the other forms it
+  could take and flags the one that does not fit, together with the most plausible form. It also reads what the
+  rules found.
 
-Everything runs **on your computer**, offline once the data is downloaded. Your text is never sent anywhere.
-Strengths and weaknesses, with examples: [docs/capabilities.md](docs/capabilities.md).
+Everything runs **on your computer**, offline. Your text is never sent anywhere.
+Strengths and weaknesses, with examples: [docs/capabilities.en.md](docs/capabilities.en.md).
 
-### Download
+### Install
 
-1. From the project's *Releases* page, take the file for your system: `…-windows-x86_64.zip`,
-   `…-macos-arm64.tar.gz` (Apple silicon), `…-macos-x86_64.tar.gz` (Intel Mac), `…-linux-x86_64.tar.gz`.
-2. Unpack it. It holds one program, `vaugelas` (`vaugelas.exe` on Windows).
-3. On first run Vaugelas downloads its data (about 64 MB: model 61 MB, lexicon 3 MB, compressed), checks its sha256 and
-   stores it in your user data folder. You can do this in advance with `vaugelas download-model`. The data uses
-   about 165 MB on disk. Use `--data DIR` or `VAUGELAS_DATA` to put it somewhere else.
+You need **four files**, all on the project's *Releases* page:
+1. the program for your system: `vaugelas-v0.2.0-windows-x86_64.zip`, `…-macos-arm64.tar.gz` (Apple silicon),
+   `…-macos-x86_64.tar.gz` (Intel Mac) or `…-linux-x86_64.tar.gz`;
+2. the three data files: `model.frcm.gz` (71 MB), `lexicon.tsv.gz` (3 MB), `resources.tar.gz` (9 MB).
+
+Unpack the program, then **put the three data files in the same folder as the program**, still compressed. On first
+run Vaugelas finds them there, checks their sha256 and installs them in your user data folder (about ten seconds);
+you can then delete the downloaded files. Without them it tries to download them itself, which fails while the
+repository is private, and it tells you what to do.
+
+The data uses about 200 MB on disk: Windows `%LOCALAPPDATA%\vaugelas`, macOS `~/Library/Application
+Support/vaugelas`, Linux `~/.local/share/vaugelas`; `--data DIR` or `VAUGELAS_DATA` to put it elsewhere.
+`vaugelas info` shows where the data is and which model is installed.
+
+**macOS:** the program is not signed by Apple; if macOS refuses to open it, run once in Terminal, in the program's
+folder: `xattr -d com.apple.quarantine vaugelas`. **Windows:** on "Windows protected your PC", click *More info*,
+then *Run anyway*.
 
 ### Run
 
@@ -139,67 +194,88 @@ Strengths and weaknesses, with examples: [docs/capabilities.md](docs/capabilitie
 vaugelas check "Les élections ont été annulés par le juge."
 vaugelas check -f my_text.txt
 vaugelas check --json "…"              # machine-readable output
-vaugelas check --threshold 0.99 "…"    # fewer, surer model flags (default 0.9571 ≈ 1.5% false alarms)
-vaugelas check --rules-only "…"        # rules only (very fast); --model-only for the model only
+vaugelas check --threshold 0.9 "…"     # more model flags (and more false alarms); default 0.9914
+vaugelas check --rules-only "…"        # rules only; --model-only for the model only
 vaugelas --help
 ```
+
+The default threshold 0.9914 makes the model flag about 3.5 of 1,000 correct sentences of published books.
 
 ### Use it from an editor (LanguageTool-compatible server)
 
 ```
 vaugelas serve --port 8081
 ```
-Point any LanguageTool client at `http://localhost:8081`: LTeX (VS Code, Neovim…), the LanguageTool browser
-extension, plug-ins for Obsidian, LibreOffice and Emacs. Some clients want the `/v2` suffix. Example for LTeX:
-`"ltex.languageToolHttpServerUri": "http://localhost:8081"`.
+Point a LanguageTool client at `http://localhost:8081` (some want `http://localhost:8081/v2`): LTeX in VS Code
+(`"ltex.languageToolHttpServerUri": "http://localhost:8081"`, `"ltex.language": "fr"`), the LanguageTool browser
+extension (advanced settings, local server), LibreOffice's LanguageTool remote checker, Obsidian or Emacs plug-ins.
+The server follows LanguageTool's public `/v2` API; it was tested with direct requests, not with each of these
+clients, so please report one that does not work.
 Supported: `POST /v2/check` (`language`, `text` or annotated `data`, `disabledRules`, `enabledRules` +
 `enabledOnly`, `disabledCategories`) and `GET /v2/languages`. Offsets are in UTF-16 code units, as in LanguageTool.
 French only. Each match also carries `"vaugelas": {"source": "rules" | "model" | "rules+model", "score": …}`.
-Model and lexicon are loaded once at start. The server binds to `127.0.0.1` unless `--host` is given.
+The model is loaded once at start (about 1 s); a one-sentence request then takes about 15 ms. The server binds to
+`127.0.0.1` unless `--host` is given. It uses [tiny_http](https://crates.io/crates/tiny_http), a small synchronous
+HTTP server: enough for a local service answering one editor.
 
-The server uses [tiny_http](https://crates.io/crates/tiny_http): a small, mature, synchronous HTTP server with
-no async runtime. That is enough for a local service answering one editor, and it keeps the binary small and the
-build simple on all four platforms.
+### Privacy
+
+Vaugelas goes online only to download its data files, and only when they are missing. It collects nothing and
+never sends your text anywhere. The server accepts connections from your own computer only.
+
+### Strengths and limits
+
+- **Good** at agreement (subject-verb, past participle, adjective, attribute), infinitive vs participle, subjunctive
+  and conditional when a rule knows the trigger, capitals of days and months, and part of the homophones.
+- **Fair** on homophones: 55% on a homophone test made the same way as its training examples (which favours it), and
+  it still misses many (*ou / où*, *ces / ses*, *mer / mère*).
+- **Weak** on word choice that needs meaning (*conjecture / conjoncture*, *voie / voix*), on errors that need a word
+  added or removed, on punctuation and style. The model only replaces a word with another form of it.
+
+On the project's hard test set (final-2, never seen in training) the model alone finds 51.4% of the errors at the
+default threshold, and the rules alone 47.0% (with 1.6% of correct sentences flagged); together they find more,
+since they partly catch different errors. On 18,703 correct sentences of books the model alone flags about 3.5 per
+1,000. Details: [docs/capabilities.en.md](docs/capabilities.en.md).
 
 ### Speed and memory
 
-2013 laptop (i5-4300M, 2 cores / 4 threads, 7 GB), never idle during the measurements (load average 5-7):
+2013 laptop (Intel i5-4300M, 2 cores, 7 GB): rules + model about 12 ms per sentence and about 650 MB of memory; rules
+only under 0.1 ms per sentence (the model is still loaded). Startup about 1 s, the very first one 5-10 s while the
+data is installed and the tables are built. The server uses about 620 MB. The program itself is about 6 MB.
 
-| | per sentence (p50) | 4 threads | memory |
-|---|---:|---:|---:|
-| rules only | 0.07 ms | — | ~50 MB |
-| model + rules, from text | 12.4 ms | ~100 sentences/s | ~540 MB after start, ~670 MB peak |
-| same, int8 model (`--int8`) | 14.1 ms | ~74 sentences/s | ~20 MB less |
+### Reporting a problem
 
-The program is about 5 MB. The server uses about 490 MB of memory and answers a one-sentence request in about 22 ms. Startup is about 1 s. The very first start takes about 6 s while the model's lexicon tables are built and cached.
-Quality on the held-out final-2 set: rules alone 49.2% detection at 1.6% false alarms, rules + model **67.5%** at 3.1%,
-rules + LanguageTool 61.9% at 6.1%. On clean book text the model flags 9.6 sentences per 1,000. Caveat:
-final-2 was built partly from errors the rules miss, which favours a model that complements them.
+Open an issue on the project's GitHub page with the exact sentence, Vaugelas's answer, what you expected, and the
+output of `vaugelas --version` and `vaugelas info`. A false alarm on a correct sentence is as useful as a missed error.
 
 ### For developers
 
 ```
 cargo build --release            # binary: target/release/vaugelas
 cargo test --release             # data-dependent tests skip when the data is not installed
-vaugelas download-model --from DIR   # install from local files (model.frcm, lexicon.tsv, or their .gz)
+cargo clippy --all-targets -- -D warnings
+vaugelas download-model --from DIR   # install from local files (model.frcm.gz, lexicon.tsv.gz, resources.tar.gz)
+vaugelas score -f sentences.txt      # per-word model scores, one sentence per line (JSON lines)
 ```
-- `crates/vaugelas`: the library (`rules`: fr-check rule checker; `model`: energy-model inference;
-  `text`: characterizer and lexicon tables; `report`: the merged report).
-- `crates/vaugelas-cli`: the `vaugelas` program (CLI, data download, LanguageTool-compatible server).
-- Parity with the research code (2026-11-07):
-  `tests/fixtures/`: 1,006 sentences, rule lints identical to `frc` and the 123 model flags identical to
-  `frc-infer`, 0 lines differ. `tools/parity.sh` checks per-word scores on final-2 (5,105 records, 57,854
-  words) and tune (9,366 records, 117,960 words): every line is byte-identical to the verified reference (max
-  difference 0.0), and the records match the Python `ebm_data.py` rows (0 mismatches).
-- **Data release.** The data is not in git. Publish it once as release `data-1` with `model.frcm.gz` and
-  `lexicon.tsv.gz` (`gzip -9k`, then `gh release create data-1 model.frcm.gz lexicon.tsv.gz`). The sha256
-  values of the *uncompressed* files are in `crates/vaugelas-cli/src/data.rs`. `VAUGELAS_DATA_URL` points the
-  download at another location. While the repository is private, anonymous downloads of release assets fail:
-  use `--from DIR` instead.
-- Binary releases: push a tag `vX.Y.Z`. `.github/workflows/release.yml` builds Linux x86_64, Windows x86_64,
-  macOS x86_64 and arm64 into a draft release.
+- `crates/vaugelas`: the library. `rules`: the fr-check rule checker. `model`: energy-model inference and the v14
+  record path (candidate lists, fr-check lints as model inputs, corpus atoms); `model::profile` holds the settings
+  that belong to each model (fr-check lints it reads, default threshold). `text`: tokenizer, sentence filter,
+  characterizer and lexicon tables. `report`: the merged report.
+- `crates/vaugelas-cli`: the `vaugelas` program (CLI, data install, LanguageTool-compatible server).
+- The model and text code is a port of the research implementation (fr-check-infer, commit cc7d94e). Parity:
+  `tests/fixtures/sentences.tsv` holds 343 hand-written sentences and `sentences.frc-infer-v14.jsonl` the scores
+  `frc-infer v14` gives them with H1; the `parity_h1` test compares every per-word score (2026-11-09: max |diff| 0
+  on 3,256 words). `tools/parity.sh FRC_INFER DATA_DIR` regenerates the reference. The rule checker is checked
+  against `frc` on `tests/fixtures/sample.txt` (1,006 sentences, byte-identical).
+- **Data release.** The data is not in git. Data set `data-2` = release `data-2` with `model.frcm.gz`,
+  `lexicon.tsv.gz`, `resources.tar.gz` and `SHA256SUMS`. The sha256 of the uncompressed files (and of every file
+  inside the resources archive) are in `crates/vaugelas-cli/src/data.rs`. `VAUGELAS_DATA_URL` points the download
+  at another location. While the repository is private, anonymous downloads fail: put the files next to the program
+  or use `download-model --from DIR`.
+- Binary releases: push a tag `vX.Y.Z`; `.github/workflows/release.yml` builds Linux x86_64, Windows x86_64, macOS
+  x86_64 and arm64, adds the data files of `data-2`, and makes a draft release. See [CHANGELOG.md](CHANGELOG.md).
 
 ### Licence
 
-Not chosen yet: see [LICENSE-TBD.md](LICENSE-TBD.md) and [NOTICE.md](NOTICE.md). The lexicon comes from the
-Grammalecte dictionary (Olivier R.) and carries its own licence.
+Not chosen yet: see [LICENSE-TBD.md](LICENSE-TBD.md), [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md) and
+[NOTICE.md](NOTICE.md). The lexicon comes from the Grammalecte dictionary (Olivier R.) and carries its own licence.
