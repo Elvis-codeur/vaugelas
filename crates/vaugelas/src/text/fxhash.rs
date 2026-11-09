@@ -16,9 +16,8 @@ impl Fx {
 impl Hasher for Fx {
     #[inline]
     fn write(&mut self, bytes: &[u8]) {
-        let mut c = bytes.chunks_exact(8);
-        for x in &mut c { self.add(u64::from_le_bytes(x.try_into().unwrap())); }
-        let r = c.remainder();
+        let (c, r) = bytes.as_chunks::<8>();
+        for x in c { self.add(u64::from_le_bytes(*x)); }
         if !r.is_empty() {
             let mut b = [0u8; 8];
             b[..r.len()].copy_from_slice(r);

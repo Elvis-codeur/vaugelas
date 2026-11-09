@@ -1,17 +1,18 @@
-//! text -> sentences -> tokens -> characterised readings + candidate sets -> model scores, all in Rust.
-use crate::model::cands::{CandSet, Cands};
-use crate::model::{CandRef, Model};
-use crate::text::characterize::{sent_split, tokenize, Lexicon, Tok};
+//! text -> sentences -> v14 records -> model scores, all in Rust.
+//!
+//! One sentence goes through exactly the steps of fr-check-infer `frc-infer v14` (`v14::process`):
+//! `sentence_filter::clean` -> `tokenize` -> `sentence_filter::skip` -> `record_pf` (fr-check lints as trigger atoms,
+//! v2 candidate lists) -> `encode` -> scores. Every step is a pure function of the sentence and the read-only tables,
+//! so a `Scorer` can be shared between threads.
+use crate::model::cands::Gen;
+use crate::model::record::Builder;
+use crate::model::resources::Resources;
+use crate::model::Model;
+use crate::rules::Checker;
+use crate::text::characterize::{sent_split, tokenize, Lexicon};
 use crate::text::natural::Natural;
-use std::path::Path;
-
-pub struct Pipeline { pub lex: Lexicon, pub nat: Natural }
-
-/// one flagged word: (sentence index, word index, word, score, suggested form)
-pub struct Flag { pub sent: usize, pub word: usize, pub text: String, pub score: f32, pub suggestion: Option<String> }
-
-/// One scored sentence: its byte offset in the text, its words, per word (score, lowest-energy form).
-pub struct ScoredSentence { pub offset: usize, pub words: Vec<String>, pub scores: Vec<(f32, Option<String>)> }
+use crate::text::sentence_filter::{clean, skip, Skip};
+use std::path::{Path, PathBuf};
 
 /// Where the built lexicon tables are cached.
 #[derive(Clone, Debug, Default)]
@@ -20,120 +21,121 @@ pub enum LexCache {
     #[default]
     NextToTsv,
     /// at this path
-    At(std::path::PathBuf),
+    At(PathBuf),
     /// no cache: build the tables from the TSV at every start (~6 s)
     Off,
 }
 
-impl Pipeline {
-    /// lexicon.tsv with the lemma atom on (the energy model is trained with it). The built tables are cached (see
-    /// `text::lexcache`) and rebuilt only when lexicon.tsv changes. `VAUGELAS_LEX_CACHE=PATH|off` overrides.
-    pub fn load(lexicon_tsv: &str) -> Pipeline {
-        let cache = match std::env::var("VAUGELAS_LEX_CACHE").ok().as_deref() {
-            Some("off") => LexCache::Off,
-            Some(p) => LexCache::At(p.into()),
-            None => LexCache::NextToTsv,
-        };
-        Self::load_with(Path::new(lexicon_tsv), &cache).expect("lexicon.tsv")
+/// The read-only tables of the v14 record path: lexicon (characterizer + natural.py tables) and the corpus resources.
+pub struct Tables { pub lex: Lexicon, pub nat: Natural, pub res: Resources }
+
+impl Tables {
+    /// `lexicon_tsv` with the lemma atom on (the model is trained with it); `resources`: the directory holding `interp/`
+    /// and `ngram/`. The lexicon tables are cached (see `text::lexcache`) and rebuilt only when lexicon.tsv changes.
+    pub fn load(lexicon_tsv: &Path, resources: &Path, cache: &LexCache) -> Result<Tables, String> {
+        let (lx, res) = rayon::join(|| Self::lexicon(lexicon_tsv, cache), || Resources::load(resources));
+        let (lex, nat) = lx.map_err(|e| format!("{}: {e}", lexicon_tsv.display()))?;
+        Ok(Tables { lex, nat, res: res? })
     }
 
-    pub fn load_with(tsv: &Path, cache: &LexCache) -> std::io::Result<Pipeline> {
+    fn lexicon(tsv: &Path, cache: &LexCache) -> std::io::Result<(Lexicon, Natural)> {
         Ok(match cache {
             LexCache::Off => {
                 let text = crate::text::pystr::universal_newlines(std::fs::read_to_string(tsv)?);
-                Pipeline { lex: Lexicon::from_tsv_with(&text, true), nat: Natural::from_tsv(&text) }
+                (Lexicon::from_tsv_with(&text, true), Natural::from_tsv(&text))
             }
             c => {
                 let at = if let LexCache::At(p) = c { Some(p.as_path()) } else { None };
                 let (lex, nat, _) = crate::text::lexcache::load_or_build(tsv, true, at)?;
-                Pipeline { lex, nat }
+                (lex, nat)
             }
         })
     }
+}
 
-    /// feats as strings (featdata.feats: readings + "guessed")
-    pub fn feats<'a>(&'a self, toks: &[Tok]) -> Vec<Vec<&'a str>> {
-        toks.iter().map(|t| {
-            let mut v: Vec<&str> = t.r.iter().map(|k| self.lex.keys[*k as usize].as_str()).collect();
-            if t.guessed { v.push("guessed"); }
-            v
-        }).collect()
-    }
+/// One scored sentence.
+#[derive(Clone, Debug)]
+pub struct Scored {
+    /// the tokens of the cleaned sentence
+    pub words: Vec<String>,
+    /// why the model does not score this sentence (English, foreign, markup, no word); `scores` is then empty
+    pub skip: Option<Skip>,
+    /// per word (at most the model's 96 first): (score 0..1, lowest-energy candidate form when the word has a set)
+    pub scores: Vec<(f64, Option<String>)>,
+}
 
-    pub fn cand_refs<'a>(&'a self, cs: &'a [CandSet]) -> Vec<CandRef<'a>> {
-        cs.iter().map(|(i, g, v)| (*i, *g, v.iter().map(|(f, ks)| (f.as_str(), ks.iter().map(|k| self.lex.keys[*k as usize].as_str()).collect())).collect())).collect()
-    }
+/// Byte span of each word of a sentence in the checked text (None: not located).
+pub type Spans = Vec<Option<(usize, usize)>>;
 
-    /// score one sentence: per word (score, suggestion = lowest-energy candidate form)
-    pub fn score_sentence(&self, model: &Model, cands: &Cands, s: &str) -> (Vec<String>, Vec<(f32, Option<String>)>) {
-        let ws = tokenize(&self.lex, s);
-        let (toks, cs) = cands.record(&ws, None, None);
-        let feats = self.feats(&toks); let words: Vec<&str> = ws.iter().map(|w| w.as_str()).collect();
-        let refs = self.cand_refs(&cs);
-        let sc = model.score_parts(&feats, &words, &refs);
-        let per: Vec<(f32, Option<String>)> = sc.into_iter().enumerate().map(|(i, (s, best))| {
-            let sug = best.and_then(|b| refs.iter().find(|c| c.0 == i).map(|c| c.2[b].0.to_string()));
+/// The model side of the checker: candidate generator + record builder + model, over borrowed tables.
+pub struct Scorer<'a> { gen: Gen<'a>, ck: &'a Checker, model: &'a Model }
+
+impl<'a> Scorer<'a> {
+    /// `ck`: the fr-check rule checker whose lints are model inputs (the same one the report uses).
+    pub fn new(t: &'a Tables, ck: &'a Checker, model: &'a Model) -> Scorer<'a> { Scorer { gen: Gen::new(&t.lex, &t.nat, &t.res), ck, model } }
+
+    pub fn model(&self) -> &'a Model { self.model }
+
+    /// One sentence through the v14 path (frc-infer `v14::process`). Err when the text holds a line break.
+    pub fn score_sentence(&self, text: &str) -> Result<Scored, String> {
+        let c = clean(text);
+        let words = tokenize(self.gen.lex, &c);
+        if let Some(sk) = skip(&words, self.gen.nat) { return Ok(Scored { words, skip: Some(sk), scores: Vec::new() }); }
+        let b = Builder::new(&self.gen, self.ck, &self.model.profile.frc_ignore);
+        let r = b.record_pf(&c, &words)?;
+        let scores = self.model.score_parts(&r.feats, &r.words, &r.cands).into_iter().enumerate().map(|(i, (s, best))| {
+            let sug = best.and_then(|k| r.cands.iter().find(|c| c.0 == i).map(|c| c.2[k].0.clone()));
             (s, sug)
         }).collect();
-        (ws, per)
+        Ok(Scored { words, skip: None, scores })
     }
 
-    /// score every non-blank sentence of a text, with the sentence's byte offset in `text`
-    pub fn score_sentences(&self, model: &Model, cands: &Cands, text: &str) -> Vec<ScoredSentence> {
-        sent_split(text).into_iter().filter(|s| !s.trim().is_empty()).map(|s| {
+    /// Every non-blank sentence of a one-line text (`sent_split`), with its byte offset in `text` and the byte span of
+    /// each of its words in `text` (None for a word that cannot be located). A sentence that cannot be scored (a line
+    /// break inside it) is left out.
+    pub fn score_line(&self, text: &str) -> Vec<(Scored, Spans)> {
+        sent_split(text).into_iter().filter(|s| !s.trim().is_empty()).filter_map(|s| {
             let offset = s.as_ptr() as usize - text.as_ptr() as usize;
-            let (words, scores) = self.score_sentence(model, cands, s);
-            ScoredSentence { offset, words, scores }
+            let sc = self.score_sentence(s).ok()?;
+            let spans = token_spans(s, &sc.words).into_iter().map(|x| x.map(|(a, b)| (offset + a, offset + b))).collect();
+            Some((sc, spans))
         }).collect()
-    }
-
-    /// score every sentence of a text; returns per sentence (words, per-word (score, suggestion))
-    pub fn score_text(&self, model: &Model, cands: &Cands, text: &str) -> Vec<(Vec<String>, Vec<(f32, Option<String>)>)> {
-        self.score_sentences(model, cands, text).into_iter().map(|s| (s.words, s.scores)).collect()
-    }
-
-    pub fn flags(&self, model: &Model, cands: &Cands, text: &str, thr: f32) -> Vec<Flag> {
-        let mut out = Vec::new();
-        for (si, (ws, per)) in self.score_text(model, cands, text).into_iter().enumerate() {
-            for (wi, (s, sug)) in per.into_iter().enumerate() {
-                if s > thr { out.push(Flag { sent: si, word: wi, text: ws[wi].clone(), score: s, suggestion: sug.filter(|x| *x != ws[wi]) }); }
-            }
-        }
-        out
     }
 }
 
-/// Byte spans of the tokens of `tokenize(sentence)` inside `sentence` (tokens are contiguous pieces of the text,
-/// with `'` written as `’`); None for a token that cannot be found.
-pub fn token_spans(sentence: &str, toks: &[String]) -> Vec<Option<(usize, usize)>> {
-    let mut pos = 0usize;
+/// Byte spans of the tokens of `tokenize(clean(sentence))` inside the raw `sentence`, in order. A token is matched at
+/// the first position at or after the end of the previous one, with `'` in the text standing for the tokenizer's `’`;
+/// what `clean` removed (`_`, `[12]`, `[Note …]`, runs of spaces) is skipped that way. None for a token not found.
+pub fn token_spans(sentence: &str, toks: &[String]) -> Spans {
+    let chars: Vec<(usize, char)> = sentence.char_indices().collect();
+    let same = |c: char, t: char| c == t || (t == '’' && c == '\'');
+    let mut pos = 0usize;                   // index into `chars`
     toks.iter().map(|t| {
-        let rest = &sentence[pos..];
-        let skip: usize = rest.chars().take_while(|c| crate::text::pystr::is_space(*c)).map(char::len_utf8).sum();
-        let start = pos + skip;
-        let mut end = start;
-        let mut it = sentence[start..].chars();
-        for tc in t.chars() {
-            match it.next() {
-                Some(c) if c == tc || (tc == '’' && c == '\'') => end += c.len_utf8(),
-                _ => return None,
-            }
-        }
-        pos = end;
-        Some((start, end))
+        let tc: Vec<char> = t.chars().collect();
+        if tc.is_empty() || tc.len() > chars.len() { return None; }
+        let k = (pos..=chars.len() - tc.len()).find(|&k| tc.iter().enumerate().all(|(j, &x)| same(chars[k + j].1, x)))?;
+        pos = k + tc.len();
+        let end = chars.get(pos).map_or(sentence.len(), |c| c.0);
+        Some((chars[k].0, end))
     }).collect()
 }
 
 #[cfg(test)]
 mod tests {
     use super::token_spans;
+    fn v(xs: &[&str]) -> Vec<String> { xs.iter().map(|x| x.to_string()).collect() }
+
     #[test]
-    fn spans_follow_elision_and_apostrophes() {
+    fn spans_follow_elision_apostrophes_and_cleaning() {
         let s = "L'enfant  dit-il « oui ».";
-        let toks: Vec<String> = ["L’", "enfant", "dit", "-il", "«", "oui", "»", "."].iter().map(|x| x.to_string()).collect();
-        let sp = token_spans(s, &toks);
+        let sp = token_spans(s, &v(&["L’", "enfant", "dit", "-il", "«", "oui", "»", "."]));
         let got: Vec<&str> = sp.iter().map(|x| { let (a, b) = x.unwrap(); &s[a..b] }).collect();
         assert_eq!(got, vec!["L'", "enfant", "dit", "-il", "«", "oui", "»", "."]);
-        assert_eq!(token_spans("abc", &["abd".to_string()]), vec![None]);
+        // clean() removed "_" and "[12]": the words are still found in the raw text
+        let s = "Une _liberté_ rare[12] ici.";
+        let sp = token_spans(s, &v(&["Une", "liberté", "rare", "ici", "."]));
+        let got: Vec<&str> = sp.iter().map(|x| { let (a, b) = x.unwrap(); &s[a..b] }).collect();
+        assert_eq!(got, vec!["Une", "liberté", "rare", "ici", "."]);
+        assert_eq!(token_spans("abc", &v(&["abd"])), vec![None]);
     }
 }
