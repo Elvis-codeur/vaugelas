@@ -1,9 +1,14 @@
 name: Release
-# Builds the binaries on a version tag (v0.1.0, ...) and attaches them to a draft GitHub release.
-# The data files (model.frcm.gz, lexicon.tsv.gz) are a separate release (tag data-1), uploaded by hand: see README.
+# On a version tag (v0.2.0, ...): builds the binaries for Linux, Windows and macOS (Intel + Apple silicon), adds the
+# data files of the data release named in crates/vaugelas-cli/src/data.rs (DATA_SET), and makes a DRAFT release
+# whose notes are the tag's CHANGELOG.md section. Nothing is published: the owner publishes the draft.
+# On a pull request that changes this file: builds and tests the four platforms only (no release), so a change to
+# the workflow is checked before it is needed.
 on:
   push:
     tags: ["v*"]
+  pull_request:
+    paths: [".github/workflows/release.yml"]
 permissions:
   contents: write
 jobs:
@@ -14,9 +19,12 @@ jobs:
         include:
           - { os: ubuntu-latest, target: x86_64-unknown-linux-gnu, name: linux-x86_64 }
           - { os: windows-latest, target: x86_64-pc-windows-msvc, name: windows-x86_64 }
-          - { os: macos-13, target: x86_64-apple-darwin, name: macos-x86_64 }
+          - { os: macos-15-intel, target: x86_64-apple-darwin, name: macos-x86_64 }
           - { os: macos-14, target: aarch64-apple-darwin, name: macos-arm64 }
     runs-on: ${{ matrix.os }}
+    env:
+      # the archive name: the tag (v0.2.0), or "test" on a pull request
+      VERSION: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'test' }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -30,18 +38,20 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          d=vaugelas-${GITHUB_REF_NAME}-${{ matrix.name }}
-          mkdir "$d"
-          cp target/${{ matrix.target }}/release/vaugelas README.md NOTICE.md LICENSE-TBD.md "$d"/
+          d=vaugelas-${VERSION}-${{ matrix.name }}
+          mkdir -p "$d/docs"
+          cp target/${{ matrix.target }}/release/vaugelas README.md CHANGELOG.md NOTICE.md LICENSE-TBD.md "$d"/
+          cp docs/capabilities.md docs/capabilities.en.md "$d/docs/"
           tar czf "$d.tar.gz" "$d"
           shasum -a 256 "$d.tar.gz" > "$d.tar.gz.sha256"
       - name: Package (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $d = "vaugelas-$env:GITHUB_REF_NAME-${{ matrix.name }}"
-          New-Item -ItemType Directory $d | Out-Null
-          Copy-Item target/${{ matrix.target }}/release/vaugelas.exe, README.md, NOTICE.md, LICENSE-TBD.md $d
+          $d = "vaugelas-$env:VERSION-${{ matrix.name }}"
+          New-Item -ItemType Directory "$d/docs" -Force | Out-Null
+          Copy-Item target/${{ matrix.target }}/release/vaugelas.exe, README.md, CHANGELOG.md, NOTICE.md, LICENSE-TBD.md $d
+          Copy-Item docs/capabilities.md, docs/capabilities.en.md "$d/docs"
           Compress-Archive -Path $d -DestinationPath "$d.zip"
           (Get-FileHash "$d.zip" -Algorithm SHA256).Hash.ToLower() + "  $d.zip" | Out-File -Encoding ascii "$d.zip.sha256"
       - uses: actions/upload-artifact@v4
@@ -52,13 +62,31 @@ jobs:
             vaugelas-*.zip*
   release:
     needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           path: dist
           merge-multiple: true
+      - name: Data files and release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          set=$(sed -n 's/^pub const DATA_SET: &str = "\(.*\)";/\1/p' crates/vaugelas-cli/src/data.rs)
+          echo "data set: $set"
+          gh release download "$set" --repo "$GITHUB_REPOSITORY" --dir dist \
+            --pattern model.frcm.gz --pattern lexicon.tsv.gz --pattern resources.tar.gz --pattern SHA256SUMS
+          (cd dist && grep -E ' (model\.frcm|lexicon\.tsv|resources\.tar)\.gz$' SHA256SUMS | sha256sum -c -)
+          mv dist/SHA256SUMS "dist/data-SHA256SUMS.txt"
+          # the CHANGELOG section of this tag: from its heading to the next one
+          awk -v t="## [${GITHUB_REF_NAME#v}]" 'index($0, t) == 1 {on = 1; next} on && /^## \[/ {exit} on' CHANGELOG.md > notes.md
+          test -s notes.md || { echo "no CHANGELOG.md section for ${GITHUB_REF_NAME}" >&2; exit 1; }
       - uses: softprops/action-gh-release@v2
         with:
           draft: true
+          name: Vaugelas ${{ github.ref_name }}
+          body_path: notes.md
           files: dist/*
