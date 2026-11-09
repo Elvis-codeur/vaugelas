@@ -71,7 +71,7 @@ pub fn tokenize(text: &str) -> Vec<Tok> {
         if !toks[k].word && matches!(toks[k].text.as_str(), "." | "!" | "?" | "…") {
             let boundary = k + 1 == len || {
                 let nx = &toks[k + 1];
-                if nx.word { nx.text.chars().next().map_or(false, |c| c.is_uppercase()) }
+                if nx.word { nx.text.chars().next().is_some_and(|c| c.is_uppercase()) }
                 else { matches!(nx.text.as_str(), "«" | "—" | "(" | "\"" | "“" | "-" | "–") }
             };
             if boundary { sid += 1; pending = true; }
