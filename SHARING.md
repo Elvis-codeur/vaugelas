@@ -42,7 +42,7 @@ data files next to it, and follow the README."*
 
 ## Before the first invitation (checklist)
 
-- [ ] Merge the pull request of the H1 switch (vaugelas #1) and push the tag (see CHANGELOG.md, "How to release").
+- [ ] Merge the pull request of the H1 switch and push the tag (see [RELEASING.md](RELEASING.md)).
 - [ ] Publish the data release `data-2` and the `v0.2.0` release (both are drafts until you publish them).
 - [ ] Read [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md): nothing there blocks a private share with a few friends, but
       decide about `tests/fixtures/sample.txt` (held-out test sentences) first.
