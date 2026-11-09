@@ -32,7 +32,8 @@ start (files already correct are kept).
   unknown model instead of guessing its settings.
 
 ### Fixed
-- The macOS Intel build used the retired `macos-13` runner; it now uses `macos-15-intel`.
+- The macOS builds used retired GitHub runners (`macos-13`, retired 2025-12-04; `macos-14`, retired 2026-11-02); they
+  now use `macos-15-intel` (Intel) and `macos-15` (Apple silicon).
 
 ## [0.1.0] - 2026-11-07
 
