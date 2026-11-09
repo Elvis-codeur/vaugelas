@@ -1,5 +1,5 @@
-//! Lexicon tables of the energy model: `parse_tag`, `READ` (form -> readings) and `BYLEM` (lemma -> V/A readings),
-//! a port of training-design/natural.py.
+//! The part of training-design/natural.py featdata depends on: `parse_tag`, `READ` (form -> readings) and `BYLEM`
+//! (lemma -> V/A readings).
 use crate::text::pystr::lower;
 use crate::text::fxhash::FxMap;
 
@@ -34,7 +34,7 @@ pub fn parse_tag(tag: &str) -> (char, u8, u8, u8, u16) {
     let pos = t.first().map_or('?', |x| x.chars().next().unwrap());
     let (mut g, mut n, mut p, mut mo) = (0u8, 0u8, 0u8, 0u16);
     for r in t.iter().skip(1) {
-        let r = r.split(|c| c == ';' || c == '#').next().unwrap();
+        let r = r.split([';', '#']).next().unwrap_or("");
         match r {
             "m" => g |= 1,
             "f" => g |= 2,
@@ -84,10 +84,5 @@ impl Natural {
             }
         }
         nat
-    }
-
-    #[allow(dead_code)]
-    fn rs(&self, low: &str) -> impl Iterator<Item = &Reading> {
-        self.read.get(low).into_iter().flatten().map(move |i| &self.readings[*i as usize])
     }
 }

@@ -5,10 +5,9 @@ mod lt;
 use serde_json::json;
 use std::io::Read;
 use std::path::Path;
-use std::sync::Arc;
 use std::time::Instant;
 use vaugelas::model::pipeline::LexCache;
-use vaugelas::report::{Issue, Settings, Vaugelas, DEFAULT_THRESHOLD};
+use vaugelas::report::{Data, DataPaths, Issue, Settings, Vaugelas};
 
 const HELP: &str = "\
 Vaugelas : correcteur de grammaire française / French grammar checker
@@ -18,13 +17,16 @@ UTILISATION / USAGE
   vaugelas check -f FICHIER.txt           vérifie un fichier / check a file
   vaugelas check                          lit l’entrée standard / read standard input
   vaugelas serve [--port 8081]            serveur compatible LanguageTool / LanguageTool-compatible server
-  vaugelas download-model                 télécharge les données / download the data files
+  vaugelas download-model                 installe les données / install the data files
   vaugelas info                           où sont les données / where the data files are
+  vaugelas score -f PHRASES.txt           scores du modèle, une phrase par ligne (JSON) /
+                                          model scores, one sentence per line (JSON)
 
 OPTIONS
   --json               sortie JSON / JSON output
-  --threshold T        seuil du modèle, 0 à 1 (défaut 0.9571) ; plus haut = moins d’alertes /
-                       model threshold (default 0.9571); higher = fewer flags
+  --threshold T        seuil du modèle, 0 à 1 (défaut : celui du modèle, 0.9914 pour H1) ;
+                       plus haut = moins d’alertes / model threshold (default: the model's own,
+                       0.9914 for H1); higher = fewer flags
   --rules-only         règles seulement / rules only
   --model-only         modèle seulement / model only
   --strict-typo        conventions typographiques (espaces insécables, …) / typographic conventions
@@ -32,7 +34,12 @@ OPTIONS
   --int8               modèle en int8 (moins de mémoire) / int8 model weights (less memory)
   --data DIR           dossier des données / data directory (or VAUGELAS_DATA)
   serve: --port N (8081), --host H (127.0.0.1), --threads N
-  download-model: --from DIR (copy local files NAME or NAME.gz instead of downloading), --force
+  download-model: --from DIR (install from a folder holding model.frcm.gz, lexicon.tsv.gz and
+                  resources.tar.gz instead of downloading), --force
+
+Au premier lancement, les données sont prises dans le dossier du programme (ou le dossier courant)
+si les trois fichiers y sont, sinon téléchargées. / On first run the data files are taken from the
+program's folder (or the current folder) when the three files are there, else downloaded.
 ";
 
 struct Args { rest: Vec<String>, flags: Vec<String>, opts: Vec<(String, String)> }
@@ -59,8 +66,10 @@ impl Args {
 fn fail(msg: &str) -> ! { eprintln!("vaugelas: {msg}"); std::process::exit(1) }
 
 fn settings(a: &Args) -> Settings {
-    let threshold = a.opt("--threshold").map(|t| t.parse::<f32>().unwrap_or_else(|_| fail("--threshold needs a number between 0 and 1")))
-        .unwrap_or(DEFAULT_THRESHOLD);
+    let threshold = a.opt("--threshold").map(|t| match t.parse::<f64>() {
+        Ok(x) if (0.0..=1.0).contains(&x) => x,
+        _ => fail("--threshold needs a number between 0 and 1"),
+    });
     Settings {
         threshold,
         rules: !a.flag("--model-only"),
@@ -71,19 +80,24 @@ fn settings(a: &Args) -> Settings {
 }
 
 /// Load everything; installs the data first when it is missing (first run).
-fn load(a: &Args) -> Vaugelas {
+fn load(a: &Args) -> Data {
     let dir = data::data_dir(a.opt("--data"));
     let files = data::Files::in_dir(&dir);
     if !files.complete() {
         eprintln!("Première utilisation : installation des données / first run: installing the data files");
-        if let Err(e) = data::install(&dir, None, false) {
-            fail(&format!("{e}\nInstallez les données avec / install the data with: vaugelas download-model [--from DIR]"));
+        let local = data::local_source();
+        if let Err(e) = data::install(&dir, local.as_deref(), false) {
+            let names = data::download_names().join(", ");
+            fail(&format!("{e}\n\nTéléchargez ces trois fichiers depuis la page des versions (Releases) et posez-les à côté du programme,\n\
+                           puis relancez-le / download these three files from the Releases page, put them next to the program and run it again:\n  {names}\n\
+                           (ou / or: vaugelas download-model --from DOSSIER)"));
         }
     }
     let t0 = Instant::now();
-    let vg = Vaugelas::load(&files.lex_dir, &files.lexicon, &files.model, a.flag("--int8"), &LexCache::NextToTsv).unwrap_or_else(|e| fail(&e));
-    eprintln!("chargé en / loaded in {:.1} s", t0.elapsed().as_secs_f64());
-    vg
+    let paths = DataPaths { lex_dir: &files.lex_dir, lexicon_tsv: &files.lexicon, resources: &files.resources, model: &files.model };
+    let d = Data::load(&paths, a.flag("--int8"), &LexCache::NextToTsv).unwrap_or_else(|e| fail(&e));
+    eprintln!("chargé en / loaded in {:.1} s (modèle / model {})", t0.elapsed().as_secs_f64(), d.model.profile.name);
+    d
 }
 
 fn line_col(text: &str, b: usize) -> (usize, usize) {
@@ -114,8 +128,8 @@ fn print_text(text: &str, issues: &[Issue]) {
     }
 }
 
-fn cmd_check(a: &Args) {
-    let s = settings(a);
+/// The texts to check: arguments after the command, the file of -f, else standard input.
+fn inputs(a: &Args) -> Vec<String> {
     let mut texts: Vec<String> = a.rest[1..].to_vec();
     if let Some(f) = a.opt("-f") {
         let bytes = std::fs::read(f).unwrap_or_else(|e| fail(&format!("{f}: {e}")));
@@ -126,11 +140,17 @@ fn cmd_check(a: &Args) {
         std::io::stdin().read_to_string(&mut t).unwrap_or_else(|e| fail(&format!("stdin: {e}")));
         texts.push(t);
     }
-    let vg = load(a);
-    let cands = vg.cands();
+    texts
+}
+
+fn cmd_check(a: &Args) {
+    let s = settings(a);
+    let texts = inputs(a);
+    let d = load(a);
+    let vg = Vaugelas::new(&d);
     let json = a.flag("--json");
     for (k, t) in texts.iter().enumerate() {
-        let issues = vg.check(&cands, t, &s);
+        let issues = vg.check(t, &s);
         if json {
             println!("{}", json!({"matches": issues.iter().map(|i| issue_json(t, i)).collect::<Vec<_>>()}));
         } else {
@@ -140,20 +160,44 @@ fn cmd_check(a: &Args) {
     }
 }
 
+/// Every non-blank line is one sentence, scored as a whole (no sentence splitting), exactly like
+/// `frc-infer v14`: one JSON line per sentence {"text", "skip", "words", "scores", "suggestions"}.
+fn cmd_score(a: &Args) {
+    let texts = inputs(a);
+    let d = load(a);
+    let vg = Vaugelas::new(&d);
+    let out = std::io::stdout();
+    let mut out = std::io::BufWriter::new(out.lock());
+    use std::io::Write;
+    for line in texts.iter().flat_map(|t| t.lines()).filter(|l| !l.trim().is_empty()) {
+        let v = match vg.scorer.score_sentence(line) {
+            Ok(sc) => json!({
+                "text": line, "skip": sc.skip.map(|k| k.name()), "words": sc.words,
+                "scores": sc.scores.iter().map(|x| x.0).collect::<Vec<_>>(),
+                "suggestions": sc.scores.iter().map(|x| x.1.clone()).collect::<Vec<_>>(),
+            }),
+            Err(e) => json!({"text": line, "error": e}),
+        };
+        writeln!(out, "{v}").unwrap_or_else(|e| fail(&format!("stdout: {e}")));
+    }
+    out.flush().unwrap_or_else(|e| fail(&format!("stdout: {e}")));
+}
+
 fn main() {
     let a = Args::parse().unwrap_or_else(|e| fail(&e));
-    if a.flag("--help") || a.flag("-h") || a.rest.first().map_or(true, |c| c == "help") { print!("{HELP}"); return; }
+    if a.flag("--help") || a.flag("-h") || a.rest.first().is_none_or(|c| c == "help") { print!("{HELP}"); return; }
     if a.flag("--version") || a.flag("-V") { println!("vaugelas {}", env!("CARGO_PKG_VERSION")); return; }
     match a.rest[0].as_str() {
         "check" => cmd_check(&a),
+        "score" => cmd_score(&a),
         "serve" => {
             let port: u16 = a.opt("--port").map(|p| p.parse().unwrap_or_else(|_| fail("--port needs a number"))).unwrap_or(8081);
             let host = a.opt("--host").unwrap_or("127.0.0.1").to_string();
             let threads: usize = a.opt("--threads").map(|p| p.parse().unwrap_or_else(|_| fail("--threads needs a number")))
                 .unwrap_or_else(|| std::thread::available_parallelism().map_or(2, |n| n.get().min(4)));
             let s = settings(&a);
-            let vg = Arc::new(load(&a));
-            lt::serve(vg, &host, port, threads.max(1), s).unwrap_or_else(|e| fail(&e));
+            let d = load(&a);
+            lt::serve(&Vaugelas::new(&d), &host, port, threads.max(1), s).unwrap_or_else(|e| fail(&e));
         }
         "download-model" => {
             let dir = data::data_dir(a.opt("--data"));
@@ -163,8 +207,8 @@ fn main() {
         "info" => {
             let dir = data::data_dir(a.opt("--data"));
             let f = data::Files::in_dir(&dir);
-            println!("vaugelas {}\ndata directory: {}\ncomplete: {}", env!("CARGO_PKG_VERSION"), dir.display(), f.complete());
-            for p in [&f.model, &f.lexicon, &f.lex_dir] { println!("  {} {}", if p.exists() { "ok     " } else { "missing" }, p.display()); }
+            println!("vaugelas {}\ndata directory: {}\ndata set: {}\ncomplete: {}", env!("CARGO_PKG_VERSION"), dir.display(), data::DATA_SET, f.complete());
+            for p in [&f.model, &f.lexicon, &f.resources, &f.lex_dir] { println!("  {} {}", if p.exists() { "ok     " } else { "missing" }, p.display()); }
         }
         c => fail(&format!("unknown command '{c}' (see vaugelas --help)")),
     }

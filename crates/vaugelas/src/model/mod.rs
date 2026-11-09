@@ -3,17 +3,24 @@
 //! reading embedding = sum of its atom embeddings; word input = mean over present readings + sum of extra-atom
 //! embeddings; + learned position; nn.TransformerEncoder (norm_first, ReLU FFN, no dropout); final LayerNorm;
 //! energy of candidate c at word i = -(cand_emb(c) . proj(h_i)) / sqrt(d); score = 1 - softmax(-E)[shown form].
+//!
+//! Ported from fr-check-infer (frc-infer, commit cc7d94e).
+//!
+//! The input encoding (atoms per reading, extra slots, candidates per set) comes from the model header (`enc`), see
+//! `featmodel`. The records come from the v14 data path (`record`, `cands`, `resources`), so only v14-encoded models
+//! are accepted; the inference settings that belong to a model (fr-check lints it reads, threshold) are in `profile`.
 pub mod cands;
+pub mod drops;
+pub mod ebm_data;
+pub mod featmodel;
 pub mod pipeline;
+pub mod profile;
+pub mod record;
+pub mod resources;
+use featmodel::{encode, Enc, Encoded, Vocab};
+use profile::Profile;
 use serde_json::Value;
-use std::collections::HashMap;
 use std::io::Read;
-
-pub const MAXR: usize = 6;
-pub const MAXF: usize = 12;
-pub const MAXT: usize = 96;
-pub const MAXK: usize = 8;
-const CLOSED: [&str; 5] = ["DET", "PREP", "PRON", "CONJ", "NEG"];
 
 /// a Linear weight (dout x din): f32, or int8 with one scale per output row (symmetric, scale = max|row| / 127)
 pub enum Wt { F32(Vec<f32>), I8 { q: Vec<i8>, s: Vec<f32>, din: usize } }
@@ -32,7 +39,7 @@ impl Wt {
     pub fn bytes(&self) -> usize { match self { Wt::F32(w) => 4 * w.len(), Wt::I8 { q, s, .. } => q.len() + 4 * s.len() } }
 }
 
-thread_local! { static SCRATCH: std::cell::RefCell<Vec<f32>> = std::cell::RefCell::new(Vec::new()); }
+thread_local! { static SCRATCH: std::cell::RefCell<Vec<f32>> = const { std::cell::RefCell::new(Vec::new()) }; }
 
 /// y = x . W^T + b for either weight kind (int8: rows expanded to f32 in a per-thread scratch buffer, then sgemm)
 fn linear_w(x: &[f32], t: usize, din: usize, w: &Wt, b: &[f32], dout: usize) -> Vec<f32> {
@@ -57,7 +64,11 @@ pub struct Layer {
 
 pub struct Model {
     pub d: usize, pub heads: usize, ff: usize,
-    pub vocab: Vec<String>, stoi: HashMap<String, u32>, lem_unk: u32,
+    pub vocab: Vocab,
+    /// the input encoding the model was trained with
+    pub enc: Enc,
+    /// inference settings that belong to this model (lint inputs, default threshold)
+    pub profile: Profile,
     emb: Vec<f32>, pos: Vec<f32>, layers: Vec<Layer>, norm_w: Vec<f32>, norm_b: Vec<f32>,
     proj_w: Wt, proj_b: Vec<f32>,
 }
@@ -70,29 +81,36 @@ impl Model {
     /// int8 = true: every Linear of the encoder and the energy projection stored as int8 + per-row scales
     pub fn load_opts(path: &str, int8: bool) -> Result<Model, String> {
         let mut f = std::fs::File::open(path).map_err(|e| format!("{path}: {e}"))?;
-        let mut buf = Vec::new(); f.read_to_end(&mut buf).map_err(|e| e.to_string())?;
-        if &buf[..6] != b"FRCM1\n" { return err("not a model.frcm file"); }
-        let hl = u64::from_le_bytes(buf[6..14].try_into().unwrap()) as usize;
+        let mut buf = Vec::new(); f.read_to_end(&mut buf).map_err(|e| format!("{path}: {e}"))?;
+        if buf.len() < 14 || &buf[..6] != b"FRCM1\n" { return err("not a model.frcm file"); }
+        let hl = u64::from_le_bytes(buf[6..14].try_into().map_err(|_| "truncated header")?) as usize;
+        if buf.len() < 14 + hl { return err("truncated model.frcm header"); }
         let head: Value = serde_json::from_slice(&buf[14..14 + hl]).map_err(|e| e.to_string())?;
         let data = &buf[14 + hl..];
         let tens = head["tensors"].as_object().ok_or("no tensors")?;
-        let get = |name: &str| -> Result<Vec<f32>, String> {
+        let shape = |name: &str| -> Result<Vec<usize>, String> {
             let t = tens.get(name).ok_or(format!("missing tensor {name}"))?;
-            let n: usize = t["shape"].as_array().unwrap().iter().map(|x| x.as_u64().unwrap() as usize).product();
-            let off = t["offset"].as_u64().unwrap() as usize;
-            Ok(data[off..off + 4 * n].chunks_exact(4).map(|c| f32::from_le_bytes(c.try_into().unwrap())).collect())
+            t["shape"].as_array().ok_or(format!("{name}: no shape"))?.iter().map(|x| x.as_u64().map(|v| v as usize).ok_or(format!("{name}: bad shape"))).collect()
+        };
+        let get = |name: &str| -> Result<Vec<f32>, String> {
+            let n: usize = shape(name)?.iter().product();
+            let off = tens[name]["offset"].as_u64().ok_or(format!("{name}: no offset"))? as usize;
+            let b = data.get(off..off + 4 * n).ok_or(format!("{name}: data out of range"))?;
+            Ok(b.as_chunks::<4>().0.iter().map(|c| f32::from_le_bytes(*c)).collect())
         };
         let cfg = &head["cfg"];
-        let d = cfg["d"].as_u64().unwrap() as usize; let nl = cfg["layers"].as_u64().unwrap() as usize;
+        let num = |k: &str| cfg.get(k).and_then(Value::as_u64).map(|v| v as usize).ok_or(format!("model cfg: {k} missing"));
+        let d = num("d")?; let nl = num("layers")?;
         let mut heads = cfg.get("heads").and_then(|h| h.as_u64()).unwrap_or(4) as usize;
         if d % heads != 0 { heads = 4; }
-        let vocab: Vec<String> = head["vocab"].as_array().unwrap().iter().map(|s| s.as_str().unwrap().to_string()).collect();
-        let stoi: HashMap<String, u32> = vocab.iter().enumerate().map(|(i, s)| (s.clone(), i as u32)).collect();
-        let lem_unk = *stoi.get("lem=?").unwrap_or(&2);
+        let itos: Vec<String> = head["vocab"].as_array().ok_or("no vocab")?.iter().map(|s| s.as_str().map(String::from).ok_or("bad vocab entry")).collect::<Result<_, _>>()?;
+        let enc = Enc::from_header(&head)?;
+        if !enc.v14 { return err("this model has no v14 encoding in its header (a round-3 model such as ebm_ds?): Vaugelas needs a v14 model"); }
+        let profile = Profile::from_header(&head)?;
         let mut layers = Vec::new();
         for l in 0..nl {
             let p = |s: &str| format!("net.body.layers.{l}.{s}");
-            let ff = tens[&p("linear1.bias")]["shape"][0].as_u64().unwrap() as usize;
+            let ff = shape(&p("linear1.bias"))?[0];
             let w = |v: Vec<f32>, din: usize| if int8 { Wt::quantize(v, din) } else { Wt::F32(v) };
             layers.push(Layer {
                 in_w: w(get(&p("self_attn.in_proj_weight"))?, d), in_b: get(&p("self_attn.in_proj_bias"))?,
@@ -103,9 +121,11 @@ impl Model {
                 n2_w: get(&p("norm2.weight"))?, n2_b: get(&p("norm2.bias"))?,
             });
         }
-        let l1b = layers[0].l1_b.len();
-        Ok(Model { d, heads, ff: l1b, stoi, lem_unk, vocab,
-            emb: get("net.emb.weight")?, pos: get("net.pos.weight")?, layers,
+        let l1b = layers.first().map_or(2 * d, |l| l.l1_b.len());
+        let emb = get("net.emb.weight")?;
+        if emb[..d].iter().any(|x| *x != 0.0) { return err("embedding row 0 (padding) is not zero"); }
+        Ok(Model { d, heads, ff: l1b, vocab: Vocab::new(itos), enc, profile,
+            emb, pos: get("net.pos.weight")?, layers,
             norm_w: get("net.norm.weight")?, norm_b: get("net.norm.bias")?,
             proj_w: if int8 { Wt::quantize(get("proj.weight")?, d) } else { Wt::F32(get("proj.weight")?) }, proj_b: get("proj.bias")? })
     }
@@ -120,42 +140,24 @@ impl Model {
         n
     }
 
-    /// featmodel.Vocab.get: unknown "lem=..." -> "lem=?", anything else unknown -> <unk> (2)
-    fn id(&self, a: &str) -> u32 {
-        match self.stoi.get(a) { Some(&i) => i, None => if a.starts_with("lem=") { self.lem_unk } else { 2 } }
-    }
-    /// atom ids of one reading key, truncated to MAXF (featmodel.encode / ebm_model.enc_reads)
-    fn key_ids(&self, key: &str) -> Vec<u32> {       // no cache: Model is shared read-only across threads
-        key.split('|').map(|a| self.id(a)).take(MAXF).collect()
-    }
     fn add_row(&self, out: &mut [f32], id: u32) {
         let r = &self.emb[id as usize * self.d..(id as usize + 1) * self.d];
         for (o, x) in out.iter_mut().zip(r) { *o += x; }
     }
-    /// mean over present readings of (sum of atom embeddings); readings beyond MAXR ignored
-    fn readings_emb(&self, keys: &[&str], out: &mut [f32]) {
+    /// Net.embed / EBM.cand_emb for one word: mean over present readings (first atom id > 0) of the sum of their
+    /// atom embeddings (padding slots add row 0, which is zero: checked at load)
+    fn readings_emb(&self, reads: &[Vec<u32>], out: &mut [f32]) {
         let mut n = 0usize; let mut acc = vec![0f32; self.d];
-        for k in keys.iter().take(MAXR) {
-            let ids = self.key_ids(k);
-            if ids.first().map_or(true, |&i| i == 0) { continue; }     // has = R[..., 0] > 0
+        for ids in reads {
+            if ids.first().is_none_or(|&i| i == 0) { continue; }
             let mut r = vec![0f32; self.d];
-            for &i in &ids { self.add_row(&mut r, i); }
+            for &i in ids { self.add_row(&mut r, i); }
             for (a, x) in acc.iter_mut().zip(&r) { *a += x; }
             n += 1;
         }
         let div = n.max(1) as f32;
         for (o, a) in out.iter_mut().zip(&acc) { *o = a / div; }
     }
-}
-
-/// featmodel.token_extras + "guessed" flag, first 4 kept
-fn extras(word: &str, reads: &[&str], guessed: bool) -> Vec<String> {
-    let mut ex = Vec::new();
-    if reads.len() == 1 && reads[0] == "pos=PUNCT" { ex.push(format!("pc={word}")); }
-    else if !reads.is_empty() && reads.iter().filter(|r| r.starts_with("pos=")).all(|r| {
-        let p = r.split('|').next().unwrap(); CLOSED.contains(&&p[4..]) }) { ex.push(format!("cw={}", word.to_lowercase())); }
-    if guessed { ex.push("guessed".into()); }
-    ex.truncate(4); ex
 }
 
 /// y (t x dout) = x (t x din) . W^T + b, W stored dout x din (PyTorch Linear); sgemm from matrixmultiply
@@ -185,16 +187,14 @@ fn layer_norm(x: &[f32], t: usize, d: usize, w: &[f32], b: &[f32]) -> Vec<f32> {
 }
 
 impl Model {
-    /// encoder output h (T x d) for one sentence record (feats, words)
-    pub fn hidden(&self, feats: &[Vec<&str>], words: &[&str]) -> (Vec<f32>, usize) {
-        let d = self.d; let t = words.len().min(MAXT);
+    /// encoder output h (T x d) for one encoded sentence (EBM.hidden)
+    pub fn hidden(&self, x: &Encoded) -> (Vec<f32>, usize) {
+        let d = self.d; let t = x.t;
         let mut h = vec![0f32; t * d];
         for i in 0..t {
-            let fs = &feats[i];
-            let reads: Vec<&str> = fs.iter().copied().filter(|x| *x != "guessed").take(MAXR).collect();
             let row = &mut h[i * d..(i + 1) * d];
-            self.readings_emb(&reads, row);
-            for e in extras(words[i], &reads, fs.contains(&"guessed")) { let id = self.id(&e); self.add_row(row, id); }
+            self.readings_emb(&x.reads[i], row);
+            for &id in &x.extras[i] { self.add_row(row, id); }
             for (o, p) in row.iter_mut().zip(&self.pos[i * d..(i + 1) * d]) { *o += p; }
         }
         let hd = d / self.heads; let scale = 1.0 / (hd as f32).sqrt();
@@ -211,7 +211,7 @@ impl Model {
                         let k = &qkv[j * 3 * d + d + hh * hd..j * 3 * d + d + (hh + 1) * hd];
                         let s: f32 = q.iter().zip(k).map(|(a, b)| a * b).sum::<f32>() * scale; sc[j] = s; if s > mx { mx = s; }
                     }
-                    let mut z = 0f32; for j in 0..t { sc[j] = (sc[j] - mx).exp(); z += sc[j]; }
+                    let mut z = 0f32; for x in sc.iter_mut() { *x = (*x - mx).exp(); z += *x; }
                     let o = &mut att[i * d + hh * hd..i * d + (hh + 1) * hd];
                     for j in 0..t {
                         let p = sc[j] / z; let v = &qkv[j * 3 * d + 2 * d + hh * hd..j * 3 * d + 2 * d + (hh + 1) * hd];
@@ -230,51 +230,33 @@ impl Model {
         (layer_norm(&h, t, d, &self.norm_w, &self.norm_b), t)
     }
 
-    /// per-word error scores of one ebm JSONL record (ebm_model.token_scores, no corruption)
-    pub fn scores(&self, rec: &Value) -> Vec<f32> {
-        let words: Vec<&str> = rec["words"].as_array().unwrap().iter().map(|w| w.as_str().unwrap()).collect();
-        let feats: Vec<Vec<&str>> = rec["feats"].as_array().unwrap().iter()
-            .map(|fs| fs.as_array().unwrap().iter().map(|x| x.as_str().unwrap()).collect()).collect();
-        let empty = Vec::new();
-        let cands: Vec<CandRef> = rec.get("cands").and_then(|c| c.as_array()).unwrap_or(&empty).iter().map(|c| {
-            let c = c.as_array().unwrap();
-            (c[0].as_u64().unwrap() as usize, c[1].as_u64().unwrap() as usize,
-             c[2].as_array().unwrap().iter().map(|x| { let x = x.as_array().unwrap();
-                (x[0].as_str().unwrap(), x[1].as_array().unwrap().iter().map(|k| k.as_str().unwrap()).collect()) }).collect())
-        }).collect();
-        self.score_parts(&feats, &words, &cands).into_iter().map(|(s, _)| s).collect()
+    /// scores from parsed parts, encoded with the model's own encoding (see `featmodel::encode`)
+    pub fn score_parts<S: AsRef<str>>(&self, feats: &[Vec<S>], words: &[S], cands: &[featmodel::SetRef<S>]) -> Vec<(f64, Option<usize>)> {
+        self.score(&encode(&self.enc, &self.vocab, words, feats, cands))
     }
 
-    /// scores from parsed parts: per word (score, index of the lowest-energy candidate when the word has a set).
-    /// Same rules as ebm_model.encode: words beyond MAXT ignored, first MAXK candidates, a set whose gold index is
-    /// >= MAXK skipped; score = 1 - softmax(-E)[shown form = candidate 0].
-    pub fn score_parts(&self, feats: &[Vec<&str>], words: &[&str], cands: &[CandRef]) -> Vec<(f32, Option<usize>)> {
-        let t = words.len().min(MAXT); let mut out = vec![(0f32, None); t];
-        let todo: Vec<&CandRef> = cands.iter().filter(|(i, g, cs)| *i < t && *g < cs.len().min(MAXK)).collect();
-        if todo.is_empty() { return out; }
-        let (h, _) = self.hidden(feats, words);
+    /// ebm_model.token_scores for one encoded sentence: per word (score, index of the lowest-energy candidate when
+    /// the word has a set). score = 1 - softmax(-E)[candidate 0 = the shown form], computed like Python's
+    /// `1.0 - row[0].item()` (fp32 probability, the subtraction in double); words without a set score 0.
+    pub fn score(&self, x: &Encoded) -> Vec<(f64, Option<usize>)> {
+        let mut out = vec![(0f64, None); x.t];
+        if x.sets.is_empty() { return out; }
+        let (h, _) = self.hidden(x);
         let d = self.d; let sq = (d as f32).sqrt();
-        for (i, _, cs) in todo {
+        for (i, cs) in &x.sets {
             let i = *i;
             let hp = linear_w(&h[i * d..(i + 1) * d], 1, d, &self.proj_w, &self.proj_b, d);
-            let mut e: Vec<f32> = Vec::with_capacity(cs.len().min(MAXK));
-            for (_, keys) in cs.iter().take(MAXK) {
-                let mut ce = vec![0f32; d]; self.readings_emb(keys, &mut ce);
+            let mut e: Vec<f32> = Vec::with_capacity(cs.len());
+            for reads in cs {
+                let mut ce = vec![0f32; d]; self.readings_emb(reads, &mut ce);
                 e.push(-ce.iter().zip(&hp).map(|(a, b)| a * b).sum::<f32>() / sq);
             }
             let m = e.iter().map(|x| -x).fold(f32::NEG_INFINITY, f32::max);
             let z: f32 = e.iter().map(|x| (-x - m).exp()).sum();
-            let best = e.iter().enumerate().min_by(|a, b| a.1.partial_cmp(b.1).unwrap()).map(|(k, _)| k);
-            out[i] = (1.0 - (-e[0] - m).exp() / z, best);
+            let best = e.iter().enumerate().min_by(|a, b| a.1.total_cmp(b.1)).map(|(k, _)| k);
+            let p0 = (-e[0] - m).exp() / z;
+            out[i] = (1.0 - p0 as f64, best);
         }
         out
     }
-}
-
-/// one candidate set as borrowed strings: (word index, gold index, [(form, reading keys)])
-pub type CandRef<'a> = (usize, usize, Vec<(&'a str, Vec<&'a str>)>);
-
-pub fn open_lines(path: &str) -> Box<dyn std::io::BufRead> {
-    let f = std::fs::File::open(path).expect("input");
-    if path.ends_with(".gz") { Box::new(std::io::BufReader::new(flate2::read::GzDecoder::new(f))) } else { Box::new(std::io::BufReader::new(f)) }
 }

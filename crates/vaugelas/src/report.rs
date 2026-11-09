@@ -3,22 +3,21 @@
 //! The text is checked line by line (like `frc check FILE`, one document per line). On each line the rule checker
 //! gives its lints; the energy model scores every word of every sentence and flags those above the threshold. A model
 //! flag on a word that a rule already covers is merged into the rule's entry (its suggestion is added to the
-//! replacements when new), so each word appears once.
-use crate::model::cands::Cands;
-use crate::model::pipeline::{token_spans, LexCache, Pipeline};
+//! replacements when new), so each word appears once. Nothing else combines the two: the report is the plain union of
+//! the rules and the model (the learned combiner of v14 was fitted for that model only and is not used).
+use crate::model::pipeline::{LexCache, Scorer, Tables};
 use crate::model::Model;
 use crate::rules::{CheckOptions, Checker};
 use std::path::Path;
 
-/// Threshold of the shipped model (ebm_ds): 1.5% false alarms on the tuning round.
-pub const DEFAULT_THRESHOLD: f32 = 0.9571;
 /// Rule id given to the model's flags.
 pub const MODEL_RULE: &str = "VAUGELAS_MODEL";
 
 #[derive(Clone, Copy, Debug)]
 pub struct Settings {
-    /// a word is flagged by the model when its score is above this (0..1; higher = fewer, surer flags)
-    pub threshold: f32,
+    /// a word is flagged by the model when its score is above this (0..1; higher = fewer, surer flags);
+    /// None = the model's own default (`Model::profile`)
+    pub threshold: Option<f64>,
     pub rules: bool,
     pub model: bool,
     /// compute spelling suggestions (off = faster, FR_SPELL lints without suggestions)
@@ -28,7 +27,7 @@ pub struct Settings {
 }
 
 impl Default for Settings {
-    fn default() -> Self { Settings { threshold: DEFAULT_THRESHOLD, rules: true, model: true, spell_suggestions: true, strict_typography: false } }
+    fn default() -> Self { Settings { threshold: None, rules: true, model: true, spell_suggestions: true, strict_typography: false } }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -67,7 +66,7 @@ pub struct Issue {
     pub replacements: Vec<String>,
     pub source: Source,
     /// model score of the word (0..1) when the model flagged it
-    pub score: Option<f32>,
+    pub score: Option<f64>,
     pub category: Category,
 }
 
@@ -116,52 +115,68 @@ pub fn rule_description(rule: &str) -> &'static str {
     }
 }
 
-/// Rule checker + lexicon tables + model, loaded once and shared read-only between threads.
-pub struct Vaugelas { pub rules: Checker, pub pipe: Pipeline, pub model: Model }
+/// Everything loaded from the data directory, read-only: rule checker, lexicon tables + resources, model.
+pub struct Data { pub rules: Checker, pub tables: Tables, pub model: Model }
 
-impl Vaugelas {
-    /// `lex_dir`: FST lexicon of the rule checker; `lexicon_tsv`: lexicon of the model; `model`: model.frcm.
-    pub fn load(lex_dir: &Path, lexicon_tsv: &Path, model: &Path, int8: bool, cache: &LexCache) -> Result<Vaugelas, String> {
-        let rules = Checker::open(lex_dir).map_err(|e| format!("{}: {e}", lex_dir.display()))?;
-        let model = Model::load_opts(&model.to_string_lossy(), int8)?;
-        let pipe = Pipeline::load_with(lexicon_tsv, cache).map_err(|e| format!("{}: {e}", lexicon_tsv.display()))?;
-        Ok(Vaugelas { rules, pipe, model })
+/// The data files (see the CLI's `data` module for where they live).
+pub struct DataPaths<'p> {
+    /// FST lexicon of the rule checker
+    pub lex_dir: &'p Path,
+    /// lexicon of the model
+    pub lexicon_tsv: &'p Path,
+    /// corpus resources of the model's candidate lists (`interp/`, `ngram/`)
+    pub resources: &'p Path,
+    /// model.frcm
+    pub model: &'p Path,
+}
+
+impl Data {
+    /// `int8`: model weights stored as int8 (less memory, scores differ slightly).
+    pub fn load(p: &DataPaths, int8: bool, cache: &LexCache) -> Result<Data, String> {
+        let rules = Checker::open(p.lex_dir).map_err(|e| format!("{}: {e}", p.lex_dir.display()))?;
+        let model = Model::load_opts(&p.model.to_string_lossy(), int8).map_err(|e| format!("{}: {e}", p.model.display()))?;
+        let tables = Tables::load(p.lexicon_tsv, p.resources, cache)?;
+        Ok(Data { rules, tables, model })
     }
+}
 
-    /// Per-thread candidate generator (holds a memo, not shareable between threads).
-    pub fn cands(&self) -> Cands<'_> { Cands::new(&self.pipe.lex, &self.pipe.nat) }
+/// The checker over loaded `Data`. Holds no mutable state: share one between threads (`std::thread::scope`).
+pub struct Vaugelas<'a> { pub data: &'a Data, pub scorer: Scorer<'a> }
+
+impl<'a> Vaugelas<'a> {
+    pub fn new(data: &'a Data) -> Vaugelas<'a> { Vaugelas { data, scorer: Scorer::new(&data.tables, &data.rules, &data.model) } }
+
+    /// The threshold used when `Settings::threshold` is None: the model's own.
+    pub fn default_threshold(&self) -> f64 { self.data.model.profile.threshold }
 
     /// Check `text`; issues sorted by position.
-    pub fn check(&self, cands: &Cands, text: &str, s: &Settings) -> Vec<Issue> {
-        cands.limit_cache(200_000);
+    pub fn check(&self, text: &str, s: &Settings) -> Vec<Issue> {
         let mut out = Vec::new();
         let mut off = 0usize;
         for raw in text.split('\n') {
             let line = raw.strip_suffix('\r').unwrap_or(raw);
-            if !line.trim().is_empty() { out.extend(self.check_line(cands, line, s).into_iter().map(|mut i| { i.start += off; i.end += off; i })); }
+            if !line.trim().is_empty() { out.extend(self.check_line(line, s).into_iter().map(|mut i| { i.start += off; i.end += off; i })); }
             off += raw.len() + 1;
         }
         out
     }
 
-    fn check_line(&self, cands: &Cands, line: &str, s: &Settings) -> Vec<Issue> {
+    fn check_line(&self, line: &str, s: &Settings) -> Vec<Issue> {
         let mut issues: Vec<Issue> = Vec::new();
         if s.rules {
             let opts = CheckOptions { spell_suggestions: s.spell_suggestions, strict_typography: s.strict_typography };
-            for l in self.rules.check_opts(line, &opts) {
+            for l in self.data.rules.check_opts(line, &opts) {
                 if issues.iter().any(|i| i.start == l.start && i.end == l.end && i.rule == l.rule) { continue; }
                 issues.push(Issue { start: l.start, end: l.end, rule: l.rule.to_string(), message: l.message, replacements: l.suggestions,
                                     source: Source::Rules, score: None, category: Category::of_rule(l.rule) });
             }
         }
         if s.model {
-            for sent in self.pipe.score_sentences(&self.model, cands, line) {
-                let stext = &line[sent.offset..];
-                let spans = token_spans(stext, &sent.words);
+            let thr = s.threshold.unwrap_or_else(|| self.default_threshold());
+            for (sent, spans) in self.scorer.score_line(line) {
                 for (wi, (score, sug)) in sent.scores.iter().enumerate() {
-                    if *score <= s.threshold { continue; }
-                    let Some((a, b)) = spans[wi] else { continue };
-                    let (start, end) = (sent.offset + a, sent.offset + b);
+                    if *score <= thr { continue; }
+                    let Some((start, end)) = spans[wi] else { continue };
                     let word = &sent.words[wi];
                     let sug = sug.clone().filter(|x| x != word);
                     if let Some(r) = issues.iter_mut().find(|i| i.source != Source::Model && i.start < end && start < i.end) {

@@ -6,7 +6,8 @@ use std::time::{Duration, Instant};
 
 fn data() -> Option<PathBuf> {
     let d = std::env::var("VAUGELAS_DATA").map(PathBuf::from).unwrap_or_else(|_| Path::new(env!("CARGO_MANIFEST_DIR")).join("../../data"));
-    if d.join("lex/words.fst").is_file() && d.join("model.frcm").is_file() && d.join("lexicon.tsv").is_file() { Some(d) } else { eprintln!("skipping: no data at {}", d.display()); None }
+    let complete = d.join("lex/words.fst").is_file() && d.join("model.frcm").is_file() && d.join("lexicon.tsv").is_file() && d.join("resources/ngram").is_dir();
+    if complete { Some(d) } else { eprintln!("skipping: no data at {}", d.display()); None }
 }
 
 struct Kill(Child);

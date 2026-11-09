@@ -22,6 +22,7 @@ pub const SIG_CASED: u16 = 1024;
 pub const LMAP: u16 = 2048;
 pub const UMAP: u16 = 4096;
 pub const SLMAP: u16 = 8192;
+pub const PRINTABLE: u16 = 16384;
 
 fn bmp() -> &'static [u16] {
     static T: OnceLock<Vec<u16>> = OnceLock::new();
@@ -46,12 +47,16 @@ pub fn flags(c: char) -> u16 {
 }
 
 #[inline] pub fn is_w(c: char) -> bool { flags(c) & W != 0 }
+/// `str.isprintable()` on one character (what `repr` leaves unescaped)
+#[inline] pub fn is_printable(c: char) -> bool { flags(c) & PRINTABLE != 0 }
 #[inline] pub fn is_space(c: char) -> bool { flags(c) & S != 0 }
 #[inline] pub fn is_alpha(c: char) -> bool { flags(c) & ALPHA != 0 }
 #[inline] pub fn is_digit(c: char) -> bool { flags(c) & DIGIT != 0 }
 #[inline] pub fn is_decimal(c: char) -> bool { flags(c) & DEC != 0 }
 /// `c.isupper()` for one character (Py_UNICODE_ISUPPER).
 #[inline] pub fn is_upper(c: char) -> bool { flags(c) & UPPER != 0 }
+/// `c.islower()` for one character (Py_UNICODE_ISLOWER).
+#[inline] pub fn is_lower(c: char) -> bool { flags(c) & LOWER != 0 }
 
 /// `s.isalpha()`
 pub fn str_isalpha(s: &str) -> bool { !s.is_empty() && s.chars().all(is_alpha) }
@@ -154,20 +159,26 @@ pub fn universal_newlines(s: String) -> String {
     s.replace("\r\n", "\n").replace('\r', "\n")
 }
 
-/// Python `repr(str)` (used where the scripts `print` a dict).
+/// Python `repr(str)` (where the scripts `print` a dict or format `{x!r}`): quotes chosen like CPython, backslash
+/// escapes for the quote, `\\`, `\t`, `\n`, `\r`, other ASCII controls (`\xhh`) and every non-printable character
+/// (`\xhh`, `\uhhhh`, `\Uhhhhhhhh`; e.g. U+00A0 -> `\xa0`), as `str.isprintable` of the reference interpreter decides.
 pub fn repr_str(s: &str) -> String {
     let q = if s.contains('\'') && !s.contains('"') { '"' } else { '\'' };
     let mut o = String::with_capacity(s.len() + 2);
     o.push(q);
     for c in s.chars() {
+        let cp = c as u32;
         match c {
             '\\' => o.push_str("\\\\"),
             '\n' => o.push_str("\\n"),
             '\r' => o.push_str("\\r"),
             '\t' => o.push_str("\\t"),
             c if c == q => { o.push('\\'); o.push(c); }
-            c if (c as u32) < 0x20 || c as u32 == 0x7f => o.push_str(&format!("\\x{:02x}", c as u32)),
-            c => o.push(c),
+            _ if cp < 0x20 || cp == 0x7f => o.push_str(&format!("\\x{cp:02x}")),
+            _ if cp < 0x7f || is_printable(c) => o.push(c),
+            _ if cp <= 0xff => o.push_str(&format!("\\x{cp:02x}")),
+            _ if cp <= 0xffff => o.push_str(&format!("\\u{cp:04x}")),
+            _ => o.push_str(&format!("\\U{cp:08x}")),
         }
     }
     o.push(q);
@@ -188,5 +199,9 @@ mod tests {
         assert_eq!(upper("ß"), "SS");
         assert!(ci_eq('ſ', 's') && ci_eq('İ', 'i') && ci_eq('À', 'à') && !ci_eq('a', 'à'));
         assert!(str_isupper("ÉTÉ") && !str_isupper("ÉTé") && !str_isupper("12"));
+        // repr: non-printable characters escaped, printable non-ASCII raw, quote choice
+        assert_eq!(repr_str("a\u{a0}b\u{202f}c\u{ad}é’"), "'a\\xa0b\\u202fc\\xadé’'");
+        assert_eq!(repr_str("l'eau"), "\"l'eau\"");
+        assert_eq!(repr_str("'\"\u{1}\u{e0000}"), "'\\'\"\\x01\\U000e0000'");
     }
 }

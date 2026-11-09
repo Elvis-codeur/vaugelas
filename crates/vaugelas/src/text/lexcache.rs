@@ -51,7 +51,7 @@ impl<'a> R<'a> {
     }
     fn ids(&mut self) -> io::Result<Vec<u32>> {
         let n = self.len()?; let raw = self.take(n.checked_mul(4).ok_or_else(bad)?)?;
-        Ok(raw.chunks_exact(4).map(|c| u32::from_le_bytes(c.try_into().unwrap())).collect())
+        Ok(raw.as_chunks::<4>().0.iter().map(|c| u32::from_le_bytes(*c)).collect())
     }
     fn strs(&mut self) -> io::Result<Vec<String>> { let n = self.len()?; (0..n).map(|_| self.str()).collect() }
 }

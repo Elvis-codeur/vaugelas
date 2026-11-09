@@ -1,0 +1,344 @@
+family	sentence	correction
+ok	Le train de huit heures est parti avec dix minutes de retard.
+ok	Ma grand-mère cultive des tomates et des courgettes dans son jardin.
+ok	Nous avons décidé de repeindre la cuisine avant l'hiver.
+ok	Les enfants jouaient au ballon pendant que leurs parents discutaient.
+ok	Il faut que tu viennes nous voir à Lyon cet été.
+ok	Elle s'est souvenue de cette promenade au bord du lac.
+ok	Les lettres que j'ai reçues hier venaient toutes de Belgique.
+ok	Le directeur a annoncé que l'usine fermerait en mars.
+ok	Je ne sais pas si elle viendra demain.
+ok	Quand il pleut, les rues du vieux quartier deviennent glissantes.
+ok	Les chercheurs ont publié leurs résultats dans une revue scientifique.
+ok	Bien qu'il soit fatigué, il continue à travailler tard le soir.
+ok	Cette maison, nous l'avons achetée il y a dix ans.
+ok	On a entendu les cloches sonner toute la matinée.
+ok	La réunion aura lieu jeudi prochain dans la grande salle.
+ok	Les fleurs qu'il a offertes à sa mère étaient magnifiques.
+ok	Après le dîner, nous sommes allés marcher sur la plage.
+ok	Le médecin lui a conseillé de se reposer pendant une semaine.
+ok	Ils se sont parlé pendant des heures sans se fâcher.
+ok	Les élèves doivent rendre leur devoir avant vendredi.
+ok	Si j'avais su, je serais venu plus tôt.
+ok	La boulangère nous a donné deux croissants de plus.
+ok	Les feuilles mortes couvraient le chemin qui mène à la ferme.
+ok	Nous espérons que vous passerez de bonnes vacances.
+ok	Le chat s'est caché sous le lit dès qu'il a entendu l'orage.
+ok	Il lisait le journal tandis que sa femme préparait le café.
+ok	Le musée est fermé le mardi et les jours fériés.
+ok	Je vous remercie de votre lettre et de vos conseils.
+ok	Les ouvriers ont terminé la construction du pont en avance.
+ok	Elle a toujours voulu apprendre le portugais.
+ok	Le petit garçon a cassé le vase en jouant dans le salon.
+ok	Ces livres appartiennent à la bibliothèque municipale.
+ok	Personne ne savait où il était parti.
+ok	La neige est tombée toute la nuit sur les montagnes.
+ok	Les voisins nous ont invités à leur mariage.
+ok	Je pense qu'il a raison, même si son ton m'agace.
+ok	Le gouvernement prépare une nouvelle loi sur le logement.
+ok	Mon frère et moi sommes nés dans la même ville.
+ok	Cette chanson me rappelle mon enfance à la campagne.
+ok	Le professeur a expliqué la leçon une deuxième fois.
+ok	Il est important que chacun puisse donner son avis.
+ok	La voiture qu'elle a louée était trop petite pour nous cinq.
+ok	Les pommes de terre doivent cuire vingt minutes.
+ok	Nous nous sommes rencontrés à l'université il y a longtemps.
+ok	Le vent soufflait si fort que les volets claquaient.
+ok	Elle a ouvert la fenêtre pour faire entrer un peu d'air frais.
+ok	Ce film a reçu plusieurs prix dans des festivals internationaux.
+ok	J'ai oublié mes clés chez toi hier soir.
+ok	Les oiseaux migrateurs reviennent chaque printemps.
+ok	Le maire a inauguré la nouvelle école primaire.
+ok	Elles se sont promis de s'écrire chaque semaine.
+ok	On ne voit bien qu'avec le cœur.
+ok	Le facteur passe tous les matins vers dix heures.
+ok	Nous avons dû annuler notre voyage à cause de la grève.
+ok	La plupart des invités sont arrivés en retard.
+ok	Il a plu pendant tout le week-end.
+ok	Je me demande pourquoi elle n'a pas répondu à mon message.
+ok	Les tableaux exposés dans cette salle datent du dix-septième siècle.
+ok	Le chien aboie dès qu'un inconnu s'approche de la porte.
+ok	Vous trouverez la gare au bout de cette avenue.
+ok	Mes cousins habitent à la campagne, près d'une rivière.
+ok	Le gâteau que tu as fait était délicieux.
+ok	Elle travaille dans un laboratoire de recherche à Grenoble.
+ok	Les étudiants se sont plaints du bruit dans la bibliothèque.
+ok	Il faudrait que nous partions avant la nuit.
+ok	Le spectacle commencera dès que tout le monde sera assis.
+ok	Ma sœur est infirmière dans un hôpital de Marseille.
+ok	Nous avons vu un renard traverser la route.
+ok	Les résultats de l'enquête seront connus la semaine prochaine.
+ok	Ce restaurant sert une cuisine simple et généreuse.
+ok	Les enfants se sont endormis avant la fin du film.
+ok	Il m'a prêté son vélo pour la journée.
+ok	Les montagnes que nous avons gravies étaient couvertes de brouillard.
+ok	La conférence a été reportée au mois de juin.
+ok	J'aimerais que tu me dises la vérité.
+ok	Le jardinier a taillé les rosiers ce matin.
+ok	Les deux équipes se sont affrontées sous la pluie.
+ok	On dit que cette forêt est hantée.
+ok	Elle a été élue présidente de l'association.
+ok	Les élections ont été annulées par le juge.
+ok	Ces chaussures sont trop grandes pour moi.
+ok	Mon grand-père racontait souvent des histoires de guerre.
+ok	Nous avons acheté du pain, du fromage et des fruits.
+ok	La fenêtre de la chambre donne sur la cour.
+ok	Il n'y a plus de lait dans le réfrigérateur.
+ok	Les vendanges ont commencé plus tôt cette année.
+ok	Le témoin a reconnu l'homme qu'il avait vu ce soir-là.
+ok	Je crois qu'ils ont oublié notre rendez-vous.
+ok	Le bateau a quitté le port à l'aube.
+ok	Ces exercices sont plus difficiles que ceux d'hier.
+ok	Elle chantait en faisant la vaisselle.
+ok	Les enfants ont construit une cabane au fond du jardin.
+ok	Je n'ai jamais vu une mer aussi calme.
+ok	Le verre est tombé de la table et s'est brisé.
+ok	Elle porte une robe verte et un chapeau de paille.
+ok	Il se dirige vers la sortie sans dire un mot.
+ok	C'est la première fois que je viens ici.
+ok	Il a perdu la foi après la mort de son ami.
+ok	Le foie gras est une spécialité du Sud-Ouest.
+ok	La cour de l'école est entourée de grands arbres.
+ok	Le cours de piano commence à cinq heures.
+ok	Ce chemin est plus court que la route nationale.
+ok	Sa mère est institutrice dans un petit village.
+ok	Le maire a reçu les habitants à la mairie.
+ok	Il a payé cent euros pour ce manteau.
+ok	Le blessé avait perdu beaucoup de sang.
+ok	Il est parti sans dire au revoir.
+ok	Le pin est un arbre qui pousse bien dans les Landes.
+ok	Elle a une voix douce et grave à la fois.
+ok	Le train roule sur la voie de gauche.
+ok	Le comte habitait un château au bord de la Loire.
+ok	Ma fille aime qu'on lui lise un conte avant de dormir.
+ok	Il a fait ses comptes à la fin du mois.
+ok	Le chant des oiseaux me réveille chaque matin.
+ok	Les vaches paissent dans le champ voisin.
+ok	Il fait beau temps depuis une semaine.
+ok	Il a tant travaillé qu'il est tombé malade.
+ok	Ce colis a un poids de trois kilos.
+ok	Nous avons mangé des petits pois et du riz.
+ok	Les enfants sont partis en vacances chez leurs grands-parents.
+ok	Elle est allée à la poste pour envoyer un colis.
+ok	Ou bien tu viens avec nous, ou bien tu restes ici.
+ok	Je ne sais pas où j'ai mis mes lunettes.
+ok	Ses parents habitent à Toulouse depuis vingt ans.
+ok	Ces arbres ont plus de cent ans.
+ok	Il se lave les mains avant de manger.
+ok	Ce garçon est le meilleur élève de la classe.
+ok	Les gens sont venus nombreux pour la fête du village.
+ok	Quant à moi, je préfère rester à la maison.
+ok	Quand elle est arrivée, tout le monde dormait.
+ok	Il ne peut pas venir parce qu'il est malade.
+ok	Il y a peu de monde dans les rues ce matin.
+ok	Il n'y a ni eau ni électricité dans ce refuge.
+ok	Ça ne sert à rien de crier.
+ok	Il a pris sa voiture pour aller au travail.
+ok	Pose le livre là, sur la table.
+ok	Les entreprises ont présenté leurs comptes à leurs actionnaires.
+ok	Je leur ai dit de venir plus tôt.
+ok	Elle s'en va demain matin.
+ok	Tous les matins, il court au bord du canal.
+ok	Toute la famille était réunie pour Noël.
+ok	Quelles que soient tes raisons, tu aurais dû prévenir.
+ok	J'ai rencontré quelques amis au marché.
+ok	Le lundi, je vais à la piscine avec ma sœur.
+ok	Il parle couramment l'anglais et l'allemand.
+ok	Les Français aiment le pain frais.
+ok	En janvier, il fait souvent très froid dans l'Est.
+ok	Elle étudie la philosophie à la Sorbonne.
+ok	Ce matin, la lumière était douce sur les toits de Paris.
+ok	Il faut que vous sachiez la vérité.
+ok	Je doute qu'il puisse finir avant ce soir.
+ok	Après qu'il est parti, la maison est devenue silencieuse.
+ok	Si tu viens demain, nous irons au cinéma.
+ok	Nous aurions aimé vous accompagner.
+ok	Ils ont voulu partir tôt pour éviter les embouteillages.
+ok	Vous avez bien fait de lui en parler.
+ok	J'ai entendu dire que le magasin allait fermer.
+ok	Elle a laissé tomber son téléphone dans l'eau.
+ok	Les enfants, rangez vos affaires avant de sortir.
+ok	Le vieux pêcheur répara ses filets sur le quai.
+ok	Ils marchèrent longtemps avant d'apercevoir le village.
+ok	La nuit tombait lorsque nous arrivâmes à l'auberge.
+ok	« Viens ici ! » cria-t-elle depuis la fenêtre.
+ok	Peut-être viendra-t-il nous voir dimanche.
+ok	Dans la vallée coule une rivière paisible.
+ok	Le prix de l'essence a encore augmenté cette semaine.
+ok	La police a ouvert une enquête sur l'incendie.
+ok	L'équipe de France s'est qualifiée pour la finale.
+ok	Le projet de loi sera examiné par le Sénat en octobre.
+ok	Selon les experts, la croissance devrait ralentir l'an prochain.
+ok	Le logiciel affiche un message d'erreur au démarrage.
+ok	Cliquez sur le bouton pour enregistrer vos modifications.
+ok	Le serveur a été redémarré après la mise à jour.
+ok	Ce fichier contient la liste des clients de l'année dernière.
+ok	Merci de me confirmer votre présence avant lundi.
+ok	Je vous prie d'agréer mes salutations distinguées.
+ok	Nous accusons réception de votre demande du 3 mars.
+ok	Veuillez trouver ci-joint le contrat signé.
+ok	Le rapport de 2025 montre une baisse de 12 % des accidents.
+ok	Ils ont parcouru 450 kilomètres en deux jours.
+ok	J'ai payé 35 euros pour deux places de théâtre.
+ok	Victor Hugo est né à Besançon en 1802.
+ok	Marie et Paul se marient au mois de mai.
+ok	La Seine traverse Paris d'est en ouest.
+ok	Elle a lu tous les romans de Zola pendant l'été.
+ok	Le Petit Prince a été traduit dans des centaines de langues.
+ok	Il était une fois un roi qui avait trois filles.
+ok	La lune éclairait faiblement le sentier.
+ok	Rien ne pressait, et pourtant il courait.
+ok	Que de souvenirs dans cette vieille malle !
+ok	Pourquoi ne m'as-tu rien dit ?
+ok	Est-ce que tu as fini tes devoirs ?
+ok	Combien de temps faut-il pour aller à Lille ?
+ok	Quelle belle journée pour une promenade !
+ok	Il paraît que la boulangerie du coin a fermé.
+ok	C'est en forgeant qu'on devient forgeron.
+ok	Mieux vaut tard que jamais.
+ok	L'homme que tu as vu hier est mon oncle.
+ok	La femme dont je t'ai parlé arrive demain.
+ok	Voici la maison où je suis né.
+ok	Le stylo avec lequel j'écris est presque vide.
+ok	Ce que je préfère, c'est le silence du matin.
+ok	Les arbres dont les feuilles tombent sont des chênes.
+sv	Les enfants joue dans la cour de l'école.	joue→jouent
+sv	Mes amis est arrivés hier soir.	est→sont
+sv	Nous avons mangé et nous somme partis.	somme→sommes
+sv	Le chien des voisins aboient toute la nuit.	aboient→aboie
+sv	Tu as oublié tes clés et tu cherche partout.	cherche→cherches
+sv	Les oiseaux chante dès le lever du soleil.	chante→chantent
+sv	Ils mange au restaurant tous les vendredis.	mange→mangent
+sv	La plupart des élèves a réussi l'examen.	a→ont
+sv	Je pense qu'ils viendra demain.	viendra→viendront
+sv	Elle et moi allons au marché, puis elle rentrent.	rentrent→rentre
+sv	Les fleurs du jardin pousse très vite au printemps.	pousse→poussent
+sv	Vous avez raison, mais vous parle trop vite.	parle→parlez
+sv	C'est moi qui a fait ce gâteau.	a→ai
+sv	Les élèves que j'ai vus hier travaille bien.	travaille→travaillent
+pp_etre	Les élections ont été annulés par le juge.	annulés→annulées
+pp_etre	Elle est partis sans dire au revoir.	partis→partie
+pp_etre	Mes sœurs sont arrivé en retard.	arrivé→arrivées
+pp_etre	La porte a été ouvert par le vent.	ouvert→ouverte
+pp_etre	Les maisons ont été construit en 1950.	construit→construites
+pp_etre	Nous sommes allé au cinéma hier.	allé→allés
+pp_etre	Ma tante est né à Bordeaux.	né→née
+pp_etre	Les lettres ont été envoyé ce matin.	envoyé→envoyées
+pp_avoir	Les fleurs que j'ai acheté sont fanées.	acheté→achetées
+pp_avoir	La lettre qu'il a écrit était très longue.	écrit→écrite
+pp_avoir	Ces films, je les ai vu deux fois.	vu→vus
+pp_avoir	Les clés que tu as perdu étaient dans ta poche.	perdu→perdues
+pp_avoir	Elle a mangée toute la tarte.	mangée→mangé
+pp_avoir	Ils ont finis leur travail avant midi.	finis→fini
+pp_avoir	Nous avons parlés avec le directeur.	parlés→parlé
+adj	Elle porte une robe vert et des chaussures noires.	vert→verte
+adj	Les rues étaient désert pendant la nuit.	désert→désertes
+adj	J'ai acheté des pommes très bon.	bon→bonnes
+adj	Ces histoires sont vraiment intéressant.	intéressant→intéressantes
+adj	Une grand maison se dresse au bout du chemin.	grand→grande
+adj	Les murs sont blanc et les volets bleus.	blanc→blancs
+adj	La soupe est trop chaud pour les enfants.	chaud→chaude
+det	Il a acheté un voiture neuve.	un→une
+det	Nous avons visité le ville de Nantes.	le→la
+det	Ces garçon jouent au football.	garçon→garçons
+det	J'ai lu tous les livre de la bibliothèque.	livre→livres
+det	Elle a perdu son clé dans le jardin.	son→sa
+det	Les enfant regardent la télévision.	enfant→enfants
+inf_pp	Il a manger toute la tarte.	manger→mangé
+inf_pp	Je vais acheté du pain.	acheté→acheter
+inf_pp	Elle a décidé de partir et a quitter la ville.	quitter→quitté
+inf_pp	Nous devons terminé ce travail ce soir.	terminé→terminer
+inf_pp	Tu as oublier ton parapluie.	oublier→oublié
+inf_pp	Il faut changé les draps.	changé→changer
+inf_pp	Ils ont commencer à travailler à six heures.	commencer→commencé
+inf_pp	Je l'ai vu marché dans la rue.	marché→marcher
+hom_gram	Il a mal a la tête depuis ce matin.	a→à
+hom_gram	Elle est partie a Paris pour ses études.	a→à
+hom_gram	Mon père à acheté une nouvelle voiture.	à→a
+hom_gram	Le ciel et bleu aujourd'hui.	et→est
+hom_gram	Il est grand est fort.	est→et
+hom_gram	Je ne sais pas ou il habite.	ou→où
+hom_gram	Ils son partis très tôt.	son→sont
+hom_gram	Il a perdu sont portefeuille.	sont→son
+hom_gram	Elle a rangé ces affaires dans sa chambre.	ces→ses
+hom_gram	Il se demande se qu'il va faire.	se→ce
+hom_gram	On a fini et ils on gagné.	on→ont
+hom_gram	Ils ont pris leurs voiture.	leurs→leur
+hom_gram	Il peu venir demain.	peu→peut
+hom_gram	Sa ne m'intéresse pas du tout.	Sa→Ça
+hom_gram	Quant il fait beau, nous sortons.	Quant→Quand
+hom_gram	Il s'est mis en colère, mes il s'est calmé.	mes→mais
+hom_gram	Il c'est trompé de route.	c'est→s'est
+hom_gram	Il est parti s'en dire au revoir.	s'en→sans
+hom_lex	Il a bu un vert de vin.	vert→verre
+hom_lex	Les feuilles sont verre au printemps.	verre→vertes
+hom_lex	Il marche vert la gare.	vert→vers
+hom_lex	Je suis allé à la mère pendant les vacances.	mère→mer
+hom_lex	La mer de cette fille est professeur.	mer→mère
+hom_lex	Il a eu une crise de fois.	fois→foie
+hom_lex	Je te l'ai dit cent fois et sans foi.
+hom_lex	Il a acheté du pin à la boulangerie.	pin→pain
+hom_lex	Le conte en banque est vide.	conte→compte
+hom_lex	Il prend des court de guitare.	court→cours
+hom_lex	Elle a une belle voie pour chanter.	voie→voix
+hom_lex	Le chant de blé est doré en été.	chant→champ
+hom_lex	Le maire et la mer se promènent sur la plage.
+hom_lex	Il a perdu beaucoup de cent dans l'accident.	cent→sang
+hom_lex	Il est parti cent dire au revoir.	cent→sans
+hom_lex	Le poids chiche est une légumineuse.	poids→pois
+mood	Il faut que tu viens demain.	viens→viennes
+mood	Je veux qu'il fait ses devoirs.	fait→fasse
+mood	Bien qu'il est malade, il travaille.	est→soit
+mood	Pour que tu peux comprendre, je t'explique.	peux→puisses
+mood	Si j'aurais su, je serais venu.	aurais→avais
+mood	Il est important que vous êtes à l'heure.	êtes→soyez
+mood	Je doute qu'il a raison.	a→ait
+mood	Après qu'il soit parti, nous avons dîné.	soit→est
+conj	Il a prit le train de nuit.	prit→pris
+conj	Nous avons vu un film et nous avons rit.	rit→ri
+conj	Elle a mis son manteau et elle est sortit.	sortit→sortie
+conj	Je croyait qu'il était parti.	croyait→croyais
+conj	Tu peut venir avec nous.	peut→peux
+conj	Ils voulait partir en vacances.	voulait→voulaient
+conj	Hier, je suis aller au marché.	aller→allé
+tout	Tout les enfants sont venus.	Tout→Tous
+tout	Elle était toute contente de te voir.
+tout	Ils ont mangé tous le gâteau.	tous→tout
+leur	Je leurs ai donné un livre.	leurs→leur
+leur	Ils ont rangé leur chambres.	leur→leurs
+quel	Quelque soit ton choix, je te soutiens.	Quelque→Quel que
+capital	Nous partons Lundi matin.	Lundi→lundi
+capital	Il est né en Janvier 1990.	Janvier→janvier
+capital	Elle parle très bien le Français.	Français→français
+capital	Le Mardi, le marché est ouvert.	Mardi→mardi
+capital	J'apprends l'Espagnol depuis deux ans.	Espagnol→espagnol
+capital	La réunion est fixée au 3 Avril.	Avril→avril
+spell	Il a mangé une pome rouge.	pome→pomme
+spell	Nous avons visiter le musé du Louvre.	musé→musée
+spell	Je suis très contant de te voir.	contant→content
+spell	C'est un problème vraiment dificile.	dificile→difficile
+spell	Elle a acheté un nouvel ordinnateur.	ordinnateur→ordinateur
+typo	Il est arrivé ,puis il est reparti.	,puis→, puis
+typo	Je viens  demain.	(two spaces)→(one space)
+dup	Il est est parti hier.	est est→est
+neg	On a pas le temps de discuter.	On a pas→On n'a pas
+neg	On est pas d'accord avec toi.	On est pas→On n'est pas
+prep	Je vais au coiffeur demain.	au→chez le
+prep	Il se rappelle de son enfance.	de→
+mixed	Les enfant joue dans le jardin.	enfant→enfants, joue→jouent
+mixed	Elle a acheter des pomme vertes.	acheter→acheté, pomme→pommes
+mixed	Ils on mangé et il son parti.	on→ont, son→sont
+long	Après avoir longuement hésité, les membres du conseil municipal ont finalement voté en faveur du projet de rénovation de la place du marché.
+long	Le rapport, qui avait été commandé par le ministère au début de l'année, souligne que les inégalités entre les régions se sont encore creusées.
+long	Lorsque nous sommes arrivés au sommet, le brouillard s'était levé et nous pouvions voir toute la vallée s'étendre sous nos pieds.
+long	Les habitants du quartier, inquiets de voir les loyers augmenter, se sont réunis pour demander des explications au propriétaire.
+long	Les spécialistes que nous avons consultés estiment que les travaux dureront au moins deux ans.
+long	Les médecins de l'hôpital ont expliqué que les patients avait besoin de plus de repos.	avait→avaient
+long	La commission, après avoir examiné les dossiers, a décidée de reporter sa décision.	décidée→décidé
+long	Les chercheurs qui ont participé à l'étude sont convaincu que leurs résultats seront confirmés.	convaincu→convaincus
+foreign	The weather is nice and the children are playing in the park.
+foreign	Der Hund schläft unter dem Tisch.
+short	Merci.
+short	Bonjour à tous !
+short	Oui, bien sûr.
+short	Allez !
