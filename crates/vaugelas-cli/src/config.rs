@@ -157,16 +157,16 @@ pub const TEMPLATE: &str = r#"# Réglages de Vaugelas / Vaugelas settings
 # Seuil du modèle, entre 0 et 1 : le modèle signale un mot quand son score dépasse ce seuil.
 #   Plus bas  : Vaugelas trouve plus d'erreurs, mais signale aussi plus de mots corrects.
 #   Plus haut : moins d'alertes, presque toutes justes, mais plus d'erreurs passent.
-# Par défaut, le seuil du modèle (0.9914 pour le modèle H1), choisi pour très peu de fausses alertes : le modèle
-# seul signale à tort environ 3,5 phrases correctes sur 1 000. Exemple : « Les enfants joue dans le jardin. » passe au
-# seuil par défaut (score 0.981) et est signalée avec threshold = 0.98.
+# Par défaut, le seuil du modèle (0.9935 pour le modèle N1), choisi pour très peu de fausses alertes : le modèle
+# seul signale à tort environ 3,5 phrases correctes sur 1 000. Exemple : « Il est partit à la gare ce matin. » passe au
+# seuil par défaut (score 0.984) et est signalée avec threshold = 0.98.
 #
 # Model threshold, between 0 and 1: the model flags a word when its score is above it.
 #   Lower : Vaugelas finds more errors, but also flags more correct words.
 #   Higher: fewer flags, nearly all right, but more errors get through.
-# Default: the model's own threshold (0.9914 for model H1), chosen for very few false alarms: the model alone
-# flags about 3.5 correct sentences in 1,000. Example: "Les enfants joue dans le jardin." passes at the default threshold
-# (score 0.981) and is flagged with threshold = 0.98.
+# Default: the model's own threshold (0.9935 for model N1), chosen for very few false alarms: the model alone
+# flags about 3.5 correct sentences in 1,000. Example: "Il est partit à la gare ce matin." passes at the default threshold
+# (score 0.984) and is flagged with threshold = 0.98.
 #threshold = 0.98
 
 # Vérifier avec les règles de grammaire / check with the grammar rules

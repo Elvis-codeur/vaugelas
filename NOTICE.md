@@ -12,18 +12,19 @@ resources archive are under CC BY-SA 4.0, the lexicon under MPL-2.0 (DATA-LICENS
   with **Grammalecte 2.3.0** by Olivier R. (http://grammalecte.net, dictionary from the Dicollecte project).
   Grammalecte (the program) is distributed under GPL-3.0; its lexicon is published by its author under MPL-2.0
   ("Lexique des formes fléchies du français", Grammalecte v7.7, built the same day as the dictionary we dumped).
-- **Model** (`model.frcm`, energy model H1). Paradigm-energy model trained by the author on: public-domain French
+- **Model** (`model.frcm`, energy model N1, since 0.3.0). Paradigm-energy model trained by the author on: public-domain French
   books from Project Gutenberg (https://www.gutenberg.org), including homophone-swap pairs made from them; sentences
   from the author's generators; French Wikipedia sentences and a French grammatical-error-correction set (the
-  "natural" stream); training sentences written with DeepSeek; confusion examples written with Claude (Anthropic);
-  readings from the lexicon above; homophone candidates and pronunciations from Lexique 3.83 (below). Its
+  "natural" stream); training sentences and confusion examples written with DeepSeek; readings from the lexicon above; homophone candidates and pronunciations from Lexique 3.83 (below). Its
   vocabulary holds lemma strings from the lexicon and pronunciation strings (`snd=`) from Lexique 3.83.
 - **Resources** (`resources.tar.gz`, unpacked into `resources/`): tables the model's candidate lists read.
   Word and word-pair counts from the training books (`ngram/`, `interp/ctx_*.json`, `interp/capstats.json`);
   homophone and near-homophone lists made from **Lexique 3.83** (New, Pallier et al., http://www.lexique.org,
   CC BY-SA 4.0: forms with the same pronunciation and different lemmas; `interp/homophones_lex_1.0*.json`,
   `interp/nearhom.json`); confusion pairs mined from the training errors (`interp/mined_pairs.json`); confusion
-  partners written with Claude (`interp/cw_pairs.json`).
+  partners from the DeepSeek-written examples (`interp/cw_pairs.json`).
+- No training data and no resource of the model was written by Claude (Anthropic) since 0.3.0 (model N1, data set
+  `data-3`); the earlier model H1 (data set `data-2`) was trained partly on Claude-written examples.
 
 The rights questions these raise are listed in [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md).
 
