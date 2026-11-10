@@ -30,6 +30,11 @@ Research of 2026-11-10 (primary texts; not legal advice): see the findings below
       *Decision (owner, 2026-11-10):* the narrow reading applies. Vaugelas is a small French grammar checker, not a
       rival model or a product competing with Anthropic's services, so the Claude-written data stays and no request
       is sent to Anthropic.
+      *Superseded the same day (owner, 2026-11-10: "I don't want to break your terms of service"):* from 0.3.0 the model
+      is N1, trained from scratch on DeepSeek-written replacements of every Claude-written training example (cw, cw2)
+      and of `cw_pairs.json` (data set `data-3`). No training data or resource of the shipped model comes from Claude.
+      The hand-written test fixtures (`tests/fixtures/sample.txt`, `sentences.tsv`) were written with Claude; they are
+      test inputs, not training data, and the outputs are assigned to the user.
 - [x] **Wikipedia (CC BY-SA 4.0): model under CC BY-SA 4.0 (owner, 2026-11-10).** Creative Commons' guidance on AI training: "CC licenses apply
       only when copyright permission is required. If exceptions or limitations apply, then the CC license terms don't
       apply" (the EU text-and-data-mining exception, art. 4 of directive 2019/790, may apply), but also: if models

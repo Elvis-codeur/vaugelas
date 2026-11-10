@@ -18,7 +18,7 @@ quand il en a une.
 Il réunit deux correcteurs et donne **un seul rapport, une entrée par mot** :
 
 - **des règles** écrites à la main, très rapides et précises ;
-- **un modèle appris** (un réseau de neurones « à énergie », version H1) : il compare chaque mot aux autres formes
+- **un modèle appris** (un réseau de neurones « à énergie », version N1, entraînée sans aucune donnée écrite par Claude) : il compare chaque mot aux autres formes
   qu'il pourrait prendre (*annulés / annulées / annulé…*, *vert / verre / vers*) et signale celui qui ne va pas dans la
   phrase, avec la forme la plus plausible. Il lit aussi ce que les règles ont trouvé.
 
@@ -34,7 +34,7 @@ Il vous faut **quatre fichiers**, tous sur la page des versions (*Releases*) du 
    - Windows : `vaugelas-v0.2.1-windows-x86_64.zip`
    - Mac avec puce Apple (M1, M2, M3…) : `vaugelas-v0.2.1-macos-arm64.tar.gz` ; Mac Intel : `…-macos-x86_64.tar.gz`
    - Linux : `vaugelas-v0.2.1-linux-x86_64.tar.gz`
-2. les trois fichiers de données : `model.frcm.gz` (71 Mo), `lexicon.tsv.gz` (3 Mo) et `resources.tar.gz` (9 Mo).
+2. les trois fichiers de données : `model.frcm.gz` (70 Mo), `lexicon.tsv.gz` (3 Mo) et `resources.tar.gz` (9 Mo).
 
 Décompressez le programme (double-clic sur le `.zip` ou le `.tar.gz`), puis **posez les trois fichiers de données
 dans le même dossier que le programme**, sans les décompresser. C'est tout.
@@ -70,7 +70,7 @@ ligne 1, colonne 23 : « annulés »  →  annulées
 
 - Vérifier un fichier texte : `vaugelas check -f mon_texte.txt` (texte brut en UTF-8).
 - Résultat en JSON (pour d'autres programmes) : `vaugelas check --json "…"`.
-- **Plus ou moins d'alertes.** Le modèle signale un mot quand son score dépasse un seuil, 0.9914 par défaut (choisi
+- **Plus ou moins d'alertes.** Le modèle signale un mot quand son score dépasse un seuil, 0.9935 par défaut (choisi
   pour que le modèle signale environ 3,5 phrases sur 1 000 phrases correctes de livres). `--threshold 0.9` : il signale davantage
   de fautes, mais aussi davantage de phrases correctes ; `--threshold 0.999` : moins d'alertes, plus sûres.
 - Règles seulement : `--rules-only` ; modèle seulement : `--model-only`.
@@ -90,8 +90,8 @@ Linux `~/.config/vaugelas`). Ouvrez-le avec un éditeur de texte : chaque régla
 anglais. On peut aussi le poser à côté du programme. Ce qu'on peut y régler :
 
 - **le seuil du modèle** (`threshold`) : plus bas, Vaugelas trouve plus de fautes mais signale aussi plus de phrases
-  correctes. Par exemple, « Les enfants joue dans le jardin. » passe au seuil par défaut (0.9914) et est signalée à
-  0.98 ;
+  correctes. Par exemple, « Il est partit à la gare ce matin. » passe au seuil par défaut (0.9935, score 0.984) et est
+  signalée à 0.98 ;
 - les règles et le modèle (chacun peut être coupé), les suggestions d'orthographe, la typographie soignée, le modèle
   en int8 (moins de mémoire) ;
 - les règles ou catégories à ne jamais signaler (`disabled_rules`, `disabled_categories` ; liste des règles :
@@ -191,7 +191,7 @@ participle (*manger / mangé*), capitals, unknown words and typography, with a c
 
 It combines two checkers into **one report, one entry per word**:
 - **hand-written rules**, very fast and precise;
-- **a learned model** (a paradigm-energy neural network, version H1) that compares each word with the other forms it
+- **a learned model** (a paradigm-energy neural network, version N1, trained without any data written by Claude) that compares each word with the other forms it
   could take and flags the one that does not fit, together with the most plausible form. It also reads what the
   rules found.
 
@@ -203,7 +203,7 @@ Strengths and weaknesses, with examples: [docs/capabilities.en.md](docs/capabili
 You need **four files**, all on the project's *Releases* page:
 1. the program for your system: `vaugelas-v0.2.1-windows-x86_64.zip`, `…-macos-arm64.tar.gz` (Apple silicon),
    `…-macos-x86_64.tar.gz` (Intel Mac) or `…-linux-x86_64.tar.gz`;
-2. the three data files: `model.frcm.gz` (71 MB), `lexicon.tsv.gz` (3 MB), `resources.tar.gz` (9 MB).
+2. the three data files: `model.frcm.gz` (70 MB), `lexicon.tsv.gz` (3 MB), `resources.tar.gz` (9 MB).
 
 Unpack the program, then **put the three data files in the same folder as the program**, still compressed. On first
 run Vaugelas finds them there, checks their sha256 and installs them in your user data folder (about ten seconds);
@@ -224,12 +224,12 @@ then *Run anyway*.
 vaugelas check "Les élections ont été annulés par le juge."
 vaugelas check -f my_text.txt
 vaugelas check --json "…"              # machine-readable output
-vaugelas check --threshold 0.9 "…"     # more model flags (and more false alarms); default 0.9914
+vaugelas check --threshold 0.9 "…"     # more model flags (and more false alarms); default 0.9935
 vaugelas check --rules-only "…"        # rules only; --model-only for the model only
 vaugelas --help
 ```
 
-The default threshold 0.9914 makes the model flag about 3.5 of 1,000 correct sentences of published books.
+The default threshold 0.9935 makes the model flag about 3.5 of 1,000 correct sentences of published books.
 
 ### Settings
 
@@ -244,7 +244,7 @@ Linux `~/.config/vaugelas`); a `settings.toml` next to the program is read too. 
 setting is explained in it, in French and English. It sets:
 
 - **the model threshold** (`threshold`): lower finds more errors but also flags more correct sentences. For example,
-  "Les enfants joue dans le jardin." passes at the default threshold (0.9914) and is flagged at 0.98;
+  "Il est partit à la gare ce matin." passes at the default threshold (0.9935, score 0.984) and is flagged at 0.98;
 - rules and model (each can be switched off), spelling suggestions, strict typography, the int8 model (less memory);
 - rules or categories never to report (`disabled_rules`, `disabled_categories`; list of rules: `vaugelas rules`);
 - the data folder, and the server's host, port and threads.
@@ -316,16 +316,16 @@ vaugelas score -f sentences.txt      # per-word model scores, one sentence per l
 - `crates/vaugelas-cli`: the `vaugelas` program (CLI, data install, LanguageTool-compatible server).
 - The model and text code is a port of the research implementation (fr-check-infer, commit cc7d94e). Parity:
   `tests/fixtures/sentences.tsv` holds 343 hand-written sentences and `sentences.frc-infer-v14.jsonl` the scores
-  `frc-infer v14` gives them with H1; the `parity_h1` test compares every per-word score (2026-11-09: max |diff| 0
-  on 3,256 words). `tools/parity.sh FRC_INFER DATA_DIR` regenerates the reference. The rule checker is checked
+  `frc-infer v14` gives them with the shipped model (N1); the `parity_model` test compares every per-word score
+  (2026-11-10: max |diff| 0 on 3,256 words). `tools/parity.sh FRC_INFER DATA_DIR` regenerates the reference. The rule checker is checked
   against `frc` on `tests/fixtures/sample.txt` (1,006 hand-written sentences, byte-identical).
-- **Data release.** The data is not in git. Data set `data-2` = release `data-2` with `model.frcm.gz`,
+- **Data release.** The data is not in git. Data set `data-3` = release `data-3` with `model.frcm.gz`,
   `lexicon.tsv.gz`, `resources.tar.gz` and `SHA256SUMS`. The sha256 of the uncompressed files (and of every file
   inside the resources archive) are in `crates/vaugelas-cli/src/data.rs`. `VAUGELAS_DATA_URL` points the download
   at another location. While the repository is private, anonymous downloads fail: put the files next to the program
   or use `download-model --from DIR`.
 - Binary releases: push a tag `vX.Y.Z`; `.github/workflows/release.yml` builds Linux x86_64, Windows x86_64, macOS
-  x86_64 and arm64, adds the data files of `data-2`, and makes a draft release. See [CHANGELOG.md](CHANGELOG.md).
+  x86_64 and arm64, adds the data files of the current data set, and makes a draft release. See [CHANGELOG.md](CHANGELOG.md).
 
 ### Licence
 
