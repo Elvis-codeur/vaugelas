@@ -1,11 +1,12 @@
-# Licences: what is decided and what is still open
+# Licence research (record)
 
 **Decided (owner, 2026-11-10): the code is licensed MIT** (file LICENSE, `license` in Cargo.toml), option C below:
 the owner wants the software as open as possible. This requires that no rule code was translated from Grammalecte's
-GPL rule files (see the rule-origin question below; the owner confirms it in RIGHTS-CHECKLIST.md).
+GPL rule files; checked on 2026-11-10, none was (RIGHTS-CHECKLIST.md).
 
-**Still open:** the licence of the model weights and of the resources archive (they depend on the DeepSeek,
-Anthropic, Wikipedia and GEC-set checks), and the upstream confirmation of the dictionary's MPL-2.0.
+**Decided (owner, 2026-11-10): model weights and resources archive under CC BY-SA 4.0; the lexicon stays MPL-2.0**
+(DATA-LICENSES.md). The checks behind it (DeepSeek, Anthropic, Wikipedia, Lexique 3.83, GEC set, dictionary) are
+in RIGHTS-CHECKLIST.md.
 
 The rest of this file is the record of what was found. This file lists what was found about the origin of each part and the options that fit those
 constraints. Nothing here is legal advice. The facts were checked against local copies on 2026-11-07, and
