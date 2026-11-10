@@ -45,7 +45,7 @@ data files next to it, and follow the README."*
 - [x] Merge the pull request of the H1 switch and push the tag (see [RELEASING.md](RELEASING.md)).
 - [x] Publish the data release `data-2` and the program release (v0.2.0 on 2026-11-10, then v0.2.1).
 - [x] Licences chosen (code MIT; model and resources CC BY-SA 4.0; lexicon MPL-2.0): [DATA-LICENSES.md](DATA-LICENSES.md).
-- [ ] Read [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md): nothing there blocks a private share with a few friends, but
-      decide first whether the old `tests/fixtures/sample.txt` (held-out test sentences, replaced on 2026-11-09) must
-      also leave the git history (commit db7ff56).
+- [x] The old `tests/fixtures/sample.txt` (held-out test sentences) left the git history on 2026-11-10.
+- [ ] Before inviting anyone: ask GitHub Support to remove the references to the old commits kept by the closed
+      pull requests #2 and #4 (see RIGHTS-CHECKLIST.md), or accept that collaborators could open them there.
 - [ ] Optionally protect `main` (above).
