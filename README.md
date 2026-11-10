@@ -149,9 +149,10 @@ la phrase exacte, ce que Vaugelas a répondu, ce que vous attendiez, et le résu
 Le programme (le code) est sous licence **MIT** ([LICENSE](LICENSE)) : vous pouvez l'utiliser, le modifier, le
 redistribuer et l'inclure dans d'autres logiciels, même commerciaux, à condition de garder la mention de copyright et
 le texte de la licence.
-Les fichiers de données ont leurs propres conditions : le lexique vient du dictionnaire de Grammalecte (Olivier R.,
-MPL-2.0) ; la licence du modèle n'est pas encore choisie. Détails : [NOTICE.md](NOTICE.md),
-[LICENSE-TBD.md](LICENSE-TBD.md), [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md).
+Les fichiers de données ont leurs propres licences : le modèle et l'archive de ressources sont sous **CC BY-SA 4.0**
+(utilisation libre, même commerciale, en citant les sources et en partageant les versions modifiées sous la même
+licence) ; le lexique, issu du dictionnaire de Grammalecte (Olivier R.), reste sous **MPL-2.0**. Détails et sources à
+citer : [DATA-LICENSES.md](DATA-LICENSES.md), [NOTICE.md](NOTICE.md).
 
 ---
 
@@ -284,6 +285,7 @@ vaugelas score -f sentences.txt      # per-word model scores, one sentence per l
 The program (the code) is licensed under the **MIT licence** ([LICENSE](LICENSE)): you may use, change and
 redistribute it and include it in other software, commercial or not, as long as you keep the copyright notice and
 the licence text.
-The data files have their own terms: the lexicon comes from the Grammalecte dictionary (Olivier R., MPL-2.0); the
-model's licence is not chosen yet. Details: [NOTICE.md](NOTICE.md), [LICENSE-TBD.md](LICENSE-TBD.md),
-[RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md).
+The data files have their own licences: the model and the resources archive are under **CC BY-SA 4.0** (free use,
+commercial too, with credit to the sources and changed versions shared under the same licence); the lexicon, from
+the Grammalecte dictionary (Olivier R.), stays under **MPL-2.0**. Details and the credits to give:
+[DATA-LICENSES.md](DATA-LICENSES.md), [NOTICE.md](NOTICE.md).

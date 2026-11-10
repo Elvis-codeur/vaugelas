@@ -3,7 +3,8 @@
 ## [Unreleased]
 
 ### Changed
-- The code is licensed under the MIT licence (LICENSE); the data files keep their own terms (#7).
+- Licences (#7): the code is under the MIT licence (LICENSE); the model and the resources archive under CC BY-SA 4.0,
+  the lexicon under MPL-2.0 (DATA-LICENSES.md, texts in LICENSES/). Release archives ship them.
 
 ### Fixed
 - `vaugelas --version` (and `-V`) printed the help instead of the version when given without a command (#5).

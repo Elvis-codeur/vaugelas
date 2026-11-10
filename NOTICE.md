@@ -2,16 +2,16 @@
 
 Vaugelas Corrector. Copyright the author (Elvis-codeur).
 
-The code in this repository is licensed under the MIT licence: see LICENSE. The data files below are not covered by that licence; each keeps its own terms
-(LICENSE-TBD.md).
+The code in this repository is licensed under the MIT licence: see LICENSE. The data files below are not covered by that licence: the model and the
+resources archive are under CC BY-SA 4.0, the lexicon under MPL-2.0 (DATA-LICENSES.md, licence texts in LICENSES/).
 
 ## Data (downloaded separately, not part of this repository)
 
 - **Lexicon** (`lexicon.tsv`, and the files built from it: `lex/`, `lexicon.tsv.lem.frclex`). This is a dump of
   the French dictionary "Français (Toutes variantes)" (`fr-allvars`, 515,637 entries, built 2025-12-15) shipped
   with **Grammalecte 2.3.0** by Olivier R. (http://grammalecte.net, dictionary from the Dicollecte project).
-  Grammalecte is distributed under GPL-3.0, and its dictionary data under its own licence (MPL-2.0 according to
-  upstream; to be verified, see LICENSE-TBD.md).
+  Grammalecte (the program) is distributed under GPL-3.0; its lexicon is published by its author under MPL-2.0
+  ("Lexique des formes fléchies du français", Grammalecte v7.7, built the same day as the dictionary we dumped).
 - **Model** (`model.frcm`, energy model H1). Paradigm-energy model trained by the author on: public-domain French
   books from Project Gutenberg (https://www.gutenberg.org), including homophone-swap pairs made from them; sentences
   from the author's generators; French Wikipedia sentences and a French grammatical-error-correction set (the
