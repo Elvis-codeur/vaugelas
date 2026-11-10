@@ -14,7 +14,10 @@ path = "src/main.rs"
 
 [dependencies]
 vaugelas = { path = "../vaugelas" }
+serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order", "float_roundtrip"] }
+# the settings file (settings.toml)
+toml = { version = "0.8", default-features = false, features = ["parse"] }
 flate2 = { version = "1", default-features = false, features = ["zlib-rs"] }
 sha2 = "0.10"
 tiny_http = "0.12"
