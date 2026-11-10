@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Added
+- **Settings file** `settings.toml` (#9): every setting of `check` and `serve` (model threshold, rules / model on or
+  off, spelling suggestions, strict typography, int8, rules and categories never to report, data folder, server host,
+  port and threads), written once instead of typed on every command. `vaugelas settings --init` creates it with every
+  setting explained (French and English); `vaugelas settings` shows the file in use and the settings in force;
+  `vaugelas rules` lists the rule names. Read from `--config FILE`, `VAUGELAS_CONFIG`, next to the program, or the
+  user's settings folder. Command-line options take precedence. A mistake in the file is an error that names it.
+- `disabled_rules` / `disabled_categories` now apply to `vaugelas check` too (before: server requests only).
+
 ### Changed
 - Licences (#7): the code is under the MIT licence (LICENSE); the model and the resources archive under CC BY-SA 4.0,
   the lexicon under MPL-2.0 (DATA-LICENSES.md, texts in LICENSES/). Release archives ship them.
