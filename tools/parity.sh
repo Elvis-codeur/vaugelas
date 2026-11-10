@@ -20,4 +20,4 @@ ignore=$("${CARGO_TARGET_DIR:-$root/target}/release/vaugelas" info --data "$data
 awk -F'\t' 'NR > 1 { printf "{\"id\": \"%d\", \"text\": \"%s\"}\n", NR - 1, $2 }' "$fx/sentences.tsv" > "$tmp/in.jsonl"
 "$frc_infer" v14 "$tmp/in.jsonl" "$fx/sentences.frc-infer-v14.jsonl" --model "$data/model.frcm" --frc-ignore "$ignore" \
   --lexicon "$data/lexicon.tsv" --resources "$data/resources" --frc-lex "$data/lex"
-VAUGELAS_DATA="$data" cargo test --release --locked -p vaugelas --test parity_h1 -- --nocapture 2>&1 | grep -E '^parity:|test result|panicked'
+VAUGELAS_DATA="$data" cargo test --release --locked -p vaugelas --test parity_model -- --nocapture 2>&1 | grep -E '^parity:|test result|panicked'

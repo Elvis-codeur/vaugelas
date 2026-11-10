@@ -24,11 +24,20 @@ pub struct Profile {
 
 struct Known { source_sha256: &'static str, name: &'static str, frc_ignore: &'static [&'static str], threshold: f64 }
 
-/// The v15 lint list: every lint except spelling, typography, spacing and duplicated words. H1 was trained with the
+/// The v15 lint list: every lint except spelling, typography, spacing and duplicated words. H1 and N1 were trained with the
 /// capitalisation lints (FR_CAPITAL) as inputs; v14 also ignored CAPITAL and MAJ.
 pub const IGN_V15: [&str; 6] = ["SPELL", "TYPO", "SPACE", "NBSP", "DUP", "DOUBLE"];
 
-const KNOWN: [Known; 1] = [
+const KNOWN: [Known; 2] = [
+    // N1 = n1_dw_scratch40k (owner decision 2026-11-10: no Claude-written training data): H1's recipe from scratch on
+    // DeepSeek-written replacements of the Claude data. Threshold 0.9935 = 66 flags on 18,703 clean book sentences, the
+    // budget of H1's 0.9914 (3.5 per 1,000); see the research repository, models/n1/MODEL_CARD.md.
+    Known {
+        source_sha256: "6a46febb4732d715486b675f0d766209998d7db7f1daf60380f47eb9c3aea08c",
+        name: "N1 (n1_dw_scratch40k)",
+        frc_ignore: &IGN_V15,
+        threshold: 0.9935,
+    },
     // H1 = h1_hom_warm8k (owner decision 2026-11-09): threshold 0.9914 = as many flags on clean book text as S1 at its
     // own threshold (3.5 per 1,000 sentences); see the research repository, models/h1/MODEL_CARD.md.
     Known {
@@ -69,8 +78,10 @@ mod tests {
     #[test]
     fn known_model_by_checkpoint() {
         let p = Profile::from_header(&json!({"source_sha256": KNOWN[0].source_sha256})).unwrap();
+        assert_eq!((p.name.as_str(), p.threshold), ("N1 (n1_dw_scratch40k)", 0.9935));
         assert_eq!(p.frc_ignore, ["SPELL", "TYPO", "SPACE", "NBSP", "DUP", "DOUBLE"]);
-        assert_eq!(p.threshold, 0.9914);
+        let h1 = Profile::from_header(&json!({"source_sha256": KNOWN[1].source_sha256})).unwrap();
+        assert_eq!((h1.name.as_str(), h1.threshold), ("H1 (h1_hom_warm8k)", 0.9914));
     }
 
     #[test]

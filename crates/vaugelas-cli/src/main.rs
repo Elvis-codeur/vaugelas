@@ -31,9 +31,9 @@ UTILISATION / USAGE
 
 OPTIONS
   --json               sortie JSON / JSON output
-  --threshold T        seuil du modèle, 0 à 1 (défaut : celui du modèle, 0.9914 pour H1) ;
+  --threshold T        seuil du modèle, 0 à 1 (défaut : celui du modèle, 0.9935 pour N1) ;
                        plus haut = moins d’alertes / model threshold (default: the model's own,
-                       0.9914 for H1); higher = fewer flags
+                       0.9935 for N1); higher = fewer flags
   --rules-only         règles seulement / rules only
   --model-only         modèle seulement / model only
   --strict-typo        conventions typographiques (espaces insécables, …) / typographic conventions

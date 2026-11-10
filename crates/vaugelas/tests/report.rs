@@ -6,7 +6,7 @@ use vaugelas::report::{Settings, Source, Vaugelas, MODEL_RULE};
 fn one_entry_per_word_and_line_offsets() {
     let Some(d) = common::load() else { return };
     let vg = Vaugelas::new(&d);
-    assert_eq!(vg.default_threshold(), 0.9914, "H1's threshold comes from the model");
+    assert_eq!(vg.default_threshold(), 0.9935, "N1's threshold comes from the model");
     assert_eq!(d.model.profile.frc_ignore, ["SPELL", "TYPO", "SPACE", "NBSP", "DUP", "DOUBLE"]);
     let text = "Ceci est correct.\nLes élections ont été annulés par le juge.\r\nIl a manger toute la tarte.";
     let issues = vg.check(text, &Settings::default());
@@ -30,7 +30,7 @@ fn one_entry_per_word_and_line_offsets() {
     let r = vg.check(text, &Settings { model: false, ..Settings::default() });
     assert!(r.iter().all(|i| i.source == Source::Rules));
     let m = vg.check(text, &Settings { rules: false, ..Settings::default() });
-    assert!(!m.is_empty() && m.iter().all(|i| i.rule == MODEL_RULE && i.score.is_some_and(|s| s > 0.9914)));
+    assert!(!m.is_empty() && m.iter().all(|i| i.rule == MODEL_RULE && i.score.is_some_and(|s| s > 0.9935)));
     // threshold 1.0: the model flags nothing
     let none = vg.check(text, &Settings { rules: false, threshold: Some(1.0), ..Settings::default() });
     assert!(none.is_empty());
