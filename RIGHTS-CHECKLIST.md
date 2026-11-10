@@ -68,6 +68,8 @@ Research of 2026-11-10 (primary texts; not legal advice): see the findings below
 
 - [x] `tests/fixtures/sample.txt` held sentences of the held-out test set final-2. Replaced on 2026-11-09 by 1,006
       sentences written by Claude (issue #3); the rule checker is still byte-identical to `frc` on them.
-- [ ] The old `sample.txt` and `sample.frc.jsonl` are still in git history (commit db7ff56, on `main` and on GitHub).
-      Keep that history, or rewrite it before sharing the repository?
+- [x] The old `sample.txt` (held-out test sentences) and `sample.frc.jsonl`: removed from the git history on 2026-11-10 (owner): every commit now holds the hand-written
+      fixture; `sample.frc-infer.jsonl`, which also held them, was removed from every commit; branches and the tags
+      data-2, v0.2.0, v0.2.1 were rewritten (content at each tag unchanged). Still on GitHub: closed pull requests
+      #2 and #4 keep references to the old commits (only GitHub Support can delete them).
 - [ ] Name "Vaugelas": no trademark search has been done.
