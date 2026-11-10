@@ -16,10 +16,12 @@ The code in this repository is licensed under the MIT licence: see LICENSE. The 
   books from Project Gutenberg (https://www.gutenberg.org), including homophone-swap pairs made from them; sentences
   from the author's generators; French Wikipedia sentences and a French grammatical-error-correction set (the
   "natural" stream); training sentences written with DeepSeek; confusion examples written with Claude (Anthropic);
-  readings from the lexicon above. Its vocabulary holds lemma strings from the lexicon.
+  readings from the lexicon above; homophone candidates and pronunciations from Lexique 3.83 (below). Its
+  vocabulary holds lemma strings from the lexicon and pronunciation strings (`snd=`) from Lexique 3.83.
 - **Resources** (`resources.tar.gz`, unpacked into `resources/`): tables the model's candidate lists read.
   Word and word-pair counts from the training books (`ngram/`, `interp/ctx_*.json`, `interp/capstats.json`);
-  homophone and near-homophone lists derived from the lexicon (`interp/homophones_lex_1.0*.json`,
+  homophone and near-homophone lists made from **Lexique 3.83** (New, Pallier et al., http://www.lexique.org,
+  CC BY-SA 4.0: forms with the same pronunciation and different lemmas; `interp/homophones_lex_1.0*.json`,
   `interp/nearhom.json`); confusion pairs mined from the training errors (`interp/mined_pairs.json`); confusion
   partners written with Claude (`interp/cw_pairs.json`).
 
@@ -27,9 +29,9 @@ The rights questions these raise are listed in [RIGHTS-CHECKLIST.md](RIGHTS-CHEC
 
 ## Design credits
 
-- The rule checker follows the design of Harper (https://github.com/Automattic/harper, Apache-2.0). Its rule
-  knowledge draws on Grammalecte and LanguageTool (https://languagetool.org, LGPL-2.1). No code from these
-  projects is included (to be confirmed by the author, see LICENSE-TBD.md).
+- The rule checker follows the design of Harper (https://github.com/Automattic/harper, Apache-2.0). Its rules were
+  written for this project; Grammalecte and LanguageTool (https://languagetool.org, LGPL-2.1) served as benchmarks.
+  No code or rule text from these projects is included (checked 2026-11-10, see RIGHTS-CHECKLIST.md).
 - The HTTP API copies the shape of LanguageTool's public `/v2` API so that existing clients can use it.
 
 ## Rust dependencies compiled into the binary
