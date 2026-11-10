@@ -35,6 +35,11 @@ Research of 2026-11-10 (primary texts; not legal advice): see the findings below
       under the same license"; attribution "could be a simple link to the source of the dataset". Whether weights are
       an adaptation is legally unsettled. *Safe choice:* publish the model weights under CC BY-SA 4.0 with attribution
       to French Wikipedia; this satisfies share-alike in every reading and keeps the model fully open.
+- [ ] **Lexique 3.83: CC BY-SA 4.0 (found 2026-11-10, missing from earlier records).** lexique.org: "Lexique est
+      distribuée sous une licence Creative Commons Attribution – Partage dans les mêmes conditions 4.0". The homophone
+      lists in `resources/` (`interp/homophones_lex_1.0*.json`, `interp/nearhom.json`) are made from it, and the
+      model's `snd=` pronunciation atoms come from it. *Then:* those resource files under CC BY-SA 4.0 with credit;
+      one more reason for CC BY-SA 4.0 on the model.
 - [x] **French GEC set: Apache-2.0 upstream.** `juancavallotti/multilingual-gec` (Hugging Face) is Apache-2.0;
       `akufeldt/fr-gec-dataset` is its French subset and states no licence of its own. Credit both in NOTICE.md.
 - [ ] **Project Gutenberg books.** Public domain in the USA; the model and the word counts in `resources/` are
@@ -42,15 +47,20 @@ Research of 2026-11-10 (primary texts; not legal advice): see the findings below
       texts). Check author death dates if the model is published for other jurisdictions.
 - [ ] **UD treebanks.** Not used by H1 as far as the training records show (the research repository lists H1's data
       lineage); UD French ParTUT is non-commercial and excluded everywhere. Confirm before publishing.
-- [ ] **Model weights licence.** Recommendation: CC BY-SA 4.0 (Wikipedia share-alike), with a note that the
-      vocabulary's lemma strings come from the MPL-2.0 lexicon; resources archive under MPL-2.0 (lexicon-derived
-      lists must be). Decide after the Anthropic item.
+- [ ] **Model weights licence.** Recommendation: CC BY-SA 4.0 (Wikipedia and Lexique share-alike), with a
+      note that the vocabulary's lemma strings come from the MPL-2.0 lexicon. Resources archive: CC BY-SA 4.0 (the
+      Lexique-derived lists must be), the lexicon itself stays MPL-2.0. Decide after the Anthropic item.
 
 ## Code
 
-- [ ] **Rule checker origin.** Were any rules translated from Grammalecte's GPL rule files (`rules.grx`)? The MIT licence
-      requires "no" (rules written by the author, Grammalecte used only as a source of facts); if any were
-      translated, rewrite them or license the code GPL-3.0.
+- [x] **Rule checker origin: no Grammalecte rule was copied (checked 2026-11-10).** Compared with Grammalecte 2.3's
+      rules (`gc_rules.py`, `gc_rules_graph.py`, `gc_functions.py`, 4.3 MB): none of our 479 French message strings
+      appears in it (8 share only stock grammar phrases such as "s'accorde avec le sujet"); our 36 word lists share
+      no run of more than 8 consecutive words, and those runs are natural orders (days of the week, "ne me te se");
+      no Grammalecte module or data (`phonet_data`, `mfsp_data`, `conj_data`) is used by the app or its data
+      build; the fr-check history names Grammalecte only as a benchmark. Grammalecte code is used only by tools that
+      do not ship: `tools/dump_lexicon.py` (its MPL-2.0 dictionary reader) and `eval/run_tools.py` (baseline runs).
+      The MIT licence holds.
 - [x] **Code licence**: MIT (owner, 2026-11-10). The Rust dependencies are all permissive (NOTICE.md).
 
 ## Sharing decisions (not rights, but decide before sharing widely)
