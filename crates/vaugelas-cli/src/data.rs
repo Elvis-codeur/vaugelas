@@ -56,9 +56,10 @@ pub const LEX_FILES: [(&str, &str); 5] = [
 pub fn download_names() -> [String; 3] { [format!("{}.gz", MODEL.name), format!("{}.gz", LEXICON.name), RESOURCES_ARCHIVE.to_string()] }
 
 /// The data directory: --data DIR, else VAUGELAS_DATA, else the platform's per-user data directory.
-pub fn data_dir(explicit: Option<&str>) -> PathBuf {
+pub fn data_dir(explicit: Option<&str>, from_settings: Option<&Path>) -> PathBuf {
     if let Some(d) = explicit { return PathBuf::from(d); }
     if let Some(d) = std::env::var_os("VAUGELAS_DATA") { return PathBuf::from(d); }
+    if let Some(d) = from_settings { return d.to_path_buf(); }
     let env = |k: &str| std::env::var_os(k).filter(|v| !v.is_empty()).map(PathBuf::from);
     if cfg!(windows) {
         if let Some(d) = env("LOCALAPPDATA") { return d.join("vaugelas"); }
