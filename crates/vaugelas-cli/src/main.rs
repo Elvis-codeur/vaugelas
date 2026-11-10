@@ -185,8 +185,8 @@ fn cmd_score(a: &Args) {
 
 fn main() {
     let a = Args::parse().unwrap_or_else(|e| fail(&e));
-    if a.flag("--help") || a.flag("-h") || a.rest.first().is_none_or(|c| c == "help") { print!("{HELP}"); return; }
     if a.flag("--version") || a.flag("-V") { println!("vaugelas {}", env!("CARGO_PKG_VERSION")); return; }
+    if a.flag("--help") || a.flag("-h") || a.rest.first().is_none_or(|c| c == "help") { print!("{HELP}"); return; }
     match a.rest[0].as_str() {
         "check" => cmd_check(&a),
         "score" => cmd_score(&a),

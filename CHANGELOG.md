@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- `vaugelas --version` (and `-V`) printed the help instead of the version when given without a command (#5).
+
 ## [0.2.0] - 2026-11-09
 
 New model: **H1**. The data files change (data set `data-2`); an installation from 0.1.0 updates itself on the first
