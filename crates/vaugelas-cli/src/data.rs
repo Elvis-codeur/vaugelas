@@ -1,7 +1,7 @@
 //! Data files: where they live, how they are installed and verified.
 //!
 //! Installed from the data release (gzip-compressed, sha256 checked after decompression):
-//!   model.frcm        the energy model H1 (78 MB)
+//!   model.frcm        the energy model N1 (76 MB; no Claude-written training data)
 //!   lexicon.tsv       the French lexicon (20 MB; 515,637 forms with lemma and morphological tags)
 //!   resources.tar.gz  the model's corpus tables, unpacked into resources/ (interp/ + ngram/, 26 MB; every file checked)
 //! Built locally from lexicon.tsv, then checked against known sha256 values:
@@ -14,15 +14,15 @@ use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
 /// Name of this set of data files; also the tag of the GitHub release that holds them.
-pub const DATA_SET: &str = "data-2";
+pub const DATA_SET: &str = "data-3";
 
 /// Release that holds the data files (override with VAUGELAS_DATA_URL, a directory URL ending in `/`).
-pub const DATA_URL: &str = "https://github.com/Elvis-codeur/vaugelas/releases/download/data-2/";
+pub const DATA_URL: &str = "https://github.com/Elvis-codeur/vaugelas/releases/download/data-3/";
 
 /// One data file: its name, and the sha256 and size of its uncompressed content.
 pub struct Asset { pub name: &'static str, pub sha256: &'static str, pub size: u64 }
 
-pub const MODEL: Asset = Asset { name: "model.frcm", sha256: "87be81fb4deda34a768a4a4c636b7059e94e996434beb0b292a0655a53b106d2", size: 77_546_586 };
+pub const MODEL: Asset = Asset { name: "model.frcm", sha256: "59fc56257f3b4d8c552019a10ea515379a711d4481a321019cba8860ec05062c", size: 75_505_378 };
 pub const LEXICON: Asset = Asset { name: "lexicon.tsv", sha256: "4cbad5eec76835dafc19a6863dc980f576618cc1b2d54828fa52186b7cf657d8", size: 20_072_620 };
 
 /// The archive that holds `RESOURCE_FILES` (paths relative to `resources/`).
@@ -33,7 +33,7 @@ pub const RESOURCE_FILES: [(&str, &str); 11] = [
     ("interp/capstats.json", "42f315db7eab23a0222efe195ff1afd83774813ac5f8602a4defe1b0f49f7730"),
     ("interp/ctx_bigrams.json", "cc0961369de71b4751a57bba1b484025d20fc32a181151361f0a24f3091441e5"),
     ("interp/ctx_trigrams.json", "d526422ce9202219f9a38813bcc83713f4a4a5ee81c330e801e7149183b62a93"),
-    ("interp/cw_pairs.json", "0af3dc76f75404de1dc1256b66a3f336b57447325cc04ae4e6431c811f8df179"),
+    ("interp/cw_pairs.json", "22c91b0608ba2ff38d7d0df5e4333048f03781fdc01f07dc7eef2b67e6a8a662"),
     ("interp/homophones_lex_1.0.json", "d53858deb1f64a1aed4ce56d2cb629c830569c946cf54f7c8bc9a2b9267ac8ab"),
     ("interp/homophones_lex_1.0.phon.json", "825038156134a1961ea85167690ec21cff09ddddfc9f8436872acba973bfcad0"),
     ("interp/mined_pairs.json", "56b2f6dc8efe3b642bed2289281dab5c97db4bdba1c5f2947a1b8f9e28acfd87"),
