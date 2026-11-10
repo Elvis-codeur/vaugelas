@@ -41,8 +41,8 @@ dans le même dossier que le programme**, sans les décompresser. C'est tout.
 
 Au premier lancement, Vaugelas trouve ces fichiers à côté de lui, vérifie leur empreinte (sha256) et les installe
 dans votre dossier utilisateur (une dizaine de secondes). Ensuite vous pouvez effacer les trois fichiers téléchargés.
-Si les fichiers ne sont pas à côté du programme, Vaugelas essaie de les télécharger lui-même ; tant que le projet est
-privé ce téléchargement échoue, et le programme vous dit quoi faire.
+Si les fichiers ne sont pas à côté du programme, Vaugelas les télécharge lui-même depuis la page des versions (et
+vérifie leur empreinte) ; sans connexion, le programme vous dit quoi faire.
 
 Les données occupent environ 200 Mo sur le disque, dans :
 Windows `%LOCALAPPDATA%\vaugelas`, macOS `~/Library/Application Support/vaugelas`, Linux `~/.local/share/vaugelas`.
@@ -210,8 +210,8 @@ You need **four files**, all on the project's *Releases* page:
 
 Unpack the program, then **put the three data files in the same folder as the program**, still compressed. On first
 run Vaugelas finds them there, checks their sha256 and installs them in your user data folder (about ten seconds);
-you can then delete the downloaded files. Without them it tries to download them itself, which fails while the
-repository is private, and it tells you what to do.
+you can then delete the downloaded files. Without them it downloads them itself from the Releases page (and checks
+their sha256); offline, it tells you what to do.
 
 The data uses about 200 MB on disk: Windows `%LOCALAPPDATA%\vaugelas`, macOS `~/Library/Application
 Support/vaugelas`, Linux `~/.local/share/vaugelas`; `--data DIR` or `VAUGELAS_DATA` to put it elsewhere.
@@ -321,15 +321,14 @@ vaugelas score -f sentences.txt      # per-word model scores, one sentence per l
   characterizer and lexicon tables. `report`: the merged report.
 - `crates/vaugelas-cli`: the `vaugelas` program (CLI, data install, LanguageTool-compatible server).
 - The model and text code is a port of the research implementation (fr-check-infer, commit cc7d94e). Parity:
-  `tests/fixtures/sentences.tsv` holds 343 hand-written sentences and `sentences.frc-infer-v14.jsonl` the scores
+  `tests/fixtures/sentences.tsv` holds 343 sentences written for this test (with Claude) and `sentences.frc-infer-v14.jsonl` the scores
   `frc-infer v14` gives them with the shipped model (N1); the `parity_model` test compares every per-word score
   (2026-11-10: max |diff| 0 on 3,256 words). `tools/parity.sh FRC_INFER DATA_DIR` regenerates the reference. The rule checker is checked
-  against `frc` on `tests/fixtures/sample.txt` (1,006 hand-written sentences, byte-identical).
+  against `frc` on `tests/fixtures/sample.txt` (1,006 sentences written for this test with Claude, byte-identical).
 - **Data release.** The data is not in git. Data set `data-3` = release `data-3` with `model.frcm.gz`,
   `lexicon.tsv.gz`, `resources.tar.gz` and `SHA256SUMS`. The sha256 of the uncompressed files (and of every file
   inside the resources archive) are in `crates/vaugelas-cli/src/data.rs`. `VAUGELAS_DATA_URL` points the download
-  at another location. While the repository is private, anonymous downloads fail: put the files next to the program
-  or use `download-model --from DIR`.
+  at another location; offline, put the files next to the program or use `download-model --from DIR`.
 - Binary releases: push a tag `vX.Y.Z`; `.github/workflows/release.yml` builds Linux x86_64, Windows x86_64, macOS
   x86_64 and arm64, adds the data files of the current data set, and makes a draft release. See [CHANGELOG.md](CHANGELOG.md).
 
