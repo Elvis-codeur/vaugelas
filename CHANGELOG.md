@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.3.0] - 2026-11-10
+
+New model: **N1**, trained without any data written by Claude (data set `data-3`; an installation of 0.2.x downloads
+the new model and resources on the first start, the lexicon is unchanged).
+
+### Changed
+- The energy model is now **N1** (`n1_dw_scratch40k`, 76 MB) instead of H1. The owner chose to stay clear of
+  Anthropic's terms of service: every Claude-written training example (about 4,700 error pairs) and the confusion
+  partners made from them (`resources/interp/cw_pairs.json`) were replaced by DeepSeek-written equivalents (same
+  families and counts), and the model was trained from scratch on H1's recipe (40,000 steps).
+- Default threshold **0.9935**: the model alone flags 66 of 18,703 correct book sentences (3.5 per 1,000), the same
+  budget as H1's 0.9914.
+- Measured on the hard test set final-2 at that threshold, the model alone finds **47.8%** of the errors (H1: 51.4%):
+  weaker on noun forms (17.9% vs 40.7%) and capitals (16.7% vs 35.0%), stronger on verb forms (52.5% vs 22.5%) and
+  elision; at an equal false-alarm rate on final-2 the two models are level (53.3% vs 53.8% at 2%). Many noun-form and
+  capital errors are caught by the rules anyway (spelling of invented plurals such as *caillous*, capitals of months
+  and days). Details: docs/capabilities.md.
+- The research implementation and the program give identical scores (parity test, 343 sentences, max difference 0).
+
 ## [0.2.1] - 2026-11-10
 
 Same model (H1) and same data files (data set `data-2`): an installation of 0.2.0 keeps its data.
