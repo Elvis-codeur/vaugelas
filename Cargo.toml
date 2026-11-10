@@ -8,6 +8,7 @@ edition = "2021"
 # slice::as_chunks (1.88)
 rust-version = "1.88"
 publish = false
+license = "AGPL-3.0-or-later"
 repository = "https://github.com/Elvis-codeur/vaugelas"
 
 [profile.release]

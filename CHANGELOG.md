@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- The code is licensed under the GNU AGPL-3.0 or later (LICENSE); the data files keep their own terms (#7).
+
 ### Fixed
 - `vaugelas --version` (and `-V`) printed the help instead of the version when given without a command (#5).
 
