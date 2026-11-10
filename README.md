@@ -137,17 +137,20 @@ Résumé (détails, chiffres et exemples : [docs/capabilities.md](docs/capabilit
 
 - **Bon** sur les accords (sujet-verbe, participe passé, adjectif, attribut), sur l'infinitif / participe
   (*a manger*, *vais acheté*), sur le subjonctif et le conditionnel quand une règle connaît le déclencheur, sur les
-  majuscules des jours et des mois, et sur une partie des homophones (*à / a*, *son / sont*, *peu / peut*,
-  *vert / verre / vers*).
+  majuscules des jours et des mois (grâce aux règles), et sur une partie des homophones (*à / a*, *son / sont*,
+  *peu / peut*, *vert / verre*).
 - **Moyen** sur les homophones : sur un test d'homophones fabriqué de la même façon que ses exemples
   d'entraînement, le modèle en trouve 55 %, mais ce test le favorise (voir la page détaillée) ; il en rate encore
-  beaucoup (*ou / où*, *ces / ses*, *mer / mère*).
+  beaucoup (*a / à*, *ou / où*, *ces / ses*, *mer / mère*).
+- **Faible** sur les formes des noms (*des caillous*, *une auteuse*) pour le modèle seul ; le correcteur d'orthographe
+  en rattrape une partie (formes inventées).
 - **Faible** sur le choix du mot quand il faut comprendre le sens (*conjecture / conjoncture*, *voie / voix*), sur
   les fautes qui demandent d'ajouter ou de retirer un mot, sur la ponctuation et le style.
 - Le modèle ne fait que remplacer un mot par une autre forme ; il n'ajoute, ne retire et ne déplace jamais de mot.
 
 Sur le jeu de test difficile du projet (final-2, phrases jamais vues à l'entraînement), le modèle seul trouve
-51,4 % des fautes au seuil par défaut, et les règles seules 47,0 % (1,6 % des phrases correctes signalées). Les
+47,8 % des fautes au seuil par défaut (H1, le modèle des versions 0.2, entraîné en partie sur des exemples écrits par
+Claude : 51,4 %), et les règles seules 47,0 % (1,6 % des phrases correctes signalées). Les
 deux réunis en trouvent davantage : les règles et le modèle attrapent en partie des fautes différentes. Sur 18 703
 phrases correctes de livres, le modèle seul signale environ 3,5 phrases sur 1 000.
 
@@ -278,14 +281,17 @@ never sends your text anywhere. The server accepts connections from your own com
 ### Strengths and limits
 
 - **Good** at agreement (subject-verb, past participle, adjective, attribute), infinitive vs participle, subjunctive
-  and conditional when a rule knows the trigger, capitals of days and months, and part of the homophones.
+  and conditional when a rule knows the trigger, capitals of days and months (thanks to the rules), and part of the
+  homophones.
 - **Fair** on homophones: 55% on a homophone test made the same way as its training examples (which favours it), and
-  it still misses many (*ou / où*, *ces / ses*, *mer / mère*).
+  it still misses many (*a / à*, *ou / où*, *ces / ses*, *mer / mère*).
+- **Weak** on noun forms (*des caillous*, *une auteuse*) for the model alone; the spelling check catches part of them
+  (invented forms).
 - **Weak** on word choice that needs meaning (*conjecture / conjoncture*, *voie / voix*), on errors that need a word
   added or removed, on punctuation and style. The model only replaces a word with another form of it.
 
-On the project's hard test set (final-2, never seen in training) the model alone finds 51.4% of the errors at the
-default threshold, and the rules alone 47.0% (with 1.6% of correct sentences flagged); together they find more,
+On the project's hard test set (final-2, never seen in training) the model alone finds 47.8% of the errors at the
+default threshold (H1, the model of versions 0.2, trained partly on examples written by Claude: 51.4%), and the rules alone 47.0% (with 1.6% of correct sentences flagged); together they find more,
 since they partly catch different errors. On 18,703 correct sentences of books the model alone flags about 3.5 per
 1,000. Details: [docs/capabilities.en.md](docs/capabilities.en.md).
 
