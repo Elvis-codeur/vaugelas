@@ -41,6 +41,7 @@ impl Source {
 pub enum Category { Grammar, Typos, Typography, Casing }
 
 impl Category {
+    pub const ALL: [Category; 4] = [Category::Grammar, Category::Typos, Category::Typography, Category::Casing];
     pub fn of_rule(rule: &str) -> Category {
         match rule {
             "FR_SPELL" => Category::Typos,
@@ -70,49 +71,64 @@ pub struct Issue {
     pub category: Category,
 }
 
-/// Short French description of a rule (LanguageTool's `rule.description`).
+/// Every rule Vaugelas can report, with its short French description (LanguageTool's `rule.description`).
+/// The model's findings use `MODEL_RULE`; the others are the rule checker's lint names.
+pub const RULES: &[(&str, &str)] = &[
+    (MODEL_RULE, "Forme douteuse (modèle)"),
+    ("FR_SPELL", "Mot inconnu"),
+    ("FR_SUBJ_VERB", "Accord sujet-verbe"),
+    ("FR_ATTR_AGREE", "Accord de l’attribut"),
+    ("FR_DET_NOUN_GEN", "Accord en genre du déterminant"),
+    ("FR_DET_NOUN_NUM", "Accord en nombre du déterminant"),
+    ("FR_NOUN_ADJ", "Accord du nom et de l’adjectif"),
+    ("FR_ETRE_PLURAL", "Accord avec être"),
+    ("FR_PP_AVOIR", "Accord du participe passé avec avoir"),
+    ("FR_PP_COD", "Accord du participe passé avec avoir"),
+    ("FR_PP_PRONOMINAL", "Accord du participe passé pronominal"),
+    ("FR_PP_INVARIABLE", "Participe passé invariable"),
+    ("FR_AVOIR_INF", "Infinitif ou participe passé"),
+    ("FR_INF_PP", "Infinitif ou participe passé"),
+    ("FR_ER_E", "Infinitif ou participe passé"),
+    ("FR_PPRESENT", "Participe présent"),
+    ("FR_SUBJONCTIF", "Subjonctif attendu"),
+    ("FR_INDICATIF", "Indicatif attendu"),
+    ("FR_SI_COND", "Si + conditionnel"),
+    ("FR_IMPERATIF", "Impératif"),
+    ("FR_HOMOPHONE", "Homophones"),
+    ("FR_A_ACCENT", "Homophones"),
+    ("FR_CA_SA", "Homophones"),
+    ("FR_CE_SE", "Homophones"),
+    ("FR_ON_ONT", "Homophones"),
+    ("FR_SONT_SON", "Homophones"),
+    ("FR_ON_NEG", "Négation"),
+    ("FR_NE_QUE", "Négation"),
+    ("FR_TOUT", "Accord de tout"),
+    ("FR_QUEL_QUE", "Quel que / quelque"),
+    ("FR_LEUR", "Leur / leurs"),
+    ("FR_DONT", "Pronom relatif"),
+    ("FR_LEQUEL", "Pronom relatif"),
+    ("FR_PRONOM", "Pronom"),
+    ("FR_PREP", "Préposition"),
+    ("FR_ADV_VERB", "Adverbe et verbe"),
+    ("FR_COLOUR", "Adjectif de couleur"),
+    ("FR_COMPOUND", "Mot composé"),
+    ("FR_NUMBER", "Nombres"),
+    ("FR_DUP", "Mot répété"),
+    ("FR_ELIDED_DUP", "Mot répété"),
+    ("FR_CAPITAL", "Majuscule"),
+    ("FR_DOUBLE_SPACE", "Espaces multiples"),
+    ("FR_SPACE_AFTER", "Espace après la ponctuation"),
+    ("FR_SPACE_BEFORE", "Espace avant la ponctuation"),
+    ("FR_TYPO_SPACE_BEFORE", "Espace avant la ponctuation"),
+    ("FR_TYPO_NBSP", "Espace insécable"),
+    ("FR_TYPO_APOS", "Apostrophe typographique"),
+    ("FR_TYPO_ELLIPSIS", "Points de suspension"),
+    ("FR_TYPO_GUILLEMET", "Guillemets"),
+];
+
+/// Short French description of a rule (LanguageTool's `rule.description`); a generic one for an unknown name.
 pub fn rule_description(rule: &str) -> &'static str {
-    match rule {
-        MODEL_RULE => "Forme douteuse (modèle)",
-        "FR_SPELL" => "Mot inconnu",
-        "FR_SUBJ_VERB" => "Accord sujet-verbe",
-        "FR_ATTR_AGREE" => "Accord de l’attribut",
-        "FR_DET_NOUN_GEN" => "Accord en genre du déterminant",
-        "FR_DET_NOUN_NUM" => "Accord en nombre du déterminant",
-        "FR_NOUN_ADJ" => "Accord du nom et de l’adjectif",
-        "FR_ETRE_PLURAL" => "Accord avec être",
-        "FR_PP_AVOIR" | "FR_PP_COD" => "Accord du participe passé avec avoir",
-        "FR_PP_PRONOMINAL" => "Accord du participe passé pronominal",
-        "FR_PP_INVARIABLE" => "Participe passé invariable",
-        "FR_AVOIR_INF" | "FR_INF_PP" | "FR_ER_E" => "Infinitif ou participe passé",
-        "FR_PPRESENT" => "Participe présent",
-        "FR_SUBJONCTIF" => "Subjonctif attendu",
-        "FR_INDICATIF" => "Indicatif attendu",
-        "FR_SI_COND" => "Si + conditionnel",
-        "FR_IMPERATIF" => "Impératif",
-        "FR_HOMOPHONE" | "FR_A_ACCENT" | "FR_CA_SA" | "FR_CE_SE" | "FR_ON_ONT" | "FR_SONT_SON" => "Homophones",
-        "FR_ON_NEG" | "FR_NE_QUE" => "Négation",
-        "FR_TOUT" => "Accord de tout",
-        "FR_QUEL_QUE" => "Quel que / quelque",
-        "FR_LEUR" => "Leur / leurs",
-        "FR_DONT" | "FR_LEQUEL" => "Pronom relatif",
-        "FR_PRONOM" => "Pronom",
-        "FR_PREP" => "Préposition",
-        "FR_ADV_VERB" => "Adverbe et verbe",
-        "FR_COLOUR" => "Adjectif de couleur",
-        "FR_COMPOUND" => "Mot composé",
-        "FR_NUMBER" => "Nombres",
-        "FR_DUP" | "FR_ELIDED_DUP" => "Mot répété",
-        "FR_CAPITAL" => "Majuscule",
-        "FR_DOUBLE_SPACE" => "Espaces multiples",
-        "FR_SPACE_AFTER" => "Espace après la ponctuation",
-        "FR_SPACE_BEFORE" | "FR_TYPO_SPACE_BEFORE" => "Espace avant la ponctuation",
-        "FR_TYPO_NBSP" => "Espace insécable",
-        "FR_TYPO_APOS" => "Apostrophe typographique",
-        "FR_TYPO_ELLIPSIS" => "Points de suspension",
-        "FR_TYPO_GUILLEMET" => "Guillemets",
-        _ => "Règle de grammaire",
-    }
+    RULES.iter().find(|(r, _)| *r == rule).map_or("Règle de grammaire", |(_, d)| d)
 }
 
 /// Everything loaded from the data directory, read-only: rule checker, lexicon tables + resources, model.
