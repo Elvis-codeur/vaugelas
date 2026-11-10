@@ -10,7 +10,7 @@ Vaugelas a deux parties qui travaillent ensemble :
   mieux à la phrase. Il propose alors cette forme. Il lit aussi ce que les règles ont trouvé.
 
 Le rapport réunit les deux : un mot signalé par les règles, par le modèle ou par les deux n'apparaît qu'une fois.
-Cette page dit ce que chacun sait faire, avec des chiffres mesurés et des exemples. Elle concerne la version 0.2.0
+Cette page dit ce que chacun sait faire, avec des chiffres mesurés et des exemples. Elle concerne les versions 0.2.x
 (modèle H1, seuil par défaut 0,9914).
 
 ## 1. Les chiffres
