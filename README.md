@@ -31,9 +31,9 @@ Ce qu'il fait bien et ce qu'il fait mal, avec des exemples : [docs/capabilities.
 Il vous faut **quatre fichiers**, tous sur la page des versions (*Releases*) du projet :
 
 1. le programme pour votre système :
-   - Windows : `vaugelas-v0.2.0-windows-x86_64.zip`
-   - Mac avec puce Apple (M1, M2, M3…) : `vaugelas-v0.2.0-macos-arm64.tar.gz` ; Mac Intel : `…-macos-x86_64.tar.gz`
-   - Linux : `vaugelas-v0.2.0-linux-x86_64.tar.gz`
+   - Windows : `vaugelas-v0.2.1-windows-x86_64.zip`
+   - Mac avec puce Apple (M1, M2, M3…) : `vaugelas-v0.2.1-macos-arm64.tar.gz` ; Mac Intel : `…-macos-x86_64.tar.gz`
+   - Linux : `vaugelas-v0.2.1-linux-x86_64.tar.gz`
 2. les trois fichiers de données : `model.frcm.gz` (71 Mo), `lexicon.tsv.gz` (3 Mo) et `resources.tar.gz` (9 Mo).
 
 Décompressez le programme (double-clic sur le `.zip` ou le `.tar.gz`), puis **posez les trois fichiers de données
@@ -201,7 +201,7 @@ Strengths and weaknesses, with examples: [docs/capabilities.en.md](docs/capabili
 ### Install
 
 You need **four files**, all on the project's *Releases* page:
-1. the program for your system: `vaugelas-v0.2.0-windows-x86_64.zip`, `…-macos-arm64.tar.gz` (Apple silicon),
+1. the program for your system: `vaugelas-v0.2.1-windows-x86_64.zip`, `…-macos-arm64.tar.gz` (Apple silicon),
    `…-macos-x86_64.tar.gz` (Intel Mac) or `…-linux-x86_64.tar.gz`;
 2. the three data files: `model.frcm.gz` (71 MB), `lexicon.tsv.gz` (3 MB), `resources.tar.gz` (9 MB).
 
