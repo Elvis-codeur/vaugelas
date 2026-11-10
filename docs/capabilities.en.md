@@ -10,7 +10,7 @@ Vaugelas has two parts working together:
   better, proposing that form. It also reads what the rules found.
 
 The report merges both: a word flagged by the rules, the model or both appears once. This page says what each one
-can do, with measured numbers and examples. It is about version 0.2.0 (model H1, default threshold 0.9914).
+can do, with measured numbers and examples. It is about versions 0.2.x (model H1, default threshold 0.9914).
 
 ## 1. Numbers
 

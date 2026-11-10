@@ -1,6 +1,8 @@
 # Changelog
 
-## [Unreleased]
+## [0.2.1] - 2026-11-10
+
+Same model (H1) and same data files (data set `data-2`): an installation of 0.2.0 keeps its data.
 
 ### Added
 - **Settings file** `settings.toml` (#9): every setting of `check` and `serve` (model threshold, rules / model on or
