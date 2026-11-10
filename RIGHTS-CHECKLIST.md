@@ -29,9 +29,10 @@ options). Nothing here is legal advice. Tick an item when it is answered and wri
 
 ## Code
 
-- [ ] **Rule checker origin.** Were any rules translated from Grammalecte's GPL rule files (`rules.grx`)? Either way the
-      code's AGPL-3.0 licence holds (it can include GPL-3.0 code); the answer still belongs in NOTICE.md.
-- [x] **Code licence**: AGPL-3.0-or-later (owner, 2026-11-10). The Rust dependencies are all permissive (NOTICE.md).
+- [ ] **Rule checker origin.** Were any rules translated from Grammalecte's GPL rule files (`rules.grx`)? The MIT licence
+      requires "no" (rules written by the author, Grammalecte used only as a source of facts); if any were
+      translated, rewrite them or license the code GPL-3.0.
+- [x] **Code licence**: MIT (owner, 2026-11-10). The Rust dependencies are all permissive (NOTICE.md).
 
 ## Sharing decisions (not rights, but decide before sharing widely)
 
