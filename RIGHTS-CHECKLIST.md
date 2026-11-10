@@ -1,8 +1,9 @@
 # Rights checklist (for the owner)
 
-Open questions to settle **before the repository becomes public or the data files go beyond a few friends**. No
-licence has been chosen: that is the owner's decision ([LICENSE-TBD.md](LICENSE-TBD.md) has the facts found and the
-options). Nothing here is legal advice. Tick an item when it is answered and write the answer next to it.
+Questions settled before the repository becomes public or the data files go beyond a few friends. Licences chosen
+by the owner on 2026-11-10: code MIT, model and resources CC BY-SA 4.0, lexicon MPL-2.0 ([DATA-LICENSES.md](DATA-LICENSES.md);
+the facts found and the options considered: [docs/licence-research.md](docs/licence-research.md)). Nothing here is
+legal advice. Tick an item when it is answered and write the answer next to it.
 
 ## Data and model
 
@@ -29,14 +30,14 @@ Research of 2026-11-10 (primary texts; not legal advice): see the findings below
       *Decision (owner, 2026-11-10):* the narrow reading applies. Vaugelas is a small French grammar checker, not a
       rival model or a product competing with Anthropic's services, so the Claude-written data stays and no request
       is sent to Anthropic.
-- [ ] **Wikipedia (CC BY-SA 4.0): open, owner decision.** Creative Commons' guidance on AI training: "CC licenses apply
+- [x] **Wikipedia (CC BY-SA 4.0): model under CC BY-SA 4.0 (owner, 2026-11-10).** Creative Commons' guidance on AI training: "CC licenses apply
       only when copyright permission is required. If exceptions or limitations apply, then the CC license terms don't
       apply" (the EU text-and-data-mining exception, art. 4 of directive 2019/790, may apply), but also: if models
       "are based on ShareAlike content and they will be shared publicly", BY-SA "require[s] that adaptations be shared
       under the same license"; attribution "could be a simple link to the source of the dataset". Whether weights are
       an adaptation is legally unsettled. *Safe choice:* publish the model weights under CC BY-SA 4.0 with attribution
       to French Wikipedia; this satisfies share-alike in every reading and keeps the model fully open.
-- [ ] **Lexique 3.83: CC BY-SA 4.0 (found 2026-11-10, missing from earlier records).** lexique.org: "Lexique est
+- [x] **Lexique 3.83: CC BY-SA 4.0 (found 2026-11-10, missing from earlier records).** lexique.org: "Lexique est
       distribuée sous une licence Creative Commons Attribution – Partage dans les mêmes conditions 4.0". The homophone
       lists in `resources/` (`interp/homophones_lex_1.0*.json`, `interp/nearhom.json`) are made from it, and the
       model's `snd=` pronunciation atoms come from it. *Then:* those resource files under CC BY-SA 4.0 with credit;
@@ -48,9 +49,8 @@ Research of 2026-11-10 (primary texts; not legal advice): see the findings below
       texts). Check author death dates if the model is published for other jurisdictions.
 - [ ] **UD treebanks.** Not used by H1 as far as the training records show (the research repository lists H1's data
       lineage); UD French ParTUT is non-commercial and excluded everywhere. Confirm before publishing.
-- [ ] **Model weights licence.** Recommendation: CC BY-SA 4.0 (Wikipedia and Lexique share-alike), with a
-      note that the vocabulary's lemma strings come from the MPL-2.0 lexicon. Resources archive: CC BY-SA 4.0 (the
-      Lexique-derived lists must be), the lexicon itself stays MPL-2.0. Anthropic item decided; licence choice is the owner's.
+- [x] **Model weights and resources licence: CC BY-SA 4.0 (owner, 2026-11-10)**; lexicon stays MPL-2.0. Licence
+      texts in LICENSES/ and attached to the data release; credits in DATA-LICENSES.md.
 
 ## Code
 
