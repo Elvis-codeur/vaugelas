@@ -1,4 +1,4 @@
-//! The model's scores are those of the research implementation, on hand-written sentences.
+//! The model's scores are those of the research implementation, on sentences written for this test (with Claude).
 //!
 //! `tests/fixtures/sentences.tsv`: 343 sentences written for this test (family, sentence, intended correction; 126 hold
 //! one error). `tests/fixtures/sentences.frc-infer-v14.jsonl`: what fr-check-infer (commit cc7d94e, itself checked

@@ -18,6 +18,8 @@ the new model and resources on the first start, the lexicon is unchanged).
   capital errors are caught by the rules anyway (spelling of invented plurals such as *caillous*, capitals of months
   and days). Details: docs/capabilities.md.
 - The research implementation and the program give identical scores (parity test, 343 sentences, max difference 0).
+- The releases of versions 0.2.0 and 0.2.1 and their data set `data-2` (model H1, trained partly on examples written by
+  Claude) were withdrawn on 2026-11-10; their git tags remain (code only).
 
 ## [0.2.1] - 2026-11-10
 
