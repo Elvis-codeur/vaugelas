@@ -146,8 +146,12 @@ la phrase exacte, ce que Vaugelas a répondu, ce que vous attendiez, et le résu
 
 ### Licence
 
-Pas encore choisie : voir [LICENSE-TBD.md](LICENSE-TBD.md), [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md) et
-[NOTICE.md](NOTICE.md). Le lexique vient du dictionnaire de Grammalecte (Olivier R.) et a sa propre licence.
+Le programme (le code) est sous licence **GNU AGPL-3.0 ou ultérieure** ([LICENSE](LICENSE)) : vous pouvez
+l'utiliser, le modifier et le redistribuer ; si vous diffusez une version modifiée, ou si vous la faites tourner comme
+service en ligne, vous devez en publier le code sous la même licence.
+Les fichiers de données ont leurs propres conditions : le lexique vient du dictionnaire de Grammalecte (Olivier R.,
+MPL-2.0) ; la licence du modèle n'est pas encore choisie. Détails : [NOTICE.md](NOTICE.md),
+[LICENSE-TBD.md](LICENSE-TBD.md), [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md).
 
 ---
 
@@ -277,5 +281,9 @@ vaugelas score -f sentences.txt      # per-word model scores, one sentence per l
 
 ### Licence
 
-Not chosen yet: see [LICENSE-TBD.md](LICENSE-TBD.md), [RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md) and
-[NOTICE.md](NOTICE.md). The lexicon comes from the Grammalecte dictionary (Olivier R.) and carries its own licence.
+The program (the code) is licensed under the **GNU AGPL-3.0 or later** ([LICENSE](LICENSE)): you may use, change
+and redistribute it; if you distribute a changed version, or run it as an online service, you must publish its
+source under the same licence.
+The data files have their own terms: the lexicon comes from the Grammalecte dictionary (Olivier R., MPL-2.0); the
+model's licence is not chosen yet. Details: [NOTICE.md](NOTICE.md), [LICENSE-TBD.md](LICENSE-TBD.md),
+[RIGHTS-CHECKLIST.md](RIGHTS-CHECKLIST.md).

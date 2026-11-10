@@ -1,6 +1,10 @@
 # NOTICE
 
-Vaugelas Corrector. Copyright the author (Elvis-codeur). Licence not chosen yet: see LICENSE-TBD.md.
+Vaugelas Corrector. Copyright the author (Elvis-codeur).
+
+The code in this repository is licensed under the GNU Affero General Public License, version 3 or (at your option)
+any later version: see LICENSE. The data files below are not covered by that licence; each keeps its own terms
+(LICENSE-TBD.md).
 
 ## Data (downloaded separately, not part of this repository)
 

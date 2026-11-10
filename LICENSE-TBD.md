@@ -1,7 +1,14 @@
-# Licence: to be decided by the owner
+# Licences: what is decided and what is still open
 
-No licence has been chosen for Vaugelas yet. Until one is, all rights are reserved by the author and the repository
-stays private. This file lists what was found about the origin of each part and the options that fit those
+**Decided (owner, 2026-11-10): the code is licensed AGPL-3.0-or-later** (file LICENSE, `license` in Cargo.toml).
+The owner's reasons: a small program with no commercial aim; AGPL keeps every changed version open, including one
+run as an online service (Vaugelas has a LanguageTool-compatible server). AGPL-3.0 holds whatever the answer to the
+rule-origin question below: GPL-3.0 code (Grammalecte) and MPL-2.0 data can be combined with it.
+
+**Still open:** the licence of the model weights and of the resources archive (they depend on the DeepSeek,
+Anthropic, Wikipedia and GEC-set checks), and the upstream confirmation of the dictionary's MPL-2.0.
+
+The rest of this file is the record of what was found. This file lists what was found about the origin of each part and the options that fit those
 constraints. Nothing here is legal advice. The facts were checked against local copies on 2026-11-07, and
 the points marked **to verify** still need checking against upstream.
 
@@ -9,8 +16,8 @@ the points marked **to verify** still need checking against upstream.
 
 | part | in git? | origin | licence found |
 |---|---|---|---|
-| Rule checker code (`crates/vaugelas/src/rules/`) | yes | fr-check (owner's own code, Rust). Its README says: "The lexicon and rule knowledge come from Grammalecte (code GPLv3 ...). The architecture is modelled on Harper (Apache-2.0) and on LanguageTool (LGPL-2.1)." No source file names Grammalecte, Harper or LanguageTool, and no copied code was found by searching the source. | none chosen. **To verify:** were any rules translated from Grammalecte's GPL rule files (`gc_lang/fr/rules.grx`)? If so, that code may be a derivative work of GPL-3.0 code. |
-| Model inference and text analysis code (`src/model/`, `src/text/`) | yes | owner's own code: Rust ports of the owner's Python training code (training-design/*.py) | none chosen |
+| Rule checker code (`crates/vaugelas/src/rules/`) | yes, AGPL-3.0-or-later | fr-check (owner's own code, Rust). Its README says: "The lexicon and rule knowledge come from Grammalecte (code GPLv3 ...). The architecture is modelled on Harper (Apache-2.0) and on LanguageTool (LGPL-2.1)." No source file names Grammalecte, Harper or LanguageTool, and no copied code was found by searching the source. | AGPL-3.0-or-later. **To verify (no longer decides the code licence):** were any rules translated from Grammalecte's GPL rule files (`gc_lang/fr/rules.grx`)? If so, that code may be a derivative work of GPL-3.0 code. |
+| Model inference and text analysis code (`src/model/`, `src/text/`) | yes | owner's own code: Rust ports of the owner's Python training code (training-design/*.py) | AGPL-3.0-or-later |
 | `lexicon.tsv` (20 MB, download) | **no** | Dump of Grammalecte 2.3.0's compiled dictionary `grammalecte/graphspell/_dictionaries/fr-allvars.json` ("Français (Toutes variantes)", built 2025-12-15 15:48:13, 515,637 entries), made with fr-check's `tools/dump_lexicon.py` (`IBDAWG(dic).select()` → `form<TAB>lemma<TAB>tags`). Local copy of the source: `repos/grammalecte-cli/src/`. | The Grammalecte package README says "License: GPL 3". The graphspell engine file `dawg.py` says "License: MPL 2". The French dictionary itself (Dicollecte project, Olivier R.) is, to my knowledge, published under **MPL-2.0** on grammalecte.net. **To verify on grammalecte.net / the dictionary's own README:** the licence of the dictionary data, and whether it is "Incompatible With Secondary Licenses". |
 | FST lexicon `lex/` (words.fst, recs.bin, gen.fst, lemmas.bin, tags.txt, 7 MB) | **no**, built on the user's machine from lexicon.tsv | the same data as lexicon.tsv, in another form | same as lexicon.tsv (a derived form of the dictionary) |
 | `lexicon.tsv.lem.frclex` (72 MB cache) | **no**, built at first start | lexicon.tsv plus derived tables | same as lexicon.tsv |
@@ -53,6 +60,6 @@ the data has its own licence.
 ## Decisions needed from the owner
 
 1. Was any rule code translated from Grammalecte (this decides between A and B/C/D)?
-2. Licence for the code: A / B / C / D.
+2. ~~Licence for the code~~: decided 2026-11-10, AGPL-3.0-or-later (option A family).
 3. Licence for the model weights, after checking DeepSeek's terms.
 4. Confirm the dictionary licence upstream (MPL-2.0?), then add its licence text to the data release.

@@ -40,7 +40,7 @@ jobs:
         run: |
           d=vaugelas-${VERSION}-${{ matrix.name }}
           mkdir -p "$d/docs"
-          cp target/${{ matrix.target }}/release/vaugelas README.md CHANGELOG.md NOTICE.md LICENSE-TBD.md "$d"/
+          cp target/${{ matrix.target }}/release/vaugelas README.md CHANGELOG.md NOTICE.md LICENSE LICENSE-TBD.md "$d"/
           cp docs/capabilities.md docs/capabilities.en.md "$d/docs/"
           tar czf "$d.tar.gz" "$d"
           shasum -a 256 "$d.tar.gz" > "$d.tar.gz.sha256"
@@ -50,7 +50,7 @@ jobs:
         run: |
           $d = "vaugelas-$env:VERSION-${{ matrix.name }}"
           New-Item -ItemType Directory "$d/docs" -Force | Out-Null
-          Copy-Item target/${{ matrix.target }}/release/vaugelas.exe, README.md, CHANGELOG.md, NOTICE.md, LICENSE-TBD.md $d
+          Copy-Item target/${{ matrix.target }}/release/vaugelas.exe, README.md, CHANGELOG.md, NOTICE.md, LICENSE, LICENSE-TBD.md $d
           Copy-Item docs/capabilities.md, docs/capabilities.en.md "$d/docs"
           Compress-Archive -Path $d -DestinationPath "$d.zip"
           (Get-FileHash "$d.zip" -Algorithm SHA256).Hash.ToLower() + "  $d.zip" | Out-File -Encoding ascii "$d.zip.sha256"
