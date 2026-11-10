@@ -3,6 +3,7 @@
 //! document: `text`, or for annotated `data` the concatenation of every `text` and `markup` piece.
 use serde_json::{json, Value};
 use std::collections::HashSet;
+use crate::config::Filter;
 use vaugelas::report::{rule_description, Issue, Settings, Vaugelas};
 
 pub const MAX_CHARS: usize = 200_000;
@@ -113,8 +114,9 @@ fn split_list(v: Option<&String>) -> HashSet<String> {
     v.map(|s| s.split(',').map(|x| x.trim().to_string()).filter(|x| !x.is_empty()).collect()).unwrap_or_default()
 }
 
-/// Handle `/v2/check` parameters; Err((status, message)).
-pub fn check(vg: &Vaugelas, params: &[(String, String)], base: &Settings) -> Result<Value, (u16, String)> {
+/// Handle `/v2/check` parameters; Err((status, message)). `filter` (the settings file) applies before the request's
+/// own `disabledRules` / `enabledRules` / `disabledCategories`.
+pub fn check(vg: &Vaugelas, params: &[(String, String)], base: &Settings, filter: &Filter) -> Result<Value, (u16, String)> {
     let get = |k: &str| params.iter().find(|(a, _)| a == k).map(|(_, v)| v);
     let lang = get("language").map(String::as_str).unwrap_or("fr");
     let code = if lang == "auto" || lang.eq_ignore_ascii_case("fr") || lang.to_ascii_lowercase().starts_with("fr-") { lang } else {
@@ -133,7 +135,7 @@ pub fn check(vg: &Vaugelas, params: &[(String, String)], base: &Settings) -> Res
     let issues = vg.check(&doc.plain, base);
     let t16 = utf16_table(&doc.original);
     let matches: Vec<Value> = issues.iter()
-        .filter(|i| !disabled.contains(&i.rule) && !dis_cat.contains(i.category.id()) && (!enabled_only || enabled.contains(&i.rule)))
+        .filter(|i| filter.keeps(i) && !disabled.contains(&i.rule) && !dis_cat.contains(i.category.id()) && (!enabled_only || enabled.contains(&i.rule)))
         .map(|i| match_json(&doc, &t16, i)).collect();
     let lname = |c: &str| match c.to_ascii_lowercase().as_str() { "fr-fr" => "French (France)", "fr-be" => "French (Belgium)", "fr-ca" => "French (Canada)", "fr-ch" => "French (Switzerland)", _ => "French" };
     let shown = if code == "auto" { "fr" } else { code };
@@ -147,14 +149,14 @@ pub fn check(vg: &Vaugelas, params: &[(String, String)], base: &Settings) -> Res
 }
 
 /// Run the HTTP server with `threads` worker threads sharing `vg`; blocks forever.
-pub fn serve(vg: &Vaugelas, host: &str, port: u16, threads: usize, settings: Settings) -> Result<(), String> {
+pub fn serve(vg: &Vaugelas, host: &str, port: u16, threads: usize, settings: Settings, filter: Filter) -> Result<(), String> {
     let server = tiny_http::Server::http((host, port)).map_err(|e| format!("cannot listen on {host}:{port}: {e}"))?;
     eprintln!("Vaugelas listens on http://{host}:{port}/v2/  ({threads} threads; LanguageTool-compatible: POST /v2/check, GET /v2/languages)");
     std::thread::scope(|sc| {
         for _ in 0..threads {
             sc.spawn(|| loop {
                 let Ok(rq) = server.recv() else { continue };
-                handle(vg, rq, &settings);
+                handle(vg, rq, &settings, &filter);
             });
         }
     });
@@ -172,7 +174,7 @@ fn respond(rq: tiny_http::Request, status: u16, ctype: &str, body: String) {
     rq.respond(r).ok();
 }
 
-fn handle(vg: &Vaugelas, mut rq: tiny_http::Request, settings: &Settings) {
+fn handle(vg: &Vaugelas, mut rq: tiny_http::Request, settings: &Settings, filter: &Filter) {
     let url = rq.url().to_string();
     let (path, query) = url.split_once('?').unwrap_or((url.as_str(), ""));
     let path = path.trim_end_matches('/').to_string();
@@ -200,7 +202,7 @@ fn handle(vg: &Vaugelas, mut rq: tiny_http::Request, settings: &Settings) {
                     params.extend(form_urlencoded::parse(&body).into_owned());
                 }
             }
-            match check(vg, &params, settings) {
+            match check(vg, &params, settings, filter) {
                 Ok(v) => respond(rq, 200, "application/json", v.to_string()),
                 Err((st, msg)) => respond(rq, st, "text/plain; charset=utf-8", msg),
             }
