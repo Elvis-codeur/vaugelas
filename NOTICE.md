@@ -98,6 +98,7 @@ Generated from `cargo tree -e normal --target all` (all platforms; build-only cr
 | serde_core v1.0.229 | MIT OR Apache-2.0 |
 | serde_derive v1.0.229 | MIT OR Apache-2.0 |
 | serde_json v1.0.154 | MIT OR Apache-2.0 |
+| serde_spanned v0.6.9 | MIT OR Apache-2.0 |
 | serde v1.0.229 | MIT OR Apache-2.0 |
 | sha2 v0.10.9 | MIT OR Apache-2.0 |
 | simd-adler32 v0.3.10 | MIT |
@@ -109,6 +110,9 @@ Generated from `cargo tree -e normal --target all` (all platforms; build-only cr
 | tar v0.4.46 | MIT OR Apache-2.0 |
 | tiny_http v0.12.0 | MIT OR Apache-2.0 |
 | tinystr v0.8.5 | Unicode-3.0 |
+| toml_datetime v0.6.11 | MIT OR Apache-2.0 |
+| toml_edit v0.22.27 | MIT OR Apache-2.0 |
+| toml v0.8.23 | MIT OR Apache-2.0 |
 | typenum v1.20.1 | MIT OR Apache-2.0 |
 | unicode-ident v1.0.27 | (MIT OR Apache-2.0) AND Unicode-3.0 |
 | untrusted v0.9.0 | ISC |
@@ -130,6 +134,7 @@ Generated from `cargo tree -e normal --target all` (all platforms; build-only cr
 | windows_x86_64_gnullvm v0.52.6 | MIT OR Apache-2.0 |
 | windows_x86_64_gnu v0.52.6 | MIT OR Apache-2.0 |
 | windows_x86_64_msvc v0.52.6 | MIT OR Apache-2.0 |
+| winnow v0.7.15 | MIT |
 | writeable v0.6.4 | Unicode-3.0 |
 | yoke-derive v0.8.4 | Unicode-3.0 |
 | yoke v0.8.4 | Unicode-3.0 |
