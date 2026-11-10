@@ -77,6 +77,31 @@ ligne 1, colonne 23 : « annulés »  →  annulées
 - Conventions de la typographie soignée (espaces insécables, `…`, `’`) : `--strict-typo`.
 - Aide : `vaugelas --help`.
 
+### Réglages
+
+Tous les réglages peuvent être écrits une fois pour toutes dans un fichier, `settings.toml`. Pour le créer :
+
+```
+vaugelas settings --init
+```
+
+Le programme indique où il l'a créé (Windows `%APPDATA%\vaugelas`, macOS `~/Library/Application Support/vaugelas`,
+Linux `~/.config/vaugelas`). Ouvrez-le avec un éditeur de texte : chaque réglage y est expliqué, en français et en
+anglais. On peut aussi le poser à côté du programme. Ce qu'on peut y régler :
+
+- **le seuil du modèle** (`threshold`) : plus bas, Vaugelas trouve plus de fautes mais signale aussi plus de phrases
+  correctes. Par exemple, « Les enfants joue dans le jardin. » passe au seuil par défaut (0.9914) et est signalée à
+  0.98 ;
+- les règles et le modèle (chacun peut être coupé), les suggestions d'orthographe, la typographie soignée, le modèle
+  en int8 (moins de mémoire) ;
+- les règles ou catégories à ne jamais signaler (`disabled_rules`, `disabled_categories` ; liste des règles :
+  `vaugelas rules`) ;
+- le dossier des données, et l'adresse, le port et le nombre de fils du serveur.
+
+`vaugelas settings` montre le fichier utilisé et les réglages en vigueur. Les options de la ligne de commande passent
+avant le fichier. Une erreur dans le fichier (nom de réglage mal écrit, valeur hors limites, règle inconnue) arrête le
+programme avec un message qui dit laquelle.
+
 ### Dans votre éditeur (serveur compatible LanguageTool)
 
 Vaugelas peut tourner en arrière-plan comme un serveur **LanguageTool** local :
@@ -205,6 +230,28 @@ vaugelas --help
 ```
 
 The default threshold 0.9914 makes the model flag about 3.5 of 1,000 correct sentences of published books.
+
+### Settings
+
+Every setting can be written once in a file, `settings.toml`. To create it:
+
+```
+vaugelas settings --init
+```
+
+The program says where it wrote it (Windows `%APPDATA%\vaugelas`, macOS `~/Library/Application Support/vaugelas`,
+Linux `~/.config/vaugelas`); a `settings.toml` next to the program is read too. Open it in a text editor: every
+setting is explained in it, in French and English. It sets:
+
+- **the model threshold** (`threshold`): lower finds more errors but also flags more correct sentences. For example,
+  "Les enfants joue dans le jardin." passes at the default threshold (0.9914) and is flagged at 0.98;
+- rules and model (each can be switched off), spelling suggestions, strict typography, the int8 model (less memory);
+- rules or categories never to report (`disabled_rules`, `disabled_categories`; list of rules: `vaugelas rules`);
+- the data folder, and the server's host, port and threads.
+
+`vaugelas settings` shows the file in use and the settings in force. Command-line options take precedence over the
+file. A mistake in the file (misspelled setting, value out of range, unknown rule) stops the program with a message
+naming it.
 
 ### Use it from an editor (LanguageTool-compatible server)
 
