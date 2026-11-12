@@ -9,12 +9,14 @@
 //!
 //! The generators are deterministic functions of a seed; the parity tests compare their bytes against the Python
 //! outputs (`tests/`), and `vaugelas-dataprep --help` documents the command line.
+pub mod delta;
 pub mod lexpairs;
 pub mod lexpairs_data;
 pub mod product;
 pub mod product_data;
 pub mod pyrandom;
 pub mod records;
+pub mod widen;
 
 /// The seed the archived generators used by default (both Python scripts default to 20261112).
 pub const DEFAULT_SEED: u64 = 20261112;

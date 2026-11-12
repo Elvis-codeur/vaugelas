@@ -1,7 +1,7 @@
 //! `vaugelas-dataprep`: the Rust entry point of the data-preparation stack (see the crate documentation).
 use std::path::{Path, PathBuf};
 use std::time::Instant;
-use vaugelas_dataprep::{lexpairs, product, records, DEFAULT_SEED};
+use vaugelas_dataprep::{delta, lexpairs, product, records, DEFAULT_SEED};
 
 const HELP: &str = "\
 vaugelas-dataprep — préparation des données / data preparation, in Rust
@@ -12,6 +12,8 @@ USAGE
   vaugelas-dataprep pairs --items ITEMS.jsonl --out RECORDS.jsonl[.gz] --data DIR
   vaugelas-dataprep cands -f TEXTS --out RECORDS.jsonl[.gz] --data DIR
   vaugelas-dataprep lexconf --lexpairs LEXPAIRS.jsonl --out CONF.json [--reverse]
+  vaugelas-dataprep delta-pairs --items PAIRS.jsonl --out DELTAS.jsonl --data DIR [--lexconf CONF] [--maxc 32]
+  vaugelas-dataprep delta-text -f TEXTS.txt --out DELTAS.jsonl --data DIR [--lexconf CONF] [--maxc 32]
 
 COMMANDS
   lexpairs       Synthetic lexical minimal pairs (replaces lexpairs.py): DIR/lexpairs.jsonl + DIR/CARD.md.
@@ -21,6 +23,9 @@ COMMANDS
                  Reads the clean-text carrier JSONL ({\"text\": ...} per line); the corpus is not in this repo.
   pairs          Candidate records of a pair file (ebm_data2.py pairs): good record + bad record with gold.
   cands          Evaluation records (record_pf, no gold) for each line of TEXTS (JSON with text/sentence, or text).
+  delta-pairs    Margin E(written) - softmin(E(alternatives)) for each mined pair, bad and good side (step 3).
+  delta-text     Per-word margins for one sentence per line (calibration on clean text, 55-passage evaluation).
+  train-records  Widened-set training records (bad with gold + good) for ebm_model.py (step 4).
   lexconf        Build the optional inference resource [[wrong, right, n], ...] from produced lexpairs records; `--reverse`
                  adds both directions. Drop it at <data>/resources/interp/lexpairs_conf.json to enable it in inference.
 
@@ -45,7 +50,7 @@ struct Args {
 
 impl Args {
     fn parse() -> Result<Args, String> {
-        const WITH_VALUE: [&str; 11] = ["--out", "--per-subtype", "--seed", "--contexts", "--src", "--n", "--items", "--data", "--jobs", "--lexconf", "--lexpairs"];
+        const WITH_VALUE: [&str; 12] = ["--out", "--per-subtype", "--seed", "--contexts", "--src", "--n", "--items", "--data", "--jobs", "--lexconf", "--lexpairs", "--maxc"];
         let mut a = Args { rest: Vec::new(), opts: Vec::new(), flags: Vec::new() };
         let mut it = std::env::args().skip(1);
         while let Some(x) = it.next() {
@@ -175,6 +180,36 @@ fn cmd_lexconf(a: &Args) -> Result<(), String> {
     Ok(())
 }
 
+fn cmd_delta_pairs(a: &Args) -> Result<(), String> {
+    let items = a.opt("--items").ok_or("--items PAIRS.jsonl is required")?;
+    let out = out_dir(a);
+    let maxc = a.num("--maxc", 32usize)?;
+    let lexconf = a.opt("--lexconf").map(PathBuf::from);
+    let n = delta::delta_pairs(Path::new(items), &out, &data_dir(a), lexconf.as_deref(), maxc)?;
+    eprintln!("{}: {} pairs scored", out.display(), n);
+    Ok(())
+}
+
+fn cmd_train_records(a: &Args) -> Result<(), String> {
+    let items = a.opt("--items").ok_or("--items PAIRS.jsonl is required")?;
+    let out = out_dir(a);
+    let maxc = a.num("--maxc", 32usize)?;
+    let lexconf = a.opt("--lexconf").map(PathBuf::from);
+    let (bad, good) = delta::train_records(Path::new(items), &out, &data_dir(a), lexconf.as_deref(), maxc)?;
+    eprintln!("{}: {} bad records + {} good records", out.display(), bad, good);
+    Ok(())
+}
+
+fn cmd_delta_text(a: &Args) -> Result<(), String> {
+    let texts = a.opt("-f").ok_or("-f TEXTS is required")?;
+    let out = out_dir(a);
+    let maxc = a.num("--maxc", 32usize)?;
+    let lexconf = a.opt("--lexconf").map(PathBuf::from);
+    let n = delta::delta_text(Path::new(texts), &out, &data_dir(a), lexconf.as_deref(), maxc)?;
+    eprintln!("{}: {} lines scored", out.display(), n);
+    Ok(())
+}
+
 fn cmd_cands(a: &Args) -> Result<(), String> {
     let texts = a.opt("-f").ok_or("-f TEXTS is required")?;
     let out = out_dir(a);
@@ -208,6 +243,9 @@ fn main() {
         "pairs" => cmd_pairs(&a),
         "cands" => cmd_cands(&a),
         "lexconf" => cmd_lexconf(&a),
+        "delta-pairs" => cmd_delta_pairs(&a),
+        "delta-text" => cmd_delta_text(&a),
+        "train-records" => cmd_train_records(&a),
         other => fail(&format!("unknown command {other:?} (try --help)")),
     };
     if let Err(e) = r {

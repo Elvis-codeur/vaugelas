@@ -253,9 +253,23 @@ impl Model {
     /// `1.0 - row[0].item()` (fp32 probability, the subtraction in double); words without a set score 0.
     pub fn score(&self, x: &Encoded) -> Vec<(f64, Option<usize>)> {
         let mut out = vec![(0f64, None); x.t];
-        if x.sets.is_empty() { return out; }
+        for (i, e, best) in self.set_energies(x) {
+            let m = e.iter().map(|x| -x).fold(f32::NEG_INFINITY, f32::max);
+            let z: f32 = e.iter().map(|x| (-x - m).exp()).sum();
+            let p0 = (-e[0] - m).exp() / z;
+            out[i] = (1.0 - p0 as f64, best);
+        }
+        out
+    }
+
+    /// The raw energies of every candidate set (lower is better), one entry per word that has a set. Used by the
+    /// data-preparation experiment for the margin `E(written) - softmin(E(alternatives))`; `score` is the same
+    /// computation folded into `1 - p(candidate 0)`.
+    pub fn set_energies(&self, x: &Encoded) -> Vec<(usize, Vec<f32>, Option<usize>)> {
+        if x.sets.is_empty() { return Vec::new(); }
         let (h, _) = self.hidden(x);
         let d = self.d; let sq = (d as f32).sqrt();
+        let mut out = Vec::with_capacity(x.sets.len());
         for (i, cs) in &x.sets {
             let i = *i;
             let hp = linear_w(&h[i * d..(i + 1) * d], 1, d, &self.proj_w, &self.proj_b, d);
@@ -264,12 +278,13 @@ impl Model {
                 let mut ce = vec![0f32; d]; self.readings_emb(reads, &mut ce);
                 e.push(-ce.iter().zip(&hp).map(|(a, b)| a * b).sum::<f32>() / sq);
             }
-            let m = e.iter().map(|x| -x).fold(f32::NEG_INFINITY, f32::max);
-            let z: f32 = e.iter().map(|x| (-x - m).exp()).sum();
             let best = e.iter().enumerate().min_by(|a, b| a.1.total_cmp(b.1)).map(|(k, _)| k);
-            let p0 = (-e[0] - m).exp() / z;
-            out[i] = (1.0 - p0 as f64, best);
+            out.push((i, e, best));
         }
         out
     }
+
+    /// The number of candidates the encoder keeps per set (`cfg.maxk`). Raising it lets the same weights score a
+    /// widened candidate set (the transformer does not depend on it; only the per-set padding does).
+    pub fn set_maxk(&mut self, maxk: usize) { self.enc.maxk = maxk; }
 }
