@@ -64,6 +64,32 @@ fr-check rule filter), not its weights.
   it (the pre-GEN3 Python build reaches 50/59; the five-record gap is named in PARITY.md). A 143-pair equivalent
   derived from batch 1 is committed for the test, since the original temporary file is gone.
 
+## The optional lexical-confusion resource (inference)
+
+The candidate generator can read an extra confusion table at inference. It is **optional and off by default**:
+`data-3` does not contain the file, so the shipped checker is byte-for-byte what it was.
+
+| | |
+|---|---|
+| file | `<data>/resources/interp/lexpairs_conf.json` |
+| format | one JSON array, `[[wrong, right, n], ...]` (the `FRC_LEXPAIRS_CONF` format); `n` is informational |
+| load | `model::resources::Resources::load` (`load_lexconf`), alongside the required tables; absence is not an error |
+| effect | adds candidate forms only (rank 8, exempt from the "plausible" filters, as in `ebm_cands2._lexconf`); it never changes the written form or its readings |
+| disable | `VAUGELAS_NO_LEXCONF=1` (or remove the file) |
+| elsewhere | `VAUGELAS_LEXCONF=/path/to/conf.json` points at another file |
+| build | `vaugelas-dataprep lexconf --lexpairs data2/lexpairs.jsonl --out conf.json [--reverse]` (Rust) |
+
+`--reverse` emits both directions of every pair. The two forms of a lexical confusion can be written either way; the
+one-directional historical files came from bad sentences, where the direction was known.
+
+**Measured on 2026-11-12 (arm `n1w_lex3`, threshold 0.9934, 55 passages + 5,000 clean book sentences):** the resource
+is wired and works mechanically — with it, `faveur` in *La faveur de Dieu nous sauve* scores **0.566864** instead of
+**0.000121**, because `grâce` becomes a candidate — but the product result does not move: **13 flags, a 1/17, b 1/44,
+c 0/6**, identical to the arm without the resource and to the shipped N1. Clean-text false alarms go from 3.2 to
+3.8 per 1,000. Only 4 of the 44 lexical defects in that corpus contain a form from the 27 lexpairs pairs, and the
+scores that do rise stay below the 0.9934 operating point (the rank-vs-flag gap). **Recommendation: do not add it to
+the released data set as-is**; keep the loader for experiments and future arms.
+
 ## Parity
 
 ```

@@ -35,10 +35,13 @@ FIXTURES = ROOT / "tests/fixtures/regression"
 BASELINE = ROOT / "tools/baseline.json"
 BUCKET_A = {"grammar", "typography", "structure", "scripture"}  # checkable by rules
 BUCKET_B = {"word_choice", "glossary"}                          # lexical: model + combiner
+THRESHOLD = None  # --threshold, for measuring a model exported with another operating point
 
 
 def run_checker(binary, text, data=None, extra=()):
     cmd = [binary, "check", "--json", *extra]
+    if THRESHOLD:
+        cmd += ["--threshold", THRESHOLD]
     env = dict(os.environ)
     if data:
         env["VAUGELAS_DATA"] = data
@@ -146,8 +149,11 @@ def main():
     ap.add_argument("--vaugelas", default=str(ROOT / "target/release/vaugelas"))
     ap.add_argument("--data", default=os.environ.get("VAUGELAS_DATA"))
     ap.add_argument("--corpus", help="directory of the 67-defect corpus (external, not in this repo)")
+    ap.add_argument("--threshold", default=None, help="model threshold (default: the model's own)")
     ap.add_argument("--limit", type=int, default=8)
     a = ap.parse_args()
+    global THRESHOLD
+    THRESHOLD = a.threshold
     if not Path(a.vaugelas).is_file():
         raise SystemExit(f"binary not found: {a.vaugelas}; build it first (cargo build --release)")
 
