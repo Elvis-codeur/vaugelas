@@ -1,16 +1,16 @@
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":24,"len":3,"text":"ont","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["a"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":23,"len":6,"text":"offert","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["offertes"]}]}
-{"lints":[{"rule":"FR_NOUN_ADJ","offset":23,"len":4,"text":"bleu","message":"L’adjectif doit s’accorder avec le nom.","suggestions":["bleue"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":14,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ancienne"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_A_ACCENT","offset":15,"len":1,"text":"à","message":"« a » (verbe avoir) s’écrit sans accent.","suggestions":["a"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -19,11 +19,12 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SONT_SON","offset":11,"len":3,"text":"son","message":"« sont » (verbe être) plutôt que « son ».","suggestions":["sont"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ON_ONT","offset":4,"len":2,"text":"on","message":"« ont » (verbe avoir) : confusion avec « on ».","suggestions":["ont"]},{"rule":"FR_ER_E","offset":7,"len":5,"text":"mangé","message":"Après un pronom sujet, il faut un verbe conjugué, pas un participe passé.","suggestions":["mange"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":6,"text":"chante","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["chantent"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":15,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":19,"len":6,"text":"grands","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["grandes"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -31,18 +32,16 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SI_COND","offset":5,"len":6,"text":"aurais","message":"Après « si », pas de conditionnel : utilisez l’imparfait.","suggestions":["avais"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":11,"len":3,"text":"est","message":"Le subjonctif est requis ici.","suggestions":["soit"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_QUEL_QUE","offset":0,"len":7,"text":"Quelque","message":"Devant le verbe être : « quel(le)(s) que » en deux mots, accordé avec le sujet.","suggestions":["Quel que"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_DONT","offset":8,"len":3,"text":"que","message":"Ce verbe se construit avec « de » : le relatif est « dont ».","suggestions":["dont"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":80,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":67,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_NUMBER","offset":16,"len":4,"text":"cent","message":"« cent » multiplié prend un s quand il termine le nombre.","suggestions":["cents"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -51,49 +50,58 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":66,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" .","message":"Pas d’espace avant cette ponctuation.","suggestions":["."]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":84,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_NE_QUE","offset":3,"len":5,"text":"mange","message":"Restriction « ne … que » : le « ne » est obligatoire à l’écrit.","suggestions":["ne mange"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ON_NEG","offset":0,"len":4,"text":"On a","message":"Négation : « on n’ » devant une voyelle.","suggestions":["On n’a"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":23,"len":7,"text":"imprimé","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["imprimés"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":12,"len":5,"text":"lavés","message":"Pronom réfléchi complément indirect (ou complément direct placé après) : participe invariable.","suggestions":["lavé"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]},{"rule":"FR_SPELL","offset":77,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":70,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":15,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":19,"len":7,"text":"heureux","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["heureuses"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":18,"len":6,"text":"gentil","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["gentille"]}]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":25,"len":6,"text":"petite","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["petites"]},{"rule":"FR_ETRE_PLURAL","offset":25,"len":6,"text":"petite","message":"Après « sont », l’attribut est au pluriel.","suggestions":["petites"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":6,"text":"ouvert","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ouverte"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":5,"len":5,"text":"somme","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sommons","sommè"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":78,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":63,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":18,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["anciens"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":7,"text":"prépare","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["préparent"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":89,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":17,"len":6,"text":"grands","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["grand"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_AVOIR","offset":16,"len":8,"text":"dessinés","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["dessiné"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -105,6 +113,7 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":16,"len":5,"text":"noire","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["noirs"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -112,177 +121,241 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_AVOIR","offset":8,"len":7,"text":"décidés","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["décidé"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_A_ACCENT","offset":9,"len":1,"text":"a","message":"Préposition « à » avec accent.","suggestions":["à"]},{"rule":"FR_AVOIR_INF","offset":11,"len":9,"text":"augmenter","message":"Après « avoir », on attend un participe passé.","suggestions":["augmenté"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":14,"len":5,"text":"sages","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["sage"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":5,"text":"noire","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["noir"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":67,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":62,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":90,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]},{"rule":"FR_SPELL","offset":73,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":1,"text":"a","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["ont"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":79,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":28,"len":4,"text":"trés","message":"Faute d’orthographe possible.","suggestions":["très","tarés","thés","tirés","tris"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SPACE_BEFORE","offset":18,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
-{"lints":[{"rule":"FR_SPACE_AFTER","offset":31,"len":1,"text":",","message":"Espace manquant après la virgule.","suggestions":[", "]}]}
-{"lints":[{"rule":"FR_DOUBLE_SPACE","offset":28,"len":2,"text":"  ","message":"Espaces multiples.","suggestions":[" "]}]}
-{"lints":[{"rule":"FR_DUP","offset":4,"len":7,"text":"ont ont","message":"Mot répété.","suggestions":["ont"]}]}
-{"lints":[{"rule":"FR_DUP","offset":0,"len":5,"text":"Le le","message":"Mot répété.","suggestions":["Le"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":4,"len":10,"text":"ordinatuer","message":"Faute d’orthographe possible.","suggestions":["ordinateur"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":7,"len":10,"text":"nécéssaire","message":"Faute d’orthographe possible.","suggestions":["nécessaire"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PREP","offset":0,"len":6,"text":"Malgré","message":"« malgré que » est fautif : « bien que » (+ subjonctif).","suggestions":["Bien"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_A_ACCENT","offset":5,"len":1,"text":"à","message":"« a » (verbe avoir) s’écrit sans accent.","suggestions":["a"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PREP","offset":0,"len":6,"text":"Malgré","message":"« malgré que » est fautif : « bien que » (+ subjonctif).","suggestions":["Bien"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":17,"len":7,"text":"parlons","message":"Le subjonctif est requis ici.","suggestions":["parlions"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":80,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":15,"len":4,"text":"peut","message":"Le subjonctif est requis après cette expression.","suggestions":["puisse"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_INDICATIF","offset":12,"len":4,"text":"soit","message":"L’indicatif est requis après cette expression.","suggestions":["est"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":5,"text":"était","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["étaient"]}]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":5,"text":"était","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["étaient"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]},{"rule":"FR_SPELL","offset":81,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":5,"text":"sages","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["sage"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":61,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_AVOIR","offset":21,"len":7,"text":"poussés","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["poussé"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_AVOIR_INF","offset":7,"len":7,"text":"planter","message":"Après « avoir », on attend un participe passé.","suggestions":["planté"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":87,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":58,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":7,"text":"prépare","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["préparent"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":70,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_NE_QUE","offset":3,"len":2,"text":"as","message":"Restriction « ne … que » : le « ne » est obligatoire à l’écrit.","suggestions":["n’as"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":15,"len":6,"text":"chante","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["chantent"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":62,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":68,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]},{"rule":"FR_SPELL","offset":89,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":10,"len":7,"text":"atterit","message":"Faute d’orthographe possible.","suggestions":["atterrit"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":80,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":65,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]},{"rule":"FR_SPELL","offset":72,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":70,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":66,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":10,"text":"silencieux","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["silencieuse"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":5,"text":"était","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["étaient"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":88,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":85,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":64,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":78,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":23,"len":9,"text":"obéissant","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["obéissante"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":78,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":18,"len":9,"text":"intervenu","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["intervenus"]},{"rule":"FR_ETRE_PLURAL","offset":18,"len":9,"text":"intervenu","message":"Après « sont », l’attribut est au pluriel.","suggestions":["intervenus"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":23,"len":6,"text":"blessé","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["blessées"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":77,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":29,"len":6,"text":"plaint","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["plaignent"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":66,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":7,"text":"devrait","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["devraient"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":65,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SI_COND","offset":6,"len":9,"text":"viendrais","message":"Après « si », pas de conditionnel : utilisez l’imparfait.","suggestions":["venais"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":82,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":66,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":70,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":24,"len":4,"text":"peux","message":"Le subjonctif est requis après cette expression.","suggestions":["puisses"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_TOUT","offset":9,"len":5,"text":"toute","message":"« tout » adverbe reste invariable devant un adjectif féminin commençant par une voyelle.","suggestions":["tout"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":5,"text":"était","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["étaient"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":80,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":68,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":81,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":61,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ancien"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":83,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]},{"rule":"FR_SPELL","offset":76,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":66,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":67,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":17,"len":5,"text":"noire","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["noir"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":59,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":35,"len":6,"text":"écouté","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["écoutée"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]},{"rule":"FR_SPELL","offset":80,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":6,"text":"grands","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["grand"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ancienne"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":5,"text":"mange","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["mangent"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]},{"rule":"FR_SPELL","offset":79,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":14,"len":5,"text":"sages","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["sage"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":16,"len":6,"text":"grands","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["grandes"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -291,30 +364,53 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":5,"text":"mange","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["mangent"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":82,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":67,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":1,"text":"a","message":"Après « moi/toi/nous/vous qui », le verbe prend la personne du pronom.","suggestions":["ai"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":6,"text":"rouges","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["rouge"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":4,"text":"déçu","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["déçue"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":70,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":7,"text":"prudent","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["prudente"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":16,"len":6,"text":"rouges","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["rouge"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":78,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":86,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":81,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":19,"len":7,"text":"fatigué","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["fatiguée"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_CA_SA","offset":11,"len":2,"text":"ça","message":"« sa » (déterminant possessif) devant un nom.","suggestions":["sa"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":7,"text":"prépare","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["préparent"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":67,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":15,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":19,"len":7,"text":"prudent","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["prudentes"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -322,477 +418,86 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":14,"len":6,"text":"trompé","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["trompées"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":12,"len":6,"text":"parlés","message":"Pronom réfléchi complément indirect (ou complément direct placé après) : participe invariable.","suggestions":["parlé"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":7,"text":"content","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["contente"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":83,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":20,"len":6,"text":"acheté","message":"Le participe s’accorde avec le pronom complément placé avant (le, la, les).","suggestions":["achetée"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":24,"len":5,"text":"mangé","message":"Le participe s’accorde avec le complément placé avant (interrogation).","suggestions":["mangées"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":4,"text":"sont","message":"Après « tout le monde, chacun, personne, rien », le verbe est au singulier.","suggestions":["est"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":0,"len":6,"text":"Manges","message":"Verbe à la 1re ou 2e personne sans sujet je/tu/nous/vous.","suggestions":["Mange"]},{"rule":"FR_IMPERATIF","offset":0,"len":6,"text":"Manges","message":"Impératif des verbes en -er : pas de s à la 2e personne du singulier (sauf devant en/y).","suggestions":["Mange"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":0,"len":6,"text":"Ranges","message":"Verbe à la 1re ou 2e personne sans sujet je/tu/nous/vous.","suggestions":["Range"]},{"rule":"FR_IMPERATIF","offset":0,"len":6,"text":"Ranges","message":"Impératif des verbes en -er : pas de s à la 2e personne du singulier (sauf devant en/y).","suggestions":["Range"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":20,"len":5,"text":"perdu","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["perdues"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_TOUT","offset":9,"len":4,"text":"tout","message":"« tous / toutes » (pronom) devant ce participe pluriel.","suggestions":["tous"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_AVOIR_INF","offset":5,"len":7,"text":"envoyer","message":"Après « avoir », on attend un participe passé.","suggestions":["envoyé"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":11,"len":8,"text":"embauché","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["embauchée"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_AVOIR","offset":15,"len":7,"text":"refusée","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["refusé"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":19,"len":7,"text":"racheté","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["rachetée"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":11,"len":8,"text":"voulants","message":"Faute d’orthographe possible.","suggestions":["volants","voulant","coulants","foulants","moulants"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":19,"len":12,"text":"encourageant","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["encourageants"]},{"rule":"FR_ETRE_PLURAL","offset":19,"len":12,"text":"encourageant","message":"Après « sont », l’attribut est au pluriel.","suggestions":["encourageants"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PRONOM","offset":24,"len":2,"text":"en","message":"Avec « aller », le lieu se reprend par « y » (« j’y vais »).","suggestions":["y"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_COLOUR","offset":26,"len":7,"text":"oranges","message":"Les noms employés comme adjectifs de couleur sont invariables.","suggestions":["orange"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_COLOUR","offset":23,"len":5,"text":"bleue","message":"Adjectif de couleur composé : invariable.","suggestions":["bleu"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":8,"len":7,"text":"remerci","message":"Faute d’orthographe possible.","suggestions":["remercia","remercie","remerciè","remercié"]}]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":20,"len":9,"text":"excellant","message":"Adjectif verbal : orthographe différente du participe présent (convaincant, fatigant…).","suggestions":["excellent"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":18,"len":4,"text":"tres","message":"Faute d’orthographe possible.","suggestions":["très","tares","tees","tes","tires"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":37,"len":10,"text":"aujourdhui","message":"Faute d’orthographe possible.","suggestions":["aujourd’hui"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":40,"len":10,"text":"apres-midi","message":"Faute d’orthographe possible.","suggestions":["après-midi"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":17,"len":12,"text":"appartemment","message":"Faute d’orthographe possible.","suggestions":["appartement","apparemment"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":3,"len":11,"text":"bibliotèque","message":"Faute d’orthographe possible.","suggestions":["bibliothèque"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":14,"len":8,"text":"annuller","message":"Faute d’orthographe possible.","suggestions":["annuler"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":3,"len":13,"text":"developpement","message":"Faute d’orthographe possible.","suggestions":["développement"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":19,"len":4,"text":"recu","message":"Faute d’orthographe possible.","suggestions":["reçu","rebu","recru","recul","redu"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":5,"len":9,"text":"acceuilli","message":"Faute d’orthographe possible.","suggestions":["accueilli"]}]}
-{"lints":[{"rule":"FR_SPELL","offset":3,"len":11,"text":"gouvernment","message":"Faute d’orthographe possible.","suggestions":["gouvernement","gouvernent"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SPACE_BEFORE","offset":19,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
-{"lints":[{"rule":"FR_SPACE_BEFORE","offset":11,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
-{"lints":[{"rule":"FR_SPACE_AFTER","offset":21,"len":1,"text":",","message":"Espace manquant après la virgule.","suggestions":[", "]}]}
-{"lints":[{"rule":"FR_SPACE_AFTER","offset":33,"len":1,"text":".","message":"Espace manquante après le point.","suggestions":[". "]}]}
-{"lints":[{"rule":"FR_DOUBLE_SPACE","offset":26,"len":2,"text":"  ","message":"Espaces multiples.","suggestions":[" "]}]}
-{"lints":[{"rule":"FR_DOUBLE_SPACE","offset":2,"len":2,"text":"  ","message":"Espaces multiples.","suggestions":[" "]}]}
-{"lints":[{"rule":"FR_SPACE_BEFORE","offset":26,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
-{"lints":[{"rule":"FR_SPACE_AFTER","offset":10,"len":1,"text":"?","message":"Espace manquante après cette ponctuation.","suggestions":["? "]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_DUP","offset":2,"len":7,"text":"est est","message":"Mot répété.","suggestions":["est"]}]}
-{"lints":[{"rule":"FR_DUP","offset":15,"len":7,"text":"son son","message":"Mot répété.","suggestions":["son"]}]}
-{"lints":[{"rule":"FR_DUP","offset":0,"len":7,"text":"Les les","message":"Mot répété.","suggestions":["Les"]}]}
-{"lints":[{"rule":"FR_DUP","offset":0,"len":5,"text":"On on","message":"Mot répété.","suggestions":["On"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":13,"len":9,"text":"marseille","message":"Faute d’orthographe possible.","suggestions":["marelle","margaille","margelle","marmaille","merveille"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_CAPITAL","offset":18,"len":5,"text":"Lundi","message":"Les jours et les mois s’écrivent en minuscules.","suggestions":["lundi"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PPRESENT","offset":0,"len":6,"text":"Ayants","message":"Le participe présent est invariable.","suggestions":["Ayant"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PPRESENT","offset":0,"len":9,"text":"Chantants","message":"Le participe présent est invariable.","suggestions":["Chantant"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":11,"len":6,"text":"cassée","message":"Pronom réfléchi complément indirect (ou complément direct placé après) : participe invariable.","suggestions":["cassé"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":11,"len":6,"text":"coupée","message":"Pronom réfléchi complément indirect (ou complément direct placé après) : participe invariable.","suggestions":["coupé"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":28,"len":8,"text":"restauré","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["restaurés"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":19,"len":4,"text":"bâti","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["bâtie"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_AVOIR","offset":21,"len":9,"text":"retrouvés","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["retrouvé"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_HOMOPHONE","offset":17,"len":5,"text":"nôtre","message":"Déterminant possessif sans accent : notre, votre (« le nôtre » est un pronom).","suggestions":["notre"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":31,"len":11,"text":"demie-heure","message":"Devant le nom, « demi », « nu », « semi » sont invariables.","suggestions":["demi-heure"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_NUMBER","offset":7,"len":12,"text":"quatre-vingt","message":"« quatre-vingts » prend un s quand il termine le nombre.","suggestions":["quatre-vingts"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_NUMBER","offset":6,"len":4,"text":"cent","message":"« cent » multiplié prend un s quand il termine le nombre.","suggestions":["cents"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_NUMBER","offset":5,"len":6,"text":"milles","message":"« mille » (nombre) est invariable.","suggestions":["mille"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_HOMOPHONE","offset":15,"len":5,"text":"vôtre","message":"Déterminant possessif sans accent : notre, votre (« le nôtre » est un pronom).","suggestions":["votre"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":37,"len":10,"text":"rassemblés","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["rassemblée"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ADV_VERB","offset":13,"len":9,"text":"satisfais","message":"Après « très », on attend un adjectif ou un participe, pas un verbe conjugué.","suggestions":["satisfait","satisfaits","satisfaite"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_INF_PP","offset":8,"len":8,"text":"commencé","message":"Après ce mot, on attend un infinitif.","suggestions":["commencer"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_AVOIR_INF","offset":5,"len":9,"text":"commencer","message":"Après « avoir », on attend un participe passé.","suggestions":["commencé"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_AVOIR_INF","offset":5,"len":7,"text":"oublier","message":"Après « avoir », on attend un participe passé.","suggestions":["oublié"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_AVOIR_INF","offset":11,"len":7,"text":"décider","message":"Après « avoir », on attend un participe passé.","suggestions":["décidé"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_INF_PP","offset":14,"len":7,"text":"terminé","message":"Après ce mot, on attend un infinitif.","suggestions":["terminer"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":11,"len":5,"text":"allés","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["allées"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":2,"text":"né","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["née"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":18,"len":7,"text":"arrivés","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["arrivées"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":9,"len":5,"text":"parti","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["partie"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_LEUR","offset":22,"len":4,"text":"leur","message":"« leurs » devant un nom pluriel.","suggestions":["leurs"]},{"rule":"FR_DET_NOUN_NUM","offset":27,"len":7,"text":"enfants","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["enfant"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_CE_SE","offset":0,"len":2,"text":"Se","message":"« ce » (démonstratif) plutôt que « se ».","suggestions":["Ce"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":12,"len":4,"text":"levé","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["levés"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":11,"len":7,"text":"endormi","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["endormie"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":22,"len":7,"text":"viendra","message":"Le subjonctif est requis après cette expression.","suggestions":["vienne"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":18,"len":3,"text":"dis","message":"Le subjonctif est requis après cette expression.","suggestions":["dises"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":14,"len":4,"text":"fait","message":"Le subjonctif est requis ici.","suggestions":["fasse"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":21,"len":10,"text":"réussissez","message":"Le subjonctif est requis après cette expression.","suggestions":["réussissiez"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":25,"len":4,"text":"êtes","message":"Le subjonctif est requis après cette expression.","suggestions":["soyez"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SUBJONCTIF","offset":35,"len":4,"text":"peux","message":"Le subjonctif est requis ici.","suggestions":["puisses"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SI_COND","offset":5,"len":6,"text":"aurais","message":"Après « si », pas de conditionnel : utilisez l’imparfait.","suggestions":["avais"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SI_COND","offset":8,"len":7,"text":"aurions","message":"Après « si », pas de conditionnel : utilisez l’imparfait.","suggestions":["avions"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_SI_COND","offset":5,"len":6,"text":"ferait","message":"Après « si », pas de conditionnel : utilisez l’imparfait.","suggestions":["faisait"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ELIDED_DUP","offset":12,"len":5,"text":"la l'","message":"Déterminant répété.","suggestions":["l'"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ELIDED_DUP","offset":11,"len":5,"text":"le l'","message":"Déterminant répété.","suggestions":["l'"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":4,"len":6,"text":"maison","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["maisons"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":16,"len":7,"text":"voiture","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["voitures"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":12,"len":6,"text":"oiseau","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["oiseaux"]}]}
-{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":4,"len":5,"text":"fleur","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["fleurs"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_DET_NOUN_NUM","offset":4,"len":9,"text":"chaussure","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["chaussures"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_DET_NOUN_GEN","offset":12,"len":2,"text":"un","message":"Le déterminant doit s’accorder en genre avec le nom.","suggestions":["une"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_DET_NOUN_GEN","offset":10,"len":2,"text":"un","message":"Le déterminant doit s’accorder en genre avec le nom.","suggestions":["une"]}]}
-{"lints":[]}
-{"lints":[{"rule":"FR_DET_NOUN_GEN","offset":0,"len":2,"text":"La","message":"Le déterminant doit s’accorder en genre avec le nom.","suggestions":["Le"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":28,"len":5,"text":"blanc","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["blancs"]},{"rule":"FR_ETRE_PLURAL","offset":28,"len":5,"text":"blanc","message":"Après « sont », l’attribut est au pluriel.","suggestions":["blancs"]}]}
-{"lints":[]}
-{"lints":[]}
-{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":69,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[{"rule":"FR_ATTR_AGREE","offset":14,"len":7,"text":"heureux","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["heureuse"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":86,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":95,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":79,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":82,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPELL","offset":61,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":66,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":71,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":58,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":21,"len":7,"text":"fraîche","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["fraiches","fraîches"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":77,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":5,"text":"noire","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["noir"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":89,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":70,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":90,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":61,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":63,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":69,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":79,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":84,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":16,"len":6,"text":"jouait","message":"Le verbe de la relative s’accorde avec l’antécédent de « qui ».","suggestions":["jouaient"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":85,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":89,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -801,107 +506,131 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":63,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":83,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]},{"rule":"FR_SPELL","offset":83,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_INVARIABLE","offset":11,"len":5,"text":"faite","message":"« fait » suivi d’un infinitif est toujours invariable.","suggestions":["fait"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":21,"len":4,"text":"fait","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["faits"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":5,"text":"ouvre","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["ouvrent"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":20,"len":4,"text":"pris","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["prise"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":22,"len":6,"text":"commis","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["commises"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":16,"len":4,"text":"prêt","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["prêts"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":21,"len":4,"text":"pris","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["prises"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_COD","offset":19,"len":5,"text":"écrit","message":"Le participe passé s’accorde avec le COD placé avant.","suggestions":["écrite"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":59,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_LEUR","offset":13,"len":5,"text":"leurs","message":"« leur » devant un nom singulier.","suggestions":["leur"]},{"rule":"FR_DET_NOUN_NUM","offset":19,"len":7,"text":"voiture","message":"Le nom doit s’accorder en nombre avec le déterminant.","suggestions":["voitures"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":15,"len":5,"text":"vient","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["viennent"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_PRONOMINAL","offset":25,"len":8,"text":"qualifié","message":"Accord du participe passé avec le sujet (verbe pronominal).","suggestions":["qualifiée"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_CE_SE","offset":0,"len":2,"text":"Se","message":"« ce » (déterminant démonstratif) devant un nom.","suggestions":["Ce"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]},{"rule":"FR_SPELL","offset":80,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":63,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":63,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":23,"len":6,"text":"jouent","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["joue"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":70,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_A_ACCENT","offset":34,"len":1,"text":"a","message":"Préposition « à » avec accent.","suggestions":["à"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":16,"len":4,"text":"sais","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sait"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":3,"len":4,"text":"sait","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sais"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":63,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":79,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":3,"len":4,"text":"peut","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["peux"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":18,"len":6,"text":"rouges","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["rouge"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":3,"len":4,"text":"veut","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["veux"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":77,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":4,"len":4,"text":"veut","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["veulent"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":6,"len":2,"text":"va","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["vont"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":24,"len":6,"text":"arrivé","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["arrivées"]},{"rule":"FR_ETRE_PLURAL","offset":24,"len":6,"text":"arrivé","message":"Après « sont », l’attribut est au pluriel.","suggestions":["arrivés"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ancien"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_NOUN_ADJ","offset":13,"len":5,"text":"garée","message":"L’adjectif doit s’accorder avec le nom.","suggestions":["garées"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":68,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":26,"len":8,"text":"adorable","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["adorables"]},{"rule":"FR_ETRE_PLURAL","offset":26,"len":8,"text":"adorable","message":"Après « sont », l’attribut est au pluriel.","suggestions":["adorables"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":66,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":20,"len":8,"text":"recouvre","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["recouvrent"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]},{"rule":"FR_SPELL","offset":75,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":24,"len":7,"text":"prépare","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["préparent"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":90,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":16,"len":7,"text":"prudent","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["prudentes"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":66,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_AVOIR_INF","offset":21,"len":6,"text":"prêter","message":"Après « avoir », on attend un participe passé.","suggestions":["prêté"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
@@ -912,95 +641,366 @@
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_ATTR_AGREE","offset":16,"len":6,"text":"touché","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["touchée"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":70,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]},{"rule":"FR_SPELL","offset":73,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":14,"len":6,"text":"rouges","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["rouge"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":5,"text":"sages","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["sage"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":85,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":6,"text":"chante","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["chantent"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":87,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":6,"text":"pressé","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["pressée"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":62,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":65,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":62,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":79,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":5,"text":"vient","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["viennent"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":70,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":77,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":68,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":89,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":60,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":80,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":75,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_SPELL","offset":7,"len":3,"text":"how","message":"Faute d’orthographe possible.","suggestions":["ho","hoc","hop","hot","hou"]},{"rule":"FR_SPELL","offset":15,"len":3,"text":"you","message":"Faute d’orthographe possible.","suggestions":["yod","cou","fou","hou","mou"]},{"rule":"FR_SPELL","offset":19,"len":5,"text":"today","message":"Faute d’orthographe possible.","suggestions":["tokay"]},{"rule":"FR_TYPO_SPACE_BEFORE","offset":24,"len":1,"text":"?","message":"Espace (insécable) requise avant cette ponctuation.","suggestions":[" ?"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_QUEL_QUE","offset":0,"len":7,"text":"Quelque","message":"Devant le verbe être : « quel(le)(s) que » en deux mots, accordé avec le sujet.","suggestions":["Quelles que"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":72,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":5,"text":"noire","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["noir"]},{"rule":"FR_SPELL","offset":52,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_COMPOUND","offset":4,"len":14,"text":"porte-monnaies","message":"Forme correcte de ce mot composé.","suggestions":["porte-monnaie"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":62,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
-{"lints":[{"rule":"FR_CAPITAL","offset":30,"len":5,"text":"Corse","message":"Langue ou adjectif de nationalité : minuscule (majuscule seulement pour les habitants).","suggestions":["corse"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":61,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":55,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":88,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":16,"len":7,"text":"fatigué","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["fatiguée"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":67,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPELL","offset":73,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":64,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
 {"lints":[]}
-{"lints":[{"rule":"FR_PP_AVOIR","offset":31,"len":7,"text":"invités","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["invité"]}]}
-{"lints":[{"rule":"FR_SUBJ_VERB","offset":27,"len":1,"text":"a","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["ont"]},{"rule":"FR_PP_AVOIR","offset":29,"len":7,"text":"invités","message":"Avec « avoir », le participe ne s’accorde pas avec un complément placé après lui.","suggestions":["invité"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":14,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ancienne"]}]}
 {"lints":[]}
 {"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":64,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":73,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":66,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":67,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":12,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":16,"len":6,"text":"timide","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["timides"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":90,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":67,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":14,"len":7,"text":"sérieux","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["sérieuse"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":73,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":81,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":74,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":70,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ancien"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":7,"text":"prudent","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["prudente"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":80,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":78,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":81,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":8,"text":"manteaus","message":"Faute d’orthographe possible.","suggestions":["manteaux","manteau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":4,"text":"déçu","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["déçue"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":12,"len":5,"text":"noire","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["noir"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":65,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":66,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":68,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":59,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":78,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":16,"len":5,"text":"sages","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["sage"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":5,"text":"range","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["rangent"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":79,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":79,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":6,"text":"rouges","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["rouge"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":79,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":15,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ancienne"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]},{"rule":"FR_SPELL","offset":75,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]},{"rule":"FR_SPELL","offset":78,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":56,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":14,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["ancien"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]},{"rule":"FR_SPELL","offset":74,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":17,"text":"vraiment vraiment","message":"Mot répété.","suggestions":["vraiment"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":65,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":72,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":62,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":67,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":80,"len":7,"text":"bateaus","message":"Faute d’orthographe possible.","suggestions":["bateaux","bateau"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":71,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPELL","offset":54,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":73,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":18,"len":4,"text":"prêt","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["prête"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":16,"len":9,"text":"satisfait","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["satisfaite"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":83,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":75,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":18,"len":9,"text":"anciennes","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["anciens"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":67,"len":8,"text":"journals","message":"Faute d’orthographe possible.","suggestions":["journaux","journal"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPELL","offset":61,"len":7,"text":"cadeaus","message":"Faute d’orthographe possible.","suggestions":["cadeaux","cadeau"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":18,"len":7,"text":"content","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["contents"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]}]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":9,"text":"elle elle","message":"Mot répété.","suggestions":["elle"]},{"rule":"FR_SUBJ_VERB","offset":17,"len":7,"text":"content","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["conte"]},{"rule":"FR_SPELL","offset":84,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":64,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":65,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_DUP","offset":7,"len":5,"text":"le le","message":"Mot répété.","suggestions":["le"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":69,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":83,"len":8,"text":"tableaus","message":"Faute d’orthographe possible.","suggestions":["tableaux","tableau"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":77,"len":9,"text":"discourss","message":"Faute d’orthographe possible.","suggestions":["discours","discoures","discourus"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":70,"len":8,"text":"châteaus","message":"Faute d’orthographe possible.","suggestions":["châteaux","château"]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":14,"len":7,"text":"regarde","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["regardent"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_ATTR_AGREE","offset":16,"len":7,"text":"patient","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["patiente"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPELL","offset":73,"len":8,"text":"drapeaus","message":"Faute d’orthographe possible.","suggestions":["drapeaux","drapeau"]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":7,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":28,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPELL","offset":73,"len":7,"text":"gâteaus","message":"Faute d’orthographe possible.","suggestions":["gâteaux","gâteau"]}]}
+{"lints":[{"rule":"FR_SPELL","offset":76,"len":6,"text":"repass","message":"Faute d’orthographe possible.","suggestions":["repas","repais","repars","repassa","repasse"]}]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[]}
+{"lints":[{"rule":"FR_SPACE_BEFORE","offset":9,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]},{"rule":"FR_SPACE_BEFORE","offset":23,"len":2,"text":" ,","message":"Pas d’espace avant cette ponctuation.","suggestions":[","]}]}
+{"lints":[{"rule":"FR_SUBJ_VERB","offset":13,"len":3,"text":"est","message":"Le verbe doit s’accorder avec son sujet.","suggestions":["sont"]},{"rule":"FR_ATTR_AGREE","offset":17,"len":7,"text":"prudent","message":"L’attribut doit s’accorder avec le sujet.","suggestions":["prudents"]}]}
