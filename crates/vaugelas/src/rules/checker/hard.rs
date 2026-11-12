@@ -380,7 +380,7 @@ impl Checker {
             if Self::word_at(t, a) && matches!(t[a].lower.as_str(), "lui" | "leur" | "y") { a += 1; }
             if !Self::word_at(t, a) || !self.fin_lemma(&t[a], "avoir") { continue; }
             let mut p = a + 1;
-            while Self::word_at(t, p) && (matches!(t[p].lower.as_str(), "pas" | "plus" | "jamais" | "déjà" | "bien" | "toujours") || all_pos(&t[p], Pos::Adv)) { p += 1; }
+            while Self::word_at(t, p) && (matches!(t[p].lower.as_str(), "pas" | "plus" | "jamais" | "déjà" | "bien" | "toujours" | "point" | "guère" | "rien") || all_pos(&t[p], Pos::Adv)) { p += 1; }
             if !Self::word_at(t, p) { continue; }
             let qr: Vec<&Morph> = t[p].morph.iter().filter(|m| m.pos == Pos::Verb && m.moods & M_Q != 0).collect();
             if qr.is_empty() || qr.iter().any(|m| PP_INVARIABLE.contains(&self.lemma_of(m)) || matches!(self.lemma_of(m), "faire" | "laisser")) { continue; }
@@ -1067,6 +1067,9 @@ impl Checker {
             } else { end = noun_at - 1; }
             let Some(v) = self.main_verb_after(t, i, end + 1) else { continue };
             if !Self::word_at(t, v) || !has_fin(&t[v]) || t[v].inv.is_some() || !t[v].morph.iter().any(|m| is_fin(m) && m.person & 4 != 0) { continue; }
+            // "dans une grande détresse": the word is a noun behind its determiner, not a finite verb
+            if v > 0 && t[v].morph.iter().any(|m| m.pos == Pos::Noun)
+                && (det_info(&t[v - 1]).is_some() || t[v - 1].morph.iter().any(adjish)) { continue; }
             if t[v].morph.iter().any(|m| is_fin(m) && m.person & 4 != 0 && m.number & number != 0) { continue; }
             let sug = self.verb_forms_for(&t[v], 4, number);
             o.push(self.mk(&t[v], "FR_SUBJ_VERB", "Accord du verbe avec un sujet de quantité.", sug));
@@ -1196,9 +1199,9 @@ impl Checker {
             // a direct-object clitic right before the auxiliary (possibly behind lui/leur/y/ne): "les lui avait ôtées"
             let mut b = a;
             let mut obj_clitic = false;
-            while b > 0 && t[b - 1].word && t[b - 1].sid == t[a].sid && (CLITICS.contains(&t[b - 1].lower.as_str()) || matches!(t[b - 1].lower.as_str(), "lui" | "leur" | "y" | "en" | "ne" | "n’")) {
+            while b > 0 && t[b - 1].word && t[b - 1].sid == t[a].sid && (CLITICS.contains(&t[b - 1].lower.as_str()) || matches!(t[b - 1].lower.as_str(), "lui" | "leur" | "y" | "en" | "ne" | "n’" | "vous")) {
                 let l = t[b - 1].lower.as_str();
-                let subj_pron = matches!(l, "nous" | "vous") && !(b >= 2 && t[b - 2].word && (has_pos(&t[b - 2], Pos::PronSubj) || CLITICS.contains(&t[b - 2].lower.as_str())));
+                let subj_pron = matches!(l, "nous" | "vous") && !(b >= 2 && t[b - 2].word && (has_pos(&t[b - 2], Pos::PronSubj) || CLITICS.contains(&t[b - 2].lower.as_str()) || matches!(t[b - 2].lower.as_str(), "ne" | "n’")));
                 if (OBJ_CLITICS.contains(&l) && !subj_pron) || l == "en" { obj_clitic = true; }
                 b -= 1;
             }

@@ -2,6 +2,7 @@
 pub mod build;
 pub mod checker;
 pub mod lexicon;
+pub mod mask;
 pub mod tokenizer;
 pub mod typography;
 pub use checker::{CheckOptions, Checker, Lint};

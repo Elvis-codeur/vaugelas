@@ -46,7 +46,9 @@ impl Category {
         match rule {
             "FR_SPELL" => Category::Typos,
             "FR_CAPITAL" => Category::Casing,
-            r if r.starts_with("FR_TYPO_") || matches!(r, "FR_DOUBLE_SPACE" | "FR_SPACE_AFTER" | "FR_SPACE_BEFORE") => Category::Typography,
+            "FR_INVENTED" => Category::Typos,
+            r if r.starts_with("FR_TYPO_") || r.starts_with("FR_REF_")
+                || matches!(r, "FR_DOUBLE_SPACE" | "FR_SPACE_AFTER" | "FR_SPACE_BEFORE") => Category::Typography,
             _ => Category::Grammar,
         }
     }
@@ -124,6 +126,24 @@ pub const RULES: &[(&str, &str)] = &[
     ("FR_TYPO_APOS", "Apostrophe typographique"),
     ("FR_TYPO_ELLIPSIS", "Points de suspension"),
     ("FR_TYPO_GUILLEMET", "Guillemets"),
+    ("FR_TYPO_APOS_SPACE", "Espace après l’apostrophe d’élision"),
+    ("FR_INVENTED", "Mot inventé"),
+    ("FR_PARTITIVE", "Article partitif manquant"),
+    ("FR_INF_NOUN", "Infinitif employé comme nom"),
+    ("FR_SI_MAIS_QUE", "Si … mais que"),
+    ("FR_REF_QUOTE", "Guillemets non appariés"),
+    ("FR_REF_DUP", "Référence répétée"),
+    ("FR_REF_STYLE", "Référence au style anglais"),
+    ("FR_REF_VERSE_NUM", "Numéro de verset dans le texte"),
+    ("FR_REF_COMMA", "Liste de versets sans espace"),
+];
+
+/// Rules added after the fr-check parity fixture was frozen (`tests/fixtures/sample.txt`, issue #3). The parity
+/// test compares the checker with the reference implementation on that fixture; these rules have no counterpart
+/// there, so they are filtered out of that comparison and covered by `tests/fixtures/regression/` instead.
+pub const EXTENSION_RULES: &[&str] = &[
+    "FR_INVENTED", "FR_PARTITIVE", "FR_INF_NOUN", "FR_SI_MAIS_QUE", "FR_TYPO_APOS_SPACE",
+    "FR_REF_QUOTE", "FR_REF_DUP", "FR_REF_STYLE", "FR_REF_VERSE_NUM", "FR_REF_COMMA",
 ];
 
 /// Short French description of a rule (LanguageTool's `rule.description`); a generic one for an unknown name.
@@ -174,6 +194,16 @@ impl<'a> Vaugelas<'a> {
             if !line.trim().is_empty() { out.extend(self.check_line(line, s).into_iter().map(|mut i| { i.start += off; i.end += off; i })); }
             off += raw.len() + 1;
         }
+        // quotation balance, a repeated reference or verse numbering are properties of the document, not of a line: a quotation may open in one
+        // paragraph and close in the next, which is why the per-line rules cannot judge it.
+        if s.rules {
+            for l in self.data.rules.document_rules(text) {
+                out.push(Issue { start: l.start, end: l.end, rule: l.rule.to_string(), message: l.message,
+                                 replacements: l.suggestions, source: Source::Rules, score: None,
+                                 category: Category::of_rule(l.rule) });
+            }
+            out.sort_by_key(|i| (i.start, i.end));
+        }
         out
     }
 
@@ -198,6 +228,12 @@ impl<'a> Vaugelas<'a> {
                     if *score <= thr { continue; }
                     let Some((start, end)) = spans[wi] else { continue };
                     let word = &sent.words[wi];
+                    // "celles de tout autre": the model proposes a plural after an indefinite "tout", where the
+                    // singular is correct; a construction guard, not a word list (measured, r313650)
+                    if wi > 0 && matches!(sent.words[wi - 1].to_lowercase().as_str(), "tout" | "toute" | "tous" | "toutes")
+                        && line.get(start..end).is_some_and(|w| matches!(w.to_lowercase().as_str(), "autre" | "autres")) {
+                        continue;
+                    }
                     let sug = sug.clone().filter(|x| x != word);
                     if let Some(r) = issues.iter_mut().find(|i| i.source != Source::Model && i.start < end && start < i.end) {
                         r.source = Source::Both; r.score = Some(*score);

@@ -1,0 +1,32 @@
+# Vaugelas domain allow-list: French words the lexicon does not know but that are correct.
+#
+# One word per line, lowercase, `#` starts a comment. The rule checker reports an unknown word as FR_SPELL
+# unless it is listed here. This file is the fix for the false positives measured on the 55-passage reference
+# corpus (2026-11-10-prompt-ceiling/vaugelas/VAUGELAS-EVALUATION.md): the technical and theological vocabulary
+# the general lexicon lacks. Nothing here is third-party text; it is a word list.
+#
+# Add a word only with the passage that proved it (keep the comment).
+#
+# --- theology / church history -------------------------------------------------
+sacerdotalisme   # r331928, heading of the article (Roman Catholic system)
+sacerdotaliste
+sacerdotalistes  # r313465
+theopneustique   # r332480: "theopneustiques", inspired
+theopneustiques
+sublapsaire      # r313544, infra/sublapsarian controversy
+sublapsaires
+postrédemptioniste
+postrédemptionistes
+anté-applicationniste
+anté-applicationnistes
+supralapsaire
+supralapsaires
+infralapsaire
+infralapsaires
+#
+# --- rare but correct French, from the reference corpus --------------------------
+attiseur         # r332174: "un attiseur de discorde" (from attiser)
+mûs              # r331519: past participle of mouvoir, "mûs par"
+périssante       # r314097: "une gloire périssante"
+convertissante   # r314106: "la grâce convertissante"
+seula            # r313465: footnote text, "seula" (seule in the source)
