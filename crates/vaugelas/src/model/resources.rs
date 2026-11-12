@@ -7,11 +7,19 @@
 //! context promotions (ctx=1) without: 123 of the 2,932 kit records changed when it was absent.
 //!
 //! All counts are integers in the JSON files; a non-integer value is an error rather than a silent conversion.
+//!
+//! One table is **optional**: `interp/lexpairs_conf.json`, the lexical-confusion resource (`[[wrong, right, n], ...]`,
+//! the format of `FRC_LEXPAIRS_CONF`). It is read when present, adds candidates only (never changes a reading of the
+//! written form), and is absent from the shipped `data-3` set, so the default behaviour is unchanged. Disable it with
+//! `VAUGELAS_NO_LEXCONF=1`; point it elsewhere with `VAUGELAS_LEXCONF=/path/to/file.json`. See `docs/DATAPREP.md`.
 use std::collections::HashMap;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 /// A form -> list-of-forms table (lexical homophones, near-homophones, confusion pairs).
 pub type FormLists = HashMap<String, Vec<String>>;
+
+/// Name of the optional lexical-confusion resource, relative to the resources directory.
+pub const LEXCONF_FILE: &str = "interp/lexpairs_conf.json";
 
 #[derive(Default)]
 pub struct Resources {
@@ -65,12 +73,36 @@ fn mined(path: &Path) -> Result<FormLists, String> {
     Ok(out)
 }
 
+/// `_lexconf()`: `[[wrong, right, n], ...]` (n is ignored, as in Python) -> {wrong.lower(): [right, ...]}.
+pub fn parse_lexconf(path: &Path) -> Result<FormLists, String> {
+    let rows: Vec<(String, String, i64)> = parse(path)?;
+    let mut out: FormLists = HashMap::new();
+    for (w, c, _) in rows {
+        out.entry(w.to_lowercase()).or_default().push(c);
+    }
+    Ok(out)
+}
+
+/// The optional resource of `dir`: `$VAUGELAS_LEXCONF` when set, else `dir/interp/lexpairs_conf.json`; empty when the
+/// file is absent or `$VAUGELAS_NO_LEXCONF=1` (so the shipped data and every existing caller are unchanged).
+pub fn load_lexconf(dir: &Path) -> Result<FormLists, String> {
+    if std::env::var("VAUGELAS_NO_LEXCONF").is_ok_and(|v| v == "1") {
+        return Ok(HashMap::new());
+    }
+    let path = std::env::var_os("VAUGELAS_LEXCONF")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| dir.join(LEXCONF_FILE));
+    if !path.is_file() {
+        return Ok(HashMap::new());
+    }
+    parse_lexconf(&path)
+}
+
 impl Resources {
-    /// `_lexconf()`: `[[wrong, right, n], ...]` (n is ignored, as in Python) -> {wrong.lower(): [right, ...]}.
+    /// Add one `FRC_LEXPAIRS_CONF` file to `lexconf` (the data-preparation CLI's `--lexconf`).
     pub fn set_lexconf(&mut self, path: &Path) -> Result<(), String> {
-        let rows: Vec<(String, String, i64)> = parse(path)?;
-        for (w, c, _) in rows {
-            self.lexconf.entry(w.to_lowercase()).or_default().push(c);
+        for (w, c) in parse_lexconf(path)? {
+            self.lexconf.entry(w).or_default().extend(c);
         }
         Ok(())
     }
@@ -84,7 +116,7 @@ impl Resources {
         ctx_big.extend(tri); // Python: big.update(json.load(ctx_trigrams.json))
         Ok(Resources {
             mined: mined(&i.join("mined_pairs.json"))?,
-            lexconf: HashMap::new(),
+            lexconf: load_lexconf(dir)?,
             lexhom: parse(&i.join("homophones_lex_1.0.json"))?,
             lexhom_phon: parse(&i.join("homophones_lex_1.0.phon.json"))?,
             cw_pairs: parse(&i.join("cw_pairs.json"))?,
@@ -95,5 +127,27 @@ impl Resources {
             bigrams: parse(&g.join("bigrams.json"))?,
             capstats2: pairs(parse(&g.join("capstats2.json"))?),
         })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn lexconf_file_is_optional_and_lowercased() {
+        let dir = std::env::temp_dir().join(format!("vaugelas-lexconf-{}", std::process::id()));
+        std::fs::create_dir_all(dir.join("interp")).unwrap();
+        // absent: empty, never an error
+        assert!(load_lexconf(&dir).unwrap().is_empty());
+        std::fs::write(
+            dir.join(LEXCONF_FILE),
+            r#"[["Travaux", "œuvres", 7], ["regret", "repentance", 2]]"#,
+        )
+        .unwrap();
+        let got = load_lexconf(&dir).unwrap();
+        assert_eq!(got["travaux"], vec!["œuvres"]);
+        assert_eq!(got["regret"], vec!["repentance"]);
+        std::fs::remove_dir_all(&dir).ok();
     }
 }

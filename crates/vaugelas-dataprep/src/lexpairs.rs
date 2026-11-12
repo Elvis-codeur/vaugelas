@@ -196,3 +196,45 @@ mod tests {
         assert_ne!(body(&records(6, 7, 16)), body(&records(6, 8, 16)));
     }
 }
+
+/// The optional inference resource (`interp/lexpairs_conf.json`, `[[wrong, right, n], ...]`): one row per distinct
+/// `(span_wrong, span_right)` of a produced lexpairs file, `n` = how many records show it. `reverse` adds the opposite
+/// direction too, because a lexical confusion can be written either way (the shipped `FRC_LEXPAIRS_CONF` files were
+/// one-directional because they came from bad sentences, where the direction was known).
+pub fn confusions(path: &std::path::Path, reverse: bool) -> Result<(Vec<Value>, usize), String> {
+    use std::collections::BTreeMap;
+    let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    let mut counts: BTreeMap<(String, String), i64> = BTreeMap::new();
+    for line in text.lines().filter(|l| !l.trim().is_empty()) {
+        let r: Value = serde_json::from_str(line).map_err(|e| format!("{}: {e}", path.display()))?;
+        let w = r["span_wrong"].as_str().ok_or("record without span_wrong")?;
+        let c = r["span_right"].as_str().ok_or("record without span_right")?;
+        *counts.entry((w.to_string(), c.to_string())).or_insert(0) += 1;
+    }
+    let mut rows = Vec::new();
+    for ((w, c), n) in &counts {
+        rows.push(json!([w, c, n]));
+        if reverse {
+            rows.push(json!([c, w, n]));
+        }
+    }
+    let n_pairs = counts.len();
+    Ok((rows, n_pairs))
+}
+
+#[cfg(test)]
+mod confusion_tests {
+    use super::*;
+
+    #[test]
+    fn confusions_count_and_reverse() {
+        let p = std::env::temp_dir().join(format!("vaugelas-lexpairs-{}.jsonl", std::process::id()));
+        std::fs::write(&p, "{\"span_wrong\": \"travaux\", \"span_right\": \"œuvres\"}\n{\"span_wrong\": \"travaux\", \"span_right\": \"œuvres\"}\n").unwrap();
+        let (rows, n) = confusions(&p, false).unwrap();
+        assert_eq!((n, rows.len()), (1, 1));
+        assert_eq!(rows[0], json!(["travaux", "œuvres", 2]));
+        let (rows, _) = confusions(&p, true).unwrap();
+        assert_eq!(rows.len(), 2);
+        std::fs::remove_file(&p).ok();
+    }
+}

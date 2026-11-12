@@ -11,6 +11,7 @@ USAGE
   vaugelas-dataprep product-pairs --out DIR --src BOOKS.jsonl [--n N] [--seed S]
   vaugelas-dataprep pairs --items ITEMS.jsonl --out RECORDS.jsonl[.gz] --data DIR
   vaugelas-dataprep cands -f TEXTS --out RECORDS.jsonl[.gz] --data DIR
+  vaugelas-dataprep lexconf --lexpairs LEXPAIRS.jsonl --out CONF.json [--reverse]
 
 COMMANDS
   lexpairs       Synthetic lexical minimal pairs (replaces lexpairs.py): DIR/lexpairs.jsonl + DIR/CARD.md.
@@ -20,6 +21,8 @@ COMMANDS
                  Reads the clean-text carrier JSONL ({\"text\": ...} per line); the corpus is not in this repo.
   pairs          Candidate records of a pair file (ebm_data2.py pairs): good record + bad record with gold.
   cands          Evaluation records (record_pf, no gold) for each line of TEXTS (JSON with text/sentence, or text).
+  lexconf        Build the optional inference resource [[wrong, right, n], ...] from produced lexpairs records; `--reverse`
+                 adds both directions. Drop it at <data>/resources/interp/lexpairs_conf.json to enable it in inference.
 
 OPTIONS
   --data DIR     the model data: model.frcm, lexicon.tsv, resources/, lex/ (default: $VAUGELAS_DATA)
@@ -42,7 +45,7 @@ struct Args {
 
 impl Args {
     fn parse() -> Result<Args, String> {
-        const WITH_VALUE: [&str; 10] = ["--out", "--per-subtype", "--seed", "--contexts", "--src", "--n", "--items", "--data", "--jobs", "--lexconf"];
+        const WITH_VALUE: [&str; 11] = ["--out", "--per-subtype", "--seed", "--contexts", "--src", "--n", "--items", "--data", "--jobs", "--lexconf", "--lexpairs"];
         let mut a = Args { rest: Vec::new(), opts: Vec::new(), flags: Vec::new() };
         let mut it = std::env::args().skip(1);
         while let Some(x) = it.next() {
@@ -162,6 +165,16 @@ fn cmd_pairs(a: &Args) -> Result<(), String> {
     Ok(())
 }
 
+fn cmd_lexconf(a: &Args) -> Result<(), String> {
+    let lexpairs = a.opt("--lexpairs").ok_or("--lexpairs LEXPAIRS.jsonl is required")?;
+    let out = out_dir(a);
+    let (rows, n) = lexpairs::confusions(Path::new(lexpairs), a.flag("--reverse"))?;
+    let body = vaugelas::text::pyjson::dumps(&serde_json::Value::Array(rows.clone())) + "\n";
+    std::fs::write(&out, &body).map_err(|e| format!("{}: {e}", out.display()))?;
+    eprintln!("{}: {} distinct pairs, {} rows (reverse: {})", out.display(), n, rows.len(), a.flag("--reverse"));
+    Ok(())
+}
+
 fn cmd_cands(a: &Args) -> Result<(), String> {
     let texts = a.opt("-f").ok_or("-f TEXTS is required")?;
     let out = out_dir(a);
@@ -194,6 +207,7 @@ fn main() {
         "product-pairs" => cmd_product(&a),
         "pairs" => cmd_pairs(&a),
         "cands" => cmd_cands(&a),
+        "lexconf" => cmd_lexconf(&a),
         other => fail(&format!("unknown command {other:?} (try --help)")),
     };
     if let Err(e) = r {

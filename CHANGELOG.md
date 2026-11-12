@@ -6,6 +6,12 @@ Rules for the apparatus and for the errors small translation models actually mak
 regression instrument those changes are measured with (#20, #3).
 
 ### Data preparation (Rust only, owner rule 2026-11-12)
+- **Optional lexical-confusion resource at inference**: `Resources::load` reads `resources/interp/lexpairs_conf.json`
+  when present (additive; absent from `data-3`, disable with `VAUGELAS_NO_LEXCONF=1`, relocate with `VAUGELAS_LEXCONF`),
+  and `vaugelas-dataprep lexconf` builds it from produced lexpairs records. Measured with the N1-warm arm at 0.9934:
+  the candidate works (`faveur` 0.000121 -> 0.566864) but the 55-passage result is unchanged (13 flags, a 1/17,
+  b 1/44, c 0/6) and clean false alarms rise 3.2 -> 3.8/1,000, so it is not in the released data set.
+- `tools/check_eval.py --threshold T` measures a model at another operating point.
 - **`vaugelas-dataprep`** (`crates/vaugelas-dataprep`): the archived Python data generators' replacement.
   `lexpairs` (synthetic lexical minimal pairs, 1,080 / 1,620 records) and `product-pairs` (1,989 pairs inside real
   book sentences) are **byte-identical** to Python, `CARD.md` included; `pairs` and `cands` build the candidate
