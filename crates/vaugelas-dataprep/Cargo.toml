@@ -1,0 +1,23 @@
+[package]
+name = "vaugelas-dataprep"
+description = "Vaugelas data preparation in Rust: the Python generators' replacement (lexical and product pairs, candidate records)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "vaugelas-dataprep"
+path = "src/main.rs"
+
+[dependencies]
+vaugelas = { path = "../vaugelas" }
+serde_json = { version = "1", features = ["preserve_order", "float_roundtrip"] }
+flate2 = { version = "1", default-features = false, features = ["zlib-rs"] }
+sha2 = "0.10"
+rayon = "1"
+
+[dev-dependencies]
+serde_json = { version = "1", features = ["preserve_order", "float_roundtrip"] }

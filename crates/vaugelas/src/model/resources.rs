@@ -17,6 +17,9 @@ pub type FormLists = HashMap<String, Vec<String>>;
 pub struct Resources {
     /// `MINED`: typed form -> confusion forms mined from the training errors (n >= 3, no "ne"/"pas", no spaces)
     pub mined: FormLists,
+    /// `LEXCONF` (ebm_cands2 `_lexconf`): typed form -> confusion forms from a produced dataset (`FRC_LEXPAIRS_CONF`),
+    /// ranked last (pri 8) and exempt from the "plausible" filters, because a slot may be a multi-word phrase.
+    pub lexconf: FormLists,
     /// `LEXHOM`: form -> lexical homophones (homophones_lex_1.0.json)
     pub lexhom: FormLists,
     /// `LEXHOM_PHON`: form -> pronunciation of its homophone group (homophones_lex_1.0.phon.json)
@@ -63,6 +66,15 @@ fn mined(path: &Path) -> Result<FormLists, String> {
 }
 
 impl Resources {
+    /// `_lexconf()`: `[[wrong, right, n], ...]` (n is ignored, as in Python) -> {wrong.lower(): [right, ...]}.
+    pub fn set_lexconf(&mut self, path: &Path) -> Result<(), String> {
+        let rows: Vec<(String, String, i64)> = parse(path)?;
+        for (w, c, _) in rows {
+            self.lexconf.entry(w.to_lowercase()).or_default().push(c);
+        }
+        Ok(())
+    }
+
     /// Load every table from `dir/interp` and `dir/ngram`.
     pub fn load(dir: &Path) -> Result<Resources, String> {
         let i = dir.join("interp");
@@ -72,6 +84,7 @@ impl Resources {
         ctx_big.extend(tri); // Python: big.update(json.load(ctx_trigrams.json))
         Ok(Resources {
             mined: mined(&i.join("mined_pairs.json"))?,
+            lexconf: HashMap::new(),
             lexhom: parse(&i.join("homophones_lex_1.0.json"))?,
             lexhom_phon: parse(&i.join("homophones_lex_1.0.phon.json"))?,
             cw_pairs: parse(&i.join("cw_pairs.json"))?,

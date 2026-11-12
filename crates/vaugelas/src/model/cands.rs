@@ -524,15 +524,20 @@ impl<'a> Gen<'a> {
         }
         if let Some(rest) = low.strip_prefix("quatre-vingtsi") { pri.add1(&format!("quatre-vingti{rest}"), 0); }
         if let Some(m) = self.res.mined.get(low) { pri.add(m, 8); }
+        if let Some(m) = self.res.lexconf.get(low) { pri.add(m, 8); }
         // plausible() and the GEN3 ranking: (rank, how many forms of the same lemma already at that rank, form)
+        // LEXCONF forms bypass every filter below (Python `if f in lex: return True`), a multi-word slot included.
+        let lex: Vec<&str> = self.res.lexconf.get(low).map_or(Vec::new(), |v| v.iter().map(String::as_str).collect());
         let has_dash = low.contains('-');
         let mut items: Vec<(u8, String)> = pri.map.into_iter().map(|(f, k)| (k, f)).collect();
         items.sort_unstable();
         let mut seen: HashMap<(u8, &str), u32> = HashMap::new();
         let mut keyed: Vec<(u8, u32, &String)> = Vec::with_capacity(items.len());
         for (k, f) in &items {
-            if f == low || f.contains(' ') || (cp_len(f) < 2 && !self.in_read(f)) { continue; }
-            if f.contains('-') && !has_dash { continue; }
+            if !lex.contains(&f.as_str()) {
+                if f == low || f.contains(' ') || (cp_len(f) < 2 && !self.in_read(f)) { continue; }
+                if f.contains('-') && !has_dash { continue; }
+            }
             let lm: &str = self.rs(f).first().map_or(f.as_str(), |&i| self.lem(self.r(i)));
             let c = seen.entry((*k, lm)).or_insert(0);
             keyed.push((*k, *c, f));

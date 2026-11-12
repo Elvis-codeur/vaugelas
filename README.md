@@ -321,6 +321,10 @@ vaugelas score -f sentences.txt      # per-word model scores, one sentence per l
   that belong to each model (fr-check lints it reads, default threshold). `text`: tokenizer, sentence filter,
   characterizer and lexicon tables. `report`: the merged report.
 - `crates/vaugelas-cli`: the `vaugelas` program (CLI, data install, LanguageTool-compatible server).
+- `crates/vaugelas-dataprep`: the data-preparation CLI (Rust only, owner rule 2026-11-12): the synthetic lexical
+  pairs, the product-passage pairs and the candidate-record builder that replace the archived Python generators.
+  `make dataprep`, then `vaugelas-dataprep --help`; parity evidence and the named differences: [PARITY.md](PARITY.md),
+  usage: [docs/DATAPREP.md](docs/DATAPREP.md). Training stays Python and is out of this boundary.
 - The model and text code is a port of the research implementation (fr-check-infer, commit cc7d94e). Parity:
   `tests/fixtures/sentences.tsv` holds 343 sentences written for this test (with Claude) and `sentences.frc-infer-v14.jsonl` the scores
   `frc-infer v14` gives them with the shipped model (N1); the `parity_model` test compares every per-word score

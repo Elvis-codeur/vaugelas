@@ -794,6 +794,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "vaugelas-dataprep"
+version = "0.3.0"
+dependencies = [
+ "flate2",
+ "rayon",
+ "serde_json",
+ "sha2",
+ "vaugelas",
+]
+
+[[package]]
 name = "version_check"
 version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -232,7 +232,7 @@ impl<'a> Builder<'a> {
     }
 
     /// `FD.feats(ws)` + `frc=<RULE>` atoms (first occurrence order) on every token a lint covers.
-    fn feats(&self, s: &Sent, trig: &Triggers) -> Vec<Vec<String>> {
+    pub fn feats(&self, s: &Sent, trig: &Triggers) -> Vec<Vec<String>> {
         let lex = self.gen.lex;
         let mut feats: Vec<Vec<String>> = s.base.iter().map(|t| {
             let mut v: Vec<String> = t.r.iter().map(|k| lex.keys[*k as usize].clone()).collect();
@@ -245,6 +245,29 @@ impl<'a> Builder<'a> {
             feats[i].extend(seen.into_iter().map(|r| format!("frc={r}")));
         }
         feats
+    }
+
+    /// `cand_list(ws, i, gold)` of ebm_data2.py with gold: the natural list, then its index of the gold form; None when
+    /// the list is absent, the gold form is not in it, or the gold form is the written one (Python's two counters).
+    pub fn cand_list_gold(&self, s: &Sent, i: usize, gold: &str, sugg: &[String], dr: &mut Drops) -> Option<CandSet> {
+        let (ci, _, cs) = self.cand_list(s, i, sugg, dr)?;
+        let gl = lower(gold);
+        let g = cs.iter().position(|x| x.0 == gold).or_else(|| cs.iter().position(|x| lower(&x.0) == gl))?;
+        if g == 0 { return None; }
+        Some((ci, g, cs))
+    }
+
+    /// `record(ws, err, src, extra, gold)` of ebm_data2.py (the pairs/labeled path): the same per-word sets as
+    /// `record_pf`, with the gold index set on the error word. Returns (feats, cands); the caller adds err/src/extra.
+    pub fn record_parts(&self, text: &str, ws: &[String], gold: Option<(usize, &str)>) -> Result<(Vec<Vec<String>>, Vec<CandSet>), String> {
+        let dr = &mut Drops::new();
+        let trig = self.triggers(text, ws, dr)?;
+        let s = Sent::new(self.gen.lex, ws);
+        let cands = ws.iter().enumerate().filter(|(_, w)| has_w(w)).filter_map(|(i, _)| match gold {
+            Some((gi, gf)) if gi == i => self.cand_list_gold(&s, i, gf, &trig.sugg[i], dr),
+            _ => self.cand_list(&s, i, &trig.sugg[i], dr),
+        }).collect();
+        Ok((self.feats(&s, &trig), cands))
     }
 
     /// `record_pf(text, ws, -1, src)`: the evaluation record exactly as inference builds it (no gold). Err when the
