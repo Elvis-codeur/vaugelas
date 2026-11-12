@@ -1,0 +1,4 @@
+{
+  "note": "Committed floor for `make check-eval`. A change that lowers TP or raises FP/FN on the regression fixtures must update this file deliberately, in the same commit as the rule change, with the measured reason.",
+  "fixtures": {"tp": 11, "fp": 0, "fn": 0}
+}

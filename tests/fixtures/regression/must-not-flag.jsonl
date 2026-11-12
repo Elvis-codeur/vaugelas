@@ -1,0 +1,12 @@
+{"id":"footnote-letters-wcf","text":"il est très juste,q et terrible dans ses jugements ;v haïssant tout péché,w et qui ne tiendra nulle","forbid":["FR_SPACE_AFTER","FR_SPACE_BEFORE","FR_SPELL"],"why":"#17: a-t are the source's footnote letters kept inline"}
+{"id":"citation-roman-numerals","text":"Cette insistance est caractéristique de tout le traitement de l'Écriture par Paul (1 Cor. x. 11, Rom. xv. 4, iv. 23, 1 Cor. ix. 10, iv. 6).","forbid":["FR_SPELL","FR_INVENTED"],"why":"#17: Roman numerals are a citation style, not misspellings (the style itself is FR_REF_STYLE, issue #19)"}
+{"id":"markdown-anchor","text":"La loi de Dieu est parfaite. [Back to Top](#Content)","why":"#17: a markdown anchor, no French word involved"}
+{"id":"latin-quotation","text":"Il cite le texte latin : fomentum libidinis, et il l'explique ensuite.","why":"#17: the source quotes Latin; the translation must keep it"}
+{"id":"truncated-chunk","text":"de ses sens plus étroits, par exemple celui d'une mani-","why":"#17: the corpus cuts chunks mid-word; the translation must not repair it"}
+{"id":"theology-terms","text":"le sacerdotalisme et les thèses sublapsaires, postrédemptionistes et anté-applicationnistes","why":"#17: technical vocabulary the general lexicon lacks"}
+{"id":"clean-agreement","text":"Le grand nombre de croyants spirituels soutient leur croissance spirituelle en lui.","why":"#18: a correct agreement the model suggested 'repairing' (r313544)"}
+{"id":"clean-tout-autre","text":"leurs âmes ou celles de tout autre, et le bien commun de tous","why":"#18: 'tout autre' is correct"}
+{"id":"clean-ne-point","text":"Je ne les ai point vus ! Il ne distingue point ses brebis d'avec les chèvres.","why":"#18: point-negation is correct French"}
+{"id":"clean-passe-compose","text":"Christ ne vous a pas oubliés ; mais il est venu à votre porte.","why":"#18: a preceding direct object clitic makes the agreement correct"}
+{"id":"clean-quote-paragraphs","text":"« Exprimant le bénéfice inestimable que nous avons par ce sacrement.\n\nEnsuite, il doit avertir tous ceux qui sont ignorants. »","why":"#19: a quotation may open in one paragraph and close in the next"}
+{"id":"clean-french-refs","text":"La citation est donnée dans la Segond (Genèse 3:8 ; Actes 2:38).","why":"#19: French citation style, nothing to flag"}
