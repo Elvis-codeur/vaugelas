@@ -3,3 +3,5 @@
 *.frcm
 *.frclex
 lexicon.tsv
+/.parity/
+/.tmp-measure/

@@ -5,6 +5,17 @@
 Rules for the apparatus and for the errors small translation models actually make (issues #17, #18, #19), and the
 regression instrument those changes are measured with (#20, #3).
 
+### Data preparation (Rust only, owner rule 2026-11-12)
+- **`vaugelas-dataprep`** (`crates/vaugelas-dataprep`): the archived Python data generators' replacement.
+  `lexpairs` (synthetic lexical minimal pairs, 1,080 / 1,620 records) and `product-pairs` (1,989 pairs inside real
+  book sentences) are **byte-identical** to Python, `CARD.md` included; `pairs` and `cands` build the candidate
+  records over the v14 generator and record builder.
+- **CPython's random stream in Rust** (`pyrandom`, contract `pyrandom-mt19937-v1`): MT19937 with the exact
+  `seed`/`getrandbits`/`_randbelow`/`shuffle`/`choice` behaviour, pinned against Python 3.12.3 and 3.14.4.
+- **Parity harness** `make parity` (`tools/parity.py`): goldens produced by Python, live re-derivation optional,
+  the record path reported as equivalent with two named differences (FR_INVENTED, `capr` at a sentence start).
+  Full table, hashes and speedups: `PARITY.md`. Boundary and usage: `docs/DATAPREP.md`.
+
 ### Added
 - **Masking before checking** (#17): citations (`Rom. xv. 4`, `Psaumes 63:3, 2`), the Roman numerals inside them,
   footnote letters glued to punctuation (`vrai,b`, `gloire ;r`), bracketed footnote markers (`[114]`) and markdown
