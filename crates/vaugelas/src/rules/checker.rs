@@ -4,6 +4,25 @@ use crate::rules::tokenizer::{tokenize, Tok};
 use std::path::Path;
 
 mod hard;
+mod reference;
+mod sentence;
+
+/// Domain allow-list (technical and theological vocabulary the general lexicon lacks), compiled into the binary.
+const ALLOWLIST: &str = include_str!("../../data/allowlist.txt");
+
+/// Is `word` on the domain allow-list? Compiled once; membership only, so the result does not depend on order.
+fn allowed(word: &str) -> bool {
+    use std::sync::OnceLock;
+    static SET: OnceLock<std::collections::HashSet<String>> = OnceLock::new();
+    let set = SET.get_or_init(|| {
+        ALLOWLIST
+            .lines()
+            .map(|l| l.split('#').next().unwrap_or("").trim().to_lowercase())
+            .filter(|w| !w.is_empty())
+            .collect()
+    });
+    set.contains(&word.to_lowercase())
+}
 
 #[derive(Clone, Debug)]
 pub struct Lint {
@@ -156,6 +175,9 @@ impl Checker {
     pub fn check_opts(&self, text: &str, opts: &CheckOptions) -> Vec<Lint> {
         let mut t = tokenize(text);
         for tok in t.iter_mut() { if tok.word { self.prepare(tok); } }
+        // apparatus that is not French prose (citations, footnote letters, markdown): findings that overlap a
+        // mask are dropped below, except the `FR_REF_*` rules, which are about the apparatus itself.
+        let masks = crate::rules::mask::ranges(text);
         let mut o: Vec<Lint> = Vec::new();
         self.spell(&t, opts.spell_suggestions, &mut o);
         self.dup(&t, text, &mut o);
@@ -177,6 +199,9 @@ impl Checker {
         self.etre_plural_attr(&t, &mut o);
         self.hard_rules(&t, &mut o);
         self.homophones(&t, &mut o);
+        self.sentence_rules(&t, &mut o);
+        self.reference_rules(text, &mut o, opts.strict_typography);
+        o.retain(|l| l.rule.starts_with("FR_REF_") || !masks.iter().any(|m| m.overlaps(l.start, l.end)));
         o.sort_by(|a, b| a.start.cmp(&b.start).then(a.end.cmp(&b.end)));
         o.dedup_by(|a, b| a.start == b.start && a.end == b.end && a.rule == b.rule);
         o
@@ -304,15 +329,36 @@ impl Checker {
     }
 
     // ---------- spelling ----------
+    /// Unknown words are of two kinds, and they must not be reported as the same thing: a misspelling has a
+    /// plausible neighbour in the lexicon (`FR_SPELL`, with suggestions), while an invented word has none
+    /// (`FR_INVENTED`). A run of two unknown words is a foreign (Latin) quotation, not French at all: skipped.
     fn spell(&self, t: &[Tok], suggest: bool, o: &mut Vec<Lint>) {
-        for tk in t {
+        for (idx, tk) in t.iter().enumerate() {
             if !tk.word || tk.known || tk.skip || tk.compound { continue; }
             if tk.text.chars().count() < 2 { continue; }
             let first_up = tk.text.chars().next().is_some_and(|c| c.is_uppercase());
             if first_up { continue; } // proper nouns, acronyms, sentence-initial names
             if tk.text.chars().any(|c| !c.is_alphabetic() && c != '’' && c != '\'' && c != '-') { continue; }
+            if allowed(&tk.text) { continue; }
+            // a word cut by the chunk boundary ("mani-" at the end) is the corpus's, not the translation's
+            if t.get(idx + 1).is_some_and(|n| !n.word && n.text == "-") && t.get(idx + 2).is_none() { continue; }
+            // a neighbouring unknown word makes this a foreign quotation ("fomentum libidinis"), not a French slip
+            let foreign = [idx.checked_sub(1), idx.checked_add(1)].into_iter().flatten().any(|k| {
+                t.get(k).is_some_and(|n| n.word && !n.known && !n.skip && n.sid == tk.sid)
+            });
+            if foreign { continue; }
             let sugg = if suggest { self.lex.suggest(&tk.text, 5) } else { Vec::new() };
-            o.push(self.mk(tk, "FR_SPELL", "Faute d’orthographe possible.", sugg));
+            // an invented word is one no plausible repair reaches: either the lexicon offers nothing, or the
+            // nearest candidate differs in its first letter (a misspelling keeps the stem's first sound)
+            let invented = suggest && match sugg.first() {
+                None => true,
+                Some(s) => s.chars().next() != tk.lower.chars().next(),
+            };
+            if invented {
+                o.push(self.mk(tk, "FR_INVENTED", "Mot inventé : aucune forme française proche.", Vec::new()));
+            } else {
+                o.push(self.mk(tk, "FR_SPELL", "Faute d’orthographe possible.", sugg));
+            }
         }
     }
 
@@ -416,6 +462,16 @@ impl Checker {
                 let agrees = |g: u8, n: u8| ta.morph.iter().any(|m| adjish(m) && m.number & n != 0 && (m.gender & g != 0 || !single(g)));
                 if coord.is_some_and(|(g, n)| agrees(g, n)) || higher.is_some_and(|(g, n)| agrees(g, n)) { a += 1; continue; }
                 if !agrees(np.gender, np.number) {
+                    // "des ténèbres et de la tyrannie antichrétiennes": the adjective agrees with a plural noun
+                    // coordinated before the singular noun it follows
+                    let adj_plural = ta.morph.iter().any(|m| adjish(m) && m.number & N_P != 0);
+                    if adj_plural && np.number == N_S {
+                        let et = (i.saturating_sub(10)..i).rev().find(|&k| t[k].word && matches!(t[k].lower.as_str(), "et" | "ou"));
+                        if let Some(e) = et {
+                            let plural_before = (i.saturating_sub(12)..e).filter_map(|k| self.np_core(t, k)).any(|p| p.number == N_P);
+                            if plural_before { a += 1; continue; }
+                        }
+                    }
                     let Some(m0) = ta.morph.iter().find(|m| adjish(m)) else { break };
                     let sug = self.inflect_adj(self.lemma_of(m0), m0.pos == Pos::Verb, np.gender, np.number);
                     o.push(self.mk(ta, "FR_NOUN_ADJ", "L’adjectif doit s’accorder avec le nom.", sug));
@@ -868,6 +924,17 @@ impl Checker {
             if p.text.chars().next().is_some_and(|c| c.is_uppercase()) { continue; }
             if !(p.lower.ends_with('é') || p.lower.ends_with("és") || p.lower.ends_with("ée") || p.lower.ends_with("ées")) { continue; }
             let Some(m) = p.morph.iter().find(|m| m.pos == Pos::Verb && m.moods & M_Q != 0 && self.lemma_of(m).ends_with("er")) else { continue };
+            // "qu'elles soient tant qu'on voudra préoccupées": the participle agrees with a subject pronoun,
+            // so the trigger verb is in an adverbial clause, not the main verb that expects an infinitive
+            let subj_agrees = t.iter().any(|x| match x.lower.as_str() {
+                "elle" => m.gender & G_F != 0 && m.number & N_S != 0,
+                "elles" => m.gender & G_F != 0 && m.number & N_P != 0,
+                "il" => m.gender & G_M != 0 && m.number & N_S != 0,
+                "ils" => m.gender & G_M != 0 && m.number & N_P != 0,
+                "nous" | "vous" => m.number & N_P != 0,
+                _ => false,
+            });
+            if subj_agrees { continue; }
             o.push(self.mk(p, "FR_INF_PP", "Après ce mot, on attend un infinitif.", vec![self.lemma_of(m).to_string()]));
         }
     }

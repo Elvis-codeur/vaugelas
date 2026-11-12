@@ -1,9 +1,16 @@
-//! The rule checker gives exactly what the research binary gave on `tests/fixtures/sample.txt` (1,006 Claude-written
-//! sentences, with and without errors, written for this test; no evaluation or training data):
-//!   sample.frc.jsonl        `frc --lex lex check --json sample.txt` (fr-check, branch feat/rust-infer, c17445e)
+//! Rule parity on `tests/fixtures/sample.txt`: 1,006 sentences generated for this test by `tools/make_sample.py`
+//! (templates and word lists written for it; no sentence from any corpus, evaluation or training set).
+//!
+//! `sample.frc.jsonl` was the reference output `frc --lex lex check --json sample.txt` (fr-check, branch
+//! feat/rust-infer, c17445e). The old fixture held held-out test sentences and was replaced (issue #3); the
+//! expected file is now regenerated from this binary by `cargo run --release --example gen_parity`, with the rules
+//! added after the fixture was frozen (`report::EXTENSION_RULES`) filtered out on both sides, so the comparison
+//! still covers the fr-check-compatible rule set. The reference binary is not on this machine, so this is a
+//! regression fixture: it fails when a change to an existing rule changes its output.
 //! Skipped when the data files are not installed (VAUGELAS_DATA, else <repo>/data).
 mod common;
 use common::fixture;
+use vaugelas::report::EXTENSION_RULES;
 use vaugelas::rules::{CheckOptions, Checker};
 
 /// frc's `json_line`, verbatim
@@ -16,7 +23,9 @@ fn esc(s: &str) -> String {
     o
 }
 fn json_line(ck: &Checker, text: &str, opts: &CheckOptions) -> String {
-    let lints = ck.check_opts(text, opts);
+    // the rules added after the fixture was frozen have no counterpart in the reference output
+    let mut lints = ck.check_opts(text, opts);
+    lints.retain(|l| !EXTENSION_RULES.contains(&l.rule));
     let mut s = String::from("{\"lints\":[");
     for (k, l) in lints.iter().enumerate() {
         if k > 0 { s.push(','); }
