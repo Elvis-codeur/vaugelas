@@ -54,6 +54,25 @@ The test (`crates/vaugelas-dataprep/tests/pairs_golden.rs`) fails on a third cau
 named differences as version skew, not equivalence defects: both make the Rust record *closer* to what N1 was
 trained and scored with (the v14 path), while the Python reference is the older research script.
 
+### Lexical confusions (`FRC_LEXPAIRS_CONF`)
+
+The archived product batch injected its lexical slots with `FRC_LEXPAIRS_CONF`, a Python-only hook; the Rust `Gen`
+did not read it. It is ported now (`--lexconf FILE`, format `[[wrong, right, n], ...]`, `n` ignored, rank 8 and exempt
+from the "plausible" filters, as in `ebm_cands2._lexconf`). The original file was a temporary artifact and no longer
+exists; it was re-derived from batch 1 itself (the unique changed-token pairs, **143**, the number the dataset card
+records) and committed as `tests/parity/lexconf-batch1.json` for the test.
+
+| 60-item sample | gold visible at the error |
+|---|---|
+| Rust v14, no conf | 1 / 59 |
+| Rust v14 + conf | **45 / 59 (76.3%)** |
+| archived pre-GEN3 Python + same conf | 50 / 59 (84.7%; the full historical batch was 82.8%) |
+
+The 119 records have the same `words`, `err` and `src`; the five-record gap is the v14 generator's longer lists
+(10.0 candidates per set vs 8.8) pushing rank-8 confusions past `MAXC = 16`. That is a ranking-vs-recall difference of
+the newer generator, named here rather than tuned away: raising the rank would diverge from the Python algorithm and
+from what the shipped model reads.
+
 The **archived 1,962 product-passage records** (built 14:17 with `FRC_CANDS2=1` + a 143-pair
 `FRC_LEXPAIRS_CONF` resource) are **not** reproduced: the Rust `Gen` is the v14 GEN3/GEN4 generator, the historical
 build used the pre-GEN3 v2 generator, and the `FRC_LEXPAIRS_CONF` file was a temporary artifact (not in either

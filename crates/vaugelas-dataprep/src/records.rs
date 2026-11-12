@@ -51,7 +51,7 @@ struct Ctx {
     ignore: Vec<String>,
 }
 
-fn load(data: &Path) -> Result<Ctx, String> {
+fn load(data: &Path, lexconf: Option<&Path>) -> Result<Ctx, String> {
     let head = vaugelas::model::read_header(&data.join("model.frcm").to_string_lossy())?;
     let profile = Profile::from_header(&head)?;
     let t0 = Instant::now();
@@ -59,7 +59,8 @@ fn load(data: &Path) -> Result<Ctx, String> {
         || Tables::load(&data.join("lexicon.tsv"), &data.join("resources"), &LexCache::NextToTsv),
         || Checker::open(&data.join("lex")).map_err(|e| e.to_string()),
     );
-    let tables = tables?;
+    let mut tables = tables?;
+    if let Some(p) = lexconf { tables.res.set_lexconf(p)?; }
     let ck = ck?;
     eprintln!("data loaded in {:.1} s ({})", t0.elapsed().as_secs_f64(), profile.name);
     Ok(Ctx { tables, ck, ignore: profile.frc_ignore })
@@ -85,8 +86,8 @@ pub fn write_out(path: &Path, body: &str) -> Result<(), String> {
 
 /// `ebm_data2.py pairs OUT ITEMS.jsonl`: for every item its good record, and for a valid pair its bad record with the
 /// gold form at the changed position. `item` is the input line index (Python's `k`).
-pub fn pairs(items: &Path, out: &Path, data: &Path) -> Result<Stats, String> {
-    let ctx = load(data)?;
+pub fn pairs(items: &Path, out: &Path, data: &Path, lexconf: Option<&Path>) -> Result<Stats, String> {
+    let ctx = load(data, lexconf)?;
     let gen = Gen::new(&ctx.tables.lex, &ctx.tables.nat, &ctx.tables.res);
     let b = Builder::new(&gen, &ctx.ck, &ctx.ignore);
     let text = std::fs::read_to_string(items).map_err(|e| format!("{}: {e}", items.display()))?;
@@ -130,8 +131,8 @@ pub fn pairs(items: &Path, out: &Path, data: &Path) -> Result<Stats, String> {
 
 /// `cands`: the evaluation record (`record_pf`, no gold) for each input line. A line is JSON with a `text`/`sentence`
 /// field (an `id`/`template` names the source), or plain text; one record per line.
-pub fn cands(texts: &Path, out: &Path, data: &Path) -> Result<Stats, String> {
-    let ctx = load(data)?;
+pub fn cands(texts: &Path, out: &Path, data: &Path, lexconf: Option<&Path>) -> Result<Stats, String> {
+    let ctx = load(data, lexconf)?;
     let gen = Gen::new(&ctx.tables.lex, &ctx.tables.nat, &ctx.tables.res);
     let b = Builder::new(&gen, &ctx.ck, &ctx.ignore);
     let text = std::fs::read_to_string(texts).map_err(|e| format!("{}: {e}", texts.display()))?;

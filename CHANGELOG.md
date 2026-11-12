@@ -12,6 +12,9 @@ regression instrument those changes are measured with (#20, #3).
   records over the v14 generator and record builder.
 - **CPython's random stream in Rust** (`pyrandom`, contract `pyrandom-mt19937-v1`): MT19937 with the exact
   `seed`/`getrandbits`/`_randbelow`/`shuffle`/`choice` behaviour, pinned against Python 3.12.3 and 3.14.4.
+- **`--lexconf`**: the `FRC_LEXPAIRS_CONF` candidate hook of `ebm_cands2.py` is ported (confusions at rank 8,
+  exempt from the plausible filters); on the 60-item sample the gold reaches the list on 45/59 records instead of 1/59.
+  A 143-pair equivalent derived from batch 1 is committed as a test resource.
 - **Parity harness** `make parity` (`tools/parity.py`): goldens produced by Python, live re-derivation optional,
   the record path reported as equivalent with two named differences (FR_INVENTED, `capr` at a sentence start).
   Full table, hashes and speedups: `PARITY.md`. Boundary and usage: `docs/DATAPREP.md`.

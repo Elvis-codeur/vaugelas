@@ -59,6 +59,10 @@ fr-check rule filter), not its weights.
   a sentence start (2 records). The 1,962-record product batch archived on 2026-11-12 used the pre-GEN3 generator and
   a temporary `FRC_LEXPAIRS_CONF` file that no longer exists; those records are **regenerated, not copied**, and the
   parity page says so instead of claiming identity.
+- **Lexical confusions are back.** That `FRC_LEXPAIRS_CONF` hook is ported as `--lexconf FILE` (same format and
+  rank). On the 60-item sample the gold form is visible at the error on 45/59 bad records with the conf, 1/59 without
+  it (the pre-GEN3 Python build reaches 50/59; the five-record gap is named in PARITY.md). A 143-pair equivalent
+  derived from batch 1 is committed for the test, since the original temporary file is gone.
 
 ## Parity
 

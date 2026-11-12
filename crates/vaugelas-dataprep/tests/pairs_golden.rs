@@ -64,7 +64,7 @@ fn records_match_python_with_named_differences() {
     };
     let dir = format!("{}/tests/parity", env!("CARGO_MANIFEST_DIR"));
     let out = std::env::temp_dir().join(format!("vaugelas-pairs-test-{}.jsonl", std::process::id()));
-    let st = pairs(std::path::Path::new(&format!("{dir}/pairs-items60.jsonl")), &out, std::path::Path::new(&data)).unwrap();
+    let st = pairs(std::path::Path::new(&format!("{dir}/pairs-items60.jsonl")), &out, std::path::Path::new(&data), None).unwrap();
     assert_eq!(st.records, 119);
     let rust: Vec<Value> = std::fs::read_to_string(&out).unwrap().lines().map(|l| serde_json::from_str(l).unwrap()).collect();
     let py_text = String::from_utf8(gunzip(&format!("{dir}/pairs-reference60.jsonl.gz"))).unwrap();
@@ -83,5 +83,30 @@ fn records_match_python_with_named_differences() {
         }
     }
     assert_eq!((same, invented, capr), (113, 4, 2), "identical / FR_INVENTED / capr");
+    std::fs::remove_file(&out).ok();
+}
+
+/// `FRC_LEXPAIRS_CONF` is ported: with the 143 confusions derived from batch 1 (the original file was a temporary
+/// artifact), the gold form reaches the candidate list on 45 of the 59 bad records. Without it: 1. The archived
+/// pre-GEN3 Python build of the same batch reaches 50/59: the v14 lists are longer (10.0 vs 8.8 candidates), so five
+/// pri-8 confusions fall past MAXC=16. That difference is reported, not hidden (PARITY.md).
+#[test]
+fn lexconf_reaches_the_gold() {
+    let Some(data) = std::env::var_os("VAUGELAS_DATA") else {
+        eprintln!("SKIP lexconf_reaches_the_gold: set VAUGELAS_DATA");
+        return;
+    };
+    let dir = format!("{}/tests/parity", env!("CARGO_MANIFEST_DIR"));
+    let out = std::env::temp_dir().join(format!("vaugelas-lexconf-test-{}.jsonl", std::process::id()));
+    let conf_path = format!("{dir}/lexconf-batch1.json");
+    let items_path = format!("{dir}/pairs-items60.jsonl");
+    pairs(std::path::Path::new(&items_path), &out, std::path::Path::new(&data), Some(std::path::Path::new(&conf_path))).unwrap();
+    let rows: Vec<Value> = std::fs::read_to_string(&out).unwrap().lines().map(|l| serde_json::from_str(l).unwrap()).collect();
+    let bad: Vec<&Value> = rows.iter().filter(|r| r["err"].as_i64().unwrap() >= 0).collect();
+    let gold = bad.iter().filter(|r| {
+        let e = r["err"].as_u64().unwrap() as usize;
+        r["cands"].as_array().unwrap().iter().any(|c| c[0].as_u64().unwrap() as usize == e && c[1].as_u64().unwrap() > 0)
+    }).count();
+    assert_eq!((rows.len(), bad.len(), gold), (119, 59, 45));
     std::fs::remove_file(&out).ok();
 }

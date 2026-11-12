@@ -23,6 +23,8 @@ COMMANDS
 
 OPTIONS
   --data DIR     the model data: model.frcm, lexicon.tsv, resources/, lex/ (default: $VAUGELAS_DATA)
+  --lexconf F    extra candidate confusions for pairs/cands, [[wrong, right, n], ...] (FRC_LEXPAIRS_CONF); the
+                 archived product batch used one with 143 token pairs, which the v14 generator does not carry
   --jobs N       rayon threads (default: all cores)
   --int8         unused by the records (kept for symmetry with the model CLI)
   --version      version and random-stream contract (pyrandom-mt19937-v1)
@@ -40,7 +42,7 @@ struct Args {
 
 impl Args {
     fn parse() -> Result<Args, String> {
-        const WITH_VALUE: [&str; 9] = ["--out", "--per-subtype", "--seed", "--contexts", "--src", "--n", "--items", "--data", "--jobs"];
+        const WITH_VALUE: [&str; 10] = ["--out", "--per-subtype", "--seed", "--contexts", "--src", "--n", "--items", "--data", "--jobs", "--lexconf"];
         let mut a = Args { rest: Vec::new(), opts: Vec::new(), flags: Vec::new() };
         let mut it = std::env::args().skip(1);
         while let Some(x) = it.next() {
@@ -154,7 +156,8 @@ fn cmd_product(a: &Args) -> Result<(), String> {
 fn cmd_pairs(a: &Args) -> Result<(), String> {
     let items = a.opt("--items").ok_or("--items ITEMS.jsonl is required")?;
     let out = out_dir(a);
-    let st = records::pairs(Path::new(items), &out, &data_dir(a))?;
+    let lexconf = a.opt("--lexconf").map(PathBuf::from);
+    let st = records::pairs(Path::new(items), &out, &data_dir(a), lexconf.as_deref())?;
     eprintln!("{}: {} records in {:.2} s", out.display(), st.records, st.secs);
     Ok(())
 }
@@ -162,7 +165,8 @@ fn cmd_pairs(a: &Args) -> Result<(), String> {
 fn cmd_cands(a: &Args) -> Result<(), String> {
     let texts = a.opt("-f").ok_or("-f TEXTS is required")?;
     let out = out_dir(a);
-    let st = records::cands(Path::new(texts), &out, &data_dir(a))?;
+    let lexconf = a.opt("--lexconf").map(PathBuf::from);
+    let st = records::cands(Path::new(texts), &out, &data_dir(a), lexconf.as_deref())?;
     eprintln!("{}: {} records in {:.2} s", out.display(), st.records, st.secs);
     Ok(())
 }
