@@ -50,7 +50,7 @@ struct Args {
 
 impl Args {
     fn parse() -> Result<Args, String> {
-        const WITH_VALUE: [&str; 12] = ["--out", "--per-subtype", "--seed", "--contexts", "--src", "--n", "--items", "--data", "--jobs", "--lexconf", "--lexpairs", "--maxc"];
+        const WITH_VALUE: [&str; 14] = ["--out", "--per-subtype", "--seed", "--contexts", "--src", "--n", "--items", "--data", "--jobs", "--lexconf", "--lexpairs", "--maxc", "--docforms", "--docmap"];
         let mut a = Args { rest: Vec::new(), opts: Vec::new(), flags: Vec::new() };
         let mut it = std::env::args().skip(1);
         while let Some(x) = it.next() {
@@ -185,7 +185,8 @@ fn cmd_delta_pairs(a: &Args) -> Result<(), String> {
     let out = out_dir(a);
     let maxc = a.num("--maxc", 32usize)?;
     let lexconf = a.opt("--lexconf").map(PathBuf::from);
-    let n = delta::delta_pairs(Path::new(items), &out, &data_dir(a), lexconf.as_deref(), maxc)?;
+    let docforms = a.opt("--docforms").map(PathBuf::from);
+    let n = delta::delta_pairs(Path::new(items), &out, &data_dir(a), lexconf.as_deref(), maxc, docforms.as_deref())?;
     eprintln!("{}: {} pairs scored", out.display(), n);
     Ok(())
 }
@@ -195,7 +196,8 @@ fn cmd_train_records(a: &Args) -> Result<(), String> {
     let out = out_dir(a);
     let maxc = a.num("--maxc", 32usize)?;
     let lexconf = a.opt("--lexconf").map(PathBuf::from);
-    let (bad, good) = delta::train_records(Path::new(items), &out, &data_dir(a), lexconf.as_deref(), maxc)?;
+    let docforms = a.opt("--docforms").map(PathBuf::from);
+    let (bad, good) = delta::train_records(Path::new(items), &out, &data_dir(a), lexconf.as_deref(), maxc, docforms.as_deref())?;
     eprintln!("{}: {} bad records + {} good records", out.display(), bad, good);
     Ok(())
 }
@@ -205,7 +207,9 @@ fn cmd_delta_text(a: &Args) -> Result<(), String> {
     let out = out_dir(a);
     let maxc = a.num("--maxc", 32usize)?;
     let lexconf = a.opt("--lexconf").map(PathBuf::from);
-    let n = delta::delta_text(Path::new(texts), &out, &data_dir(a), lexconf.as_deref(), maxc)?;
+    let docforms = a.opt("--docforms").map(PathBuf::from);
+    let docmap = a.opt("--docmap").map(PathBuf::from);
+    let n = delta::delta_text(Path::new(texts), &out, &data_dir(a), lexconf.as_deref(), maxc, docforms.as_deref(), docmap.as_deref())?;
     eprintln!("{}: {} lines scored", out.display(), n);
     Ok(())
 }

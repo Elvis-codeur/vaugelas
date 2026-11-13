@@ -17,6 +17,10 @@ pub struct Widener<'a> {
     pub maxc: usize,
     /// how many context-ranked forms to add at most
     pub topk: usize,
+    /// the document's own pool (glossary renderings, recurring terms, entities), added at every slot
+    pub doc_forms: &'a [String],
+    /// how many document-pool forms to add at most
+    pub doc_topk: usize,
 }
 
 impl<'a> Widener<'a> {
@@ -95,6 +99,21 @@ impl<'a> Widener<'a> {
             self.push(s, i, &mut cs, f);
             if cs.len() > before {
                 added += 1;
+            }
+        }
+        // the document's own knowledge: glossary renderings, recurring terms and entities, ranked by the same
+        // cheap context score; this is what a reader of that book could propose
+        let mut doc: Vec<&String> = self.doc_forms.iter().filter(|f| !f.trim().is_empty()).collect();
+        doc.sort_by(|a, b| score(b).cmp(&score(a)).then_with(|| a.cmp(b)));
+        let mut dadded = 0usize;
+        for f in doc {
+            if dadded >= self.doc_topk || cs.len() >= self.maxc {
+                break;
+            }
+            let before = cs.len();
+            self.push(s, i, &mut cs, f);
+            if cs.len() > before {
+                dadded += 1;
             }
         }
         cs.truncate(self.maxc);

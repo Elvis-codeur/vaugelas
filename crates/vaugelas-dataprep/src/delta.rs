@@ -5,6 +5,7 @@
 use crate::widen::{margin, Widener};
 use rayon::prelude::*;
 use serde_json::{json, Value};
+use std::collections::HashMap;
 use std::path::Path;
 use std::time::Instant;
 use vaugelas::model::cands::{Gen, Sent};
@@ -56,9 +57,10 @@ pub fn sentence_margins(
     ws: &[String],
     extra_at: Option<(usize, &[String])>,
     gold: Option<&str>,
+    doc_forms: &[String],
 ) -> Result<Vec<Option<WordScore>>, String> {
     let d = &ctx.data;
-    let w = Widener { gen, lexconf: &d.tables.res.lexconf, maxc: ctx.maxc, topk: 12 };
+    let w = Widener { gen, lexconf: &d.tables.res.lexconf, maxc: ctx.maxc, topk: 4, doc_forms, doc_topk: 16 };
     let s = Sent::new(&d.tables.lex, ws);
     let ck: &Checker = &d.rules;
     let dr = &mut Drops::new();
@@ -99,8 +101,31 @@ pub fn sentence_margins(
 /// `delta-pairs`: every mined pair, margin of the wrong word in the bad sentence and of the correct word in the good
 /// sentence at the same changed position. Glossary items also get the reviewed rendering as a candidate at the slot
 /// (the document supplies that glossary), disagreement items do not.
-pub fn delta_pairs(items: &Path, out: &Path, data: &Path, lexconf: Option<&Path>, maxc: usize) -> Result<usize, String> {
+fn load_pools(path: Option<&Path>) -> Result<HashMap<String, Vec<String>>, String> {
+    let Some(p) = path else { return Ok(HashMap::new()) };
+    let raw: serde_json::Value = serde_json::from_slice(&std::fs::read(p).map_err(|e| format!("{}: {e}", p.display()))?)
+        .map_err(|e| format!("{}: {e}", p.display()))?;
+    let mut out = HashMap::new();
+    for (doc, v) in raw.as_object().ok_or("doc pools: not an object")? {
+        let mut forms: Vec<String> = Vec::new();
+        for k in ["glossary", "recurring", "entities"] {
+            if let Some(a) = v.get(k).and_then(|x| x.as_array()) {
+                for f in a {
+                    if let Some(s) = f.as_str() {
+                        if !forms.iter().any(|x| x == s) { forms.push(s.to_string()); }
+                    }
+                }
+            }
+        }
+        out.insert(doc.clone(), forms);
+    }
+    Ok(out)
+}
+
+/// `delta-pairs` with per-document pools (`docforms` = {doc: {glossary, recurring, entities}}).
+pub fn delta_pairs(items: &Path, out: &Path, data: &Path, lexconf: Option<&Path>, maxc: usize, docforms: Option<&Path>) -> Result<usize, String> {
     let ctx = load(data, lexconf, maxc)?;
+    let pools = load_pools(docforms)?;
     let gen = Gen::new(&ctx.data.tables.lex, &ctx.data.tables.nat, &ctx.data.tables.res);
     let text = std::fs::read_to_string(items).map_err(|e| format!("{}: {e}", items.display()))?;
     let lines: Vec<&str> = text.lines().collect();
@@ -112,6 +137,7 @@ pub fn delta_pairs(items: &Path, out: &Path, data: &Path, lexconf: Option<&Path>
             let bad = it["bad"].as_str().ok_or("item without bad")?;
             let right = it["right"].as_str().ok_or("item without right")?;
             let source = it["source"].as_str().unwrap_or("");
+            let doc = pools.get(it["doc"].as_str().unwrap_or("")).map(|v| v.as_slice()).unwrap_or(&[]);
             let ws = tokenize(&ctx.data.tables.lex, good);
             let wb = tokenize(&ctx.data.tables.lex, bad);
             let e = if ws.len() != wb.len() { None } else { (0..ws.len()).find(|&j| ws[j] != wb[j]) };
@@ -119,8 +145,8 @@ pub fn delta_pairs(items: &Path, out: &Path, data: &Path, lexconf: Option<&Path>
             // the model reads at most `enc.maxt` words of a sentence; a word beyond that is not scorable
             if e >= ctx.data.model.enc.maxt { return Ok(String::new()); }
             let extra: Vec<String> = if source == "review_glossary" { vec![right.to_string()] } else { Vec::new() };
-            let sb = sentence_margins(&ctx, &gen, bad, &wb, Some((e, &extra)), Some(right))?;
-            let sg = sentence_margins(&ctx, &gen, good, &ws, Some((e, &extra)), Some(right))?;
+            let sb = sentence_margins(&ctx, &gen, bad, &wb, Some((e, &extra)), Some(right), doc)?;
+            let sg = sentence_margins(&ctx, &gen, good, &ws, Some((e, &extra)), Some(right), doc)?;
             let (d_bad, n_bad, gold_bad, best_bad) = match &sb[e] {
                 Some(x) => (x.delta, x.n, x.gold, x.best.clone()),
                 None => (0.0, 0, None, None),
@@ -155,10 +181,11 @@ pub fn delta_pairs(items: &Path, out: &Path, data: &Path, lexconf: Option<&Path>
 /// `train-records`: widened-set training records (JSONL, gzip when the path ends in `.gz`) for a pair file: one bad
 /// record with the gold at the changed position (only when the widened set proposes it — no gold injection) and one
 /// good record (all sets gold=written) per item. The training script reads `{feats, words, err, src, cands}`.
-pub fn train_records(items: &Path, out: &Path, data: &Path, lexconf: Option<&Path>, maxc: usize) -> Result<(usize, usize), String> {
+pub fn train_records(items: &Path, out: &Path, data: &Path, lexconf: Option<&Path>, maxc: usize, docforms: Option<&Path>) -> Result<(usize, usize), String> {
     let ctx = load(data, lexconf, maxc)?;
+    let pools = load_pools(docforms)?;
     let gen = Gen::new(&ctx.data.tables.lex, &ctx.data.tables.nat, &ctx.data.tables.res);
-    let w = Widener { gen: &gen, lexconf: &ctx.data.tables.res.lexconf, maxc, topk: 12 };
+    let w0 = Widener { gen: &gen, lexconf: &ctx.data.tables.res.lexconf, maxc, topk: 8, doc_forms: &[], doc_topk: 0 };
     let text = std::fs::read_to_string(items).map_err(|e| format!("{}: {e}", items.display()))?;
     let lines: Vec<&str> = text.lines().collect();
     let rows: Vec<Result<String, String>> = lines
@@ -169,6 +196,7 @@ pub fn train_records(items: &Path, out: &Path, data: &Path, lexconf: Option<&Pat
             let bad = it["bad"].as_str().ok_or("item without bad")?;
             let right = it["right"].as_str().ok_or("item without right")?;
             let source = it["source"].as_str().unwrap_or("");
+            let doc = pools.get(it["doc"].as_str().unwrap_or("")).map(|v| v.as_slice()).unwrap_or(&[]);
             let ws = tokenize(&ctx.data.tables.lex, good);
             let wb = tokenize(&ctx.data.tables.lex, bad);
             let e = if ws.len() != wb.len() { None } else { (0..ws.len()).find(|&j| ws[j] != wb[j]) };
@@ -188,6 +216,7 @@ pub fn train_records(items: &Path, out: &Path, data: &Path, lexconf: Option<&Pat
                 for i in 0..words.len() {
                     if !has_w(&words[i]) { continue; }
                     let ex: Vec<String> = match at { Some(j) if j == i => extra.clone(), _ => Vec::new() };
+                    let w = Widener { doc_forms: doc, ..w0 };
                     let set = w.widen(&s, i, &ex);
                     if set.2.len() < 2 { continue; }
                     let g = if Some(i) == at {
@@ -228,8 +257,13 @@ pub fn train_records(items: &Path, out: &Path, data: &Path, lexconf: Option<&Pat
 
 /// `delta-text`: one passage per line -> per-sentence, per-word margins with character offsets (the offsets the
 /// evaluation corpus and the checker report use). Sentences are split exactly like the checker (`sent_split`).
-pub fn delta_text(texts: &Path, out: &Path, data: &Path, lexconf: Option<&Path>, maxc: usize) -> Result<usize, String> {
+pub fn delta_text(texts: &Path, out: &Path, data: &Path, lexconf: Option<&Path>, maxc: usize, docforms: Option<&Path>, docmap: Option<&Path>) -> Result<usize, String> {
     let ctx = load(data, lexconf, maxc)?;
+    let pools = load_pools(docforms)?;
+    let docmap: Vec<String> = match docmap {
+        Some(p) => serde_json::from_slice(&std::fs::read(p).map_err(|e| format!("{}: {e}", p.display()))?).map_err(|e| format!("{}: {e}", p.display()))?,
+        None => Vec::new(),
+    };
     let gen = Gen::new(&ctx.data.tables.lex, &ctx.data.tables.nat, &ctx.data.tables.res);
     let text = std::fs::read_to_string(texts).map_err(|e| format!("{}: {e}", texts.display()))?;
     let lines: Vec<&str> = text.lines().filter(|l| !l.trim().is_empty()).collect();
@@ -237,6 +271,7 @@ pub fn delta_text(texts: &Path, out: &Path, data: &Path, lexconf: Option<&Path>,
         .par_iter()
         .enumerate()
         .map(|(k, line)| {
+            let doc = docmap.get(k).and_then(|d| pools.get(d)).map(|v| v.as_slice()).unwrap_or(&[]);
             let mut sents = Vec::new();
             for sent in vaugelas::text::characterize::sent_split(line) {
                 if sent.trim().is_empty() { continue; }
@@ -244,7 +279,7 @@ pub fn delta_text(texts: &Path, out: &Path, data: &Path, lexconf: Option<&Path>,
                 let start = line[..byte].chars().count();
                 let nchars = sent.chars().count();
                 let ws = tokenize(&ctx.data.tables.lex, sent);
-                let sc = sentence_margins(&ctx, &gen, sent, &ws, None, None)?;
+                let sc = sentence_margins(&ctx, &gen, sent, &ws, None, None, doc)?;
                 // char span of each token in the sentence (sequential search, ' as ’ like the tokenizer)
                 let chars: Vec<char> = sent.chars().collect();
                 let mut pos = 0usize;
